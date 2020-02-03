@@ -1,4 +1,4 @@
-# PJT III - This is Frontend Branch
+# PJT III - Backend Branch
 - Branch Name
     - master
     - dev/master : Develop Master Branch
