@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# PJT-III
-=======
 # PJT III - This is Master Branch
 - Branch Name
     - master
@@ -9,4 +6,3 @@
         - front/[feature_name] : Front feature Branch
     - dev/back : Develop Back Branch
         - back/[feature_name] : Back feature Branch
->>>>>>> becc6290055405e070936f501c13191fd1679535
