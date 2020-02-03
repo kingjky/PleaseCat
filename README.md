@@ -1,4 +1,4 @@
-# PJT III - Frontend Branch
+# PJT III - catProfile in Frontend Branch
 - Branch Name
     - master
     - dev/master : Develop Master Branch
