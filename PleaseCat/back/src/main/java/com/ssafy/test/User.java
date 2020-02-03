@@ -1,8 +1,9 @@
-package com.ssafy.security;
+package com.ssafy.test;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties; 
+/*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;    
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rest.api.entity.common.CommonDateEntity;
+import com.ssafy.security.CommonDateEntity;
 import lombok.*;
 import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +25,11 @@ import java.util.stream.Collectors;
 @Table(name = "user") // 'user' 테이블과 매핑됨을 명시
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Post Entity에서 User와의 관계를 Json으로 변환시 오류 방지를 위한 코드
 @Proxy(lazy = false)
-public class User extends CommonDateEntity implements UserDetails {
-    @Id // pk
+*/
+public class User //extends CommonDateEntity implements UserDetails 
+{
+/*
+	@Id // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long msrl;
     @Column(nullable = false, unique = true, length = 50)
@@ -76,4 +80,11 @@ public class User extends CommonDateEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
 }

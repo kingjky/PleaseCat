@@ -1,4 +1,4 @@
-package com.rest.api.config.security;
+package com.ssafy.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;

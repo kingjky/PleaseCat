@@ -3,22 +3,16 @@ package com.ssafy.model.service;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.model.dao.UserDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.user;
-import com.ssafy.security.JwtTokenProvider;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImp2 implements UserService {
 	@Autowired
 	private UserDao dao;
-	@Autowired
-	private JwtTokenProvider jwtTokenProvider;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	//회원번호로 회원검색
 	public user searchUser(int no) {
@@ -55,12 +49,10 @@ public class UserServiceImp implements UserService {
 	//회원가입을 통한 회원추가
 	public void insertUser(user User) {
 		try {
-			user find = dao.searchUserEmail(User.getUser_email());
+			user find = dao.searchUser(User.getUser_no());
 			if(find != null) {
 				throw new PleaseCatException();
 			}else {
-				String pw = passwordEncoder.encode(User.getPassword());
-				User.setUser_pw(pw);
 				dao.insertUser(User);
 				System.out.println("user 입력 성공");
 			}

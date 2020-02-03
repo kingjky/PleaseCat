@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.model.dto.user;
 import com.ssafy.model.service.UserService;
-import com.ssafy.security.JwtTokenProvider;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -29,13 +28,13 @@ import io.swagger.annotations.ApiResponses;
 
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
-@RequestMapping("/api/user")
+@RequestMapping("/api/user2")
 @RestController
-public class UserRestController {
+public class UserRestController2 {
 	
 	@Autowired
 	private UserService userService;
-
+	
 	@ExceptionHandler
 	public ResponseEntity<Map<String, Object>> handle(Exception e){
 		return handleFail(e.getMessage(), HttpStatus.OK);
@@ -83,7 +82,6 @@ public class UserRestController {
 	@ApiOperation("로그인 처리")
 	@GetMapping("/login")
 	public ResponseEntity<Map<String, Object>> searchUser(@RequestParam String user_email, @RequestParam String user_pw ) throws Exception{
-		
 		return handleSuccess(userService.login(user_email,user_pw));
 	}
 	

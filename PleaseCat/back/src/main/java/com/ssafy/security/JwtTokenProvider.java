@@ -18,6 +18,11 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+/*
+추가된 라이브러리를 사용해서 JWT를 생성하고 검증하는 컴포넌트를 만들어 보도록 하겠습니다. 
+JWT에는 토큰 만료 시간이나 회원 권한 정보등을 저장할 수 있습니다.
+*/
+
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
@@ -27,7 +32,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     private long tokenValidMilisecond = 1000L * 60 * 60 * 24; // 24시간만 토큰 유효
 
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @PostConstruct
     protected void init() {
@@ -36,14 +41,14 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     // Jwt 토큰 생성
     public String createToken(String userPk, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(userPk);
-        claims.put("roles", roles);
+        Claims claims = Jwts.claims().setSubject(userPk);// JWT payload 에 저장되는 정보단위
+        claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
         return Jwts.builder()
-                .setClaims(claims) // 데이터
-                .setIssuedAt(now) // 토큰 발행일자
+                .setClaims(claims) // 데이터 (정보 저장)
+                .setIssuedAt(now) // 토큰 발행일자 시간 정보 
                 .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘, secret값 세팅
+                .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘,  signature 에 들어갈  secret값 세팅
                 .compact();
     }
 

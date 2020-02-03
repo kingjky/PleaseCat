@@ -10,7 +10,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
-/*WebSecurityConfigureAdapter을 상속받은 시큐리티 설정 클래스를 선언한다. 
+/*WebSecurityConfigureAdapter을 상속받은 시큐리티 설정 클래스를 선언한다.  
 이 클래스에서는 유저 권한에 따른 URI 접근을 설정한다. 
 예를들어 /admin 으로 시작하는 URI는 "ADMIN" 권한이 있는 유저만 접근 가능하고, 
 인덱스 페이지나 회원 가입 페이지는 모든 사용자가 접근 가능하다.*/
