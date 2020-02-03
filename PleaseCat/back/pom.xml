@@ -37,30 +37,14 @@
 		</dependency>
 	<!--  Spring Boot -->
 	
-		  	<!-- for JWT -->
- 	<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-web</artifactId>
-		    <version>5.2.0.RELEASE</version>
-		</dependency>
+
 		
+		<!-- lombok -->
 		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
-		    <version>5.2.0.RELEASE</version>
+	    <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <optional>true</optional>
 		</dependency>
-		
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-crypto</artifactId>
-		    <version>5.2.0.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-jwt</artifactId>
-		    <version>1.1.0.RELEASE</version>
-		</dependency> 
 		
 		<!-- jackson (for json Handling) -->
 		<dependency>
@@ -148,6 +132,24 @@
 			</exclusions>
 		</dependency>
 		<!--  junit  test -->
+		
+		<!-- for JWT -->
+ 		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.2.0.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-crypto</artifactId>
+		    <version>5.2.0.RELEASE</version>
+		</dependency>
 	
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
