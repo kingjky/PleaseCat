@@ -26,12 +26,11 @@
     </div>
     <div id="photoView">
         <div id="photoList">
-            <span class="photo" v-for="n in cnt_pics" :key=n>
-                <img :src='cat.cat_no!=null?require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`):null' :alt='`pic${n}`'>
-                
+            <span class="photo" v-for="n in cnt_pics" :key=n :style="{'background-image' : `url(${require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)})`}" :alt='`pic${n}`'>
             </span>
         </div>
     </div>
+    <div class="emptySpace"></div>
 </div>
 </template>
 
@@ -76,16 +75,28 @@ export default {
 <style lang="scss" scoped>
 #catProfile{
     text-align: center;
-}
-#catProfile .btn{
-    margin: 8px;
-}
-#catProfile button {
-    border: 1px solid #dbdbdb;
-    border-radius: 3px;
-    color: #262626;
-    font-size: 2.7vw;
-    padding: 3px 12px 3px 12px;
+    .btn{
+        margin: 8px;
+    }
+    button {
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        color: #262626;
+        font-size: 2.7vw;
+        padding: 3px 12px 3px 12px;
+    }
+    h1{
+        font-size: 7vw;
+    }
+    .emptySpace {
+        height: 66px;
+    }
+    .text {
+        // transition:all 0.4s ease-out;
+        // text-shadow: 4px 2px 2px black;
+        font-weight: bold;
+        color: black;
+    }
 }
 #profileView{
     padding: 2% 2% 0 2%;
@@ -95,62 +106,36 @@ export default {
     vertical-align: middle;
     text-align: center;
     background-color: white;
-
     // border: 2px solid red;
+    img {
+        width: 100%;
+        border-radius: 100%;
+    }
+    img::after{
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+    #leftPart{
+        width: 30%;
+        position: absolute;
+        left: 5%;
+        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
+    #rightPart{
+        position: absolute;
+        left: 40%;
+        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
 }
 #profileView::after{
     content: "";
     display: block;
     padding-bottom: 40%;
-}
-#profileView img{
-    width: 100%;
-    border-radius: 100%;
-}
-#profileView img::after{
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
-#profileView h1{
-    font-size: 7vw;
-}
-#profileView > div{
-    display: inline;
-}
-#profileView #leftPart{
-    width: 30%;
-    position: absolute;
-    left: 5%;
-    
-    // box-sizing: border-box;
-    // border: 1px solid red;
-}
-#profileView #rightPart{
-    position: absolute;
-    left: 40%;
-    
-    // box-sizing: border-box;
-    // border: 1px solid red;
-}
-#profileView .line { 
-    display: inline-block;
-    width: 50%; 
-    text-align: center; 
-    vertical-align: middle;
-    border-bottom: 1px solid #000; 
-    line-height: 0.1em;
-    margin: 10px 0 20px; 
-    padding:0 10px; 
-}
-#catProfile .emptySpace {
-    height: 10px;
-}
-.text {
-    // transition:all 0.4s ease-out;
-    // text-shadow: 4px 2px 2px black;
-    font-weight: bold;
-    color: black;
 }
 #summaryView{
     display: inline-block;
@@ -162,38 +147,46 @@ export default {
     // border: 1px solid blue;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-}
-#summaryView .summary{
-    display: inline-block;
-    width: 33.3%;
-    text-align: center;
+    .summary{
+        display: inline-block;
+        width: 33.3%;
+        text-align: center;
 
-    // box-sizing: border-box;
-    // border: 1px solid red;
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
 }
 #photoView {
+    display: inline-block;
     width: 90%;
     padding: 0, 1%, 0, 1%;
-    text-align: center;
-}
-#photoList {
-    display: block;
-    text-align: center;
-}
-#photoView .photo{
-    display: inline-block;
-    overflow: hidden;
-    width: 33%;
-}
-#photoView .photo::after{
-    // content: "";
-    // display: block;
-    // padding-bottom: 100%;
-}
-.photo img{
-    display: inline-block; /* Otherwise it keeps some space around baseline */
-    min-width: 100%; /* Scale up to fill container width */
-    min-height: 100%; /* Scale up to fill container height */
-    -ms-interpolation-mode: bicubic; /* Scaled images look a bit better in IE now */
+    #photoList {
+        text-align: left;
+        .photo{
+            display: inline-block;
+            overflow: hidden;
+            width: 33%;
+            text-align: center;
+            vertical-align: middle; 
+            box-sizing: border-box;
+            // border: 1px solid red;
+            div {
+                background-position-x: -50px;
+                background-position-y: -50px;
+                overflow: hidden;
+                display: inline-block; /* Otherwise it keeps some space around baseline */
+                min-width: 100%; /* Scale up to fill container width */
+                min-height: 100%; /* Scale up to fill container height */
+                // max-width: 100%; /* Scale up to fill container width */
+                // max-height: 100%; /* Scale up to fill container height */
+                -ms-interpolation-mode: bicubic; /* Scaled images look a bit better in IE now */
+            }
+        }
+        .photo::after{
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+        }
+    }
 }
 </style>
