@@ -1,6 +1,7 @@
 package com.ssafy.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,19 @@ public class LikesServiceImp implements LikesService {
 	private LikesDao dao;
 	
 	HashMap<String, Object> map;
+	
+	//좋아요 목록 출력
+			@Override
+			public List<likes> searchAllLikes(int user_no) {
+				try { 
+					return dao.searchAllLikes(user_no);
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new PleaseCatException("좋아요 전체 목록을 불러오는데 실패했습니다.");
+				}
+			}
+	
+	
 	//회원번호와 게시글번호로 좋아요 존재 여부를 확인하고 없으면 execute 문장을 반환하고 있으면 cancel을 반환한다.
 	@Override
 	public String searchLikes(int user_no, int post_no) {

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +51,12 @@ public class LikesRestController {
 	@PostMapping("/searchLikes")
 	public ResponseEntity<Map<String, Object>> searchLikes(@RequestParam int user_no, @RequestParam int post_no) throws Exception{
 		return handleSuccess(likesService.searchLikes(user_no,post_no));
+	}
+	
+	@ApiOperation("모든 좋아요 정보를 찾는다.")
+	@GetMapping("/searchAllLikes")
+	public ResponseEntity<Map<String, Object>> searchAllLikes(@RequestParam int user_no) throws Exception{
+		return handleSuccess(likesService.searchAllLikes(user_no));
 	}
 	
 	@ApiOperation("좋아요를 누른다")
