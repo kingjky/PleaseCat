@@ -1,8 +1,9 @@
 <template>
     <div id="catList">
+        <div class="emptySpace">-Navigation Bar-</div>
         <!-- <CatCardComponent key="1" name="name" desc1="♀" desc2="loca" src="1" /> -->
         <CatCardComponent v-for="cat in cats" :key=cat.cat_no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.cat_no  />
-    <div class="emptySpace"></div>
+        <div class="emptySpace">-Tab Bar-</div>
     </div>
 </template>
 <script>
@@ -49,11 +50,11 @@ export default {
 </script>
 
 <style>
-#catList{
-    /* padding-bottom: 75px; */
-    
+#catList {
+    text-align: center;
 }
 .emptySpace {
-    height: 75px;
+    height: 70px;
+    text-align: center;
 }
 </style>

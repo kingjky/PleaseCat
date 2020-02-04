@@ -1,20 +1,20 @@
 <template>
 <div id="catProfile">
+    <div class="emptySpace">-Navigation Bar-</div>
     <div id="photoView">
         <div id="cat">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='cat.cat_no!=null?require(`../../assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
+            <img id="catPhoto" :src='require(`../../assets/images/cat/${cat.cat_no}.jpg`)' alt="" v-if="cat.cat_no">
             <h1 id="catName" class="text">{{cat.cat_name}}</h1>
         </div>
         <div id="man">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
-            <img id="manPhoto" :src='man.user_no!=null?require(`../../assets/images/man/${man.user_no}.jpg`):null' alt="" >
+            <img id="manPhoto" :src='require(`../../assets/images/man/${man.user_no}.jpg`)' alt="" v-if="man.user_no">
             <h1 id="manName" class="text">{{man.user_id}}</h1>
         </div>
     </div>
-    <div class="emptySpace"></div>
     <div id="descView" class="text">
         나이: {{cat.age}}
         <br>털색: {{cat.hair_color}}
@@ -30,6 +30,7 @@
     <div id="rankView">
 
     </div>
+    <div class="emptySpace">-Navigation Bar-</div>
 </div>
 </template>
 

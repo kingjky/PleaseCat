@@ -1,5 +1,6 @@
 <template>
 <div id="catProfile">
+    <div class="emptySpace">-Navigation Bar-</div>
     <div id="profileView">
         <div id="leftPart">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
@@ -89,7 +90,7 @@ export default {
         font-size: 7vw;
     }
     .emptySpace {
-        height: 66px;
+        height: 70px;
     }
     .text {
         // transition:all 0.4s ease-out;
