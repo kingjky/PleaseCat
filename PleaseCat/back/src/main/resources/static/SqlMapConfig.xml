@@ -13,6 +13,7 @@
    	<typeAlias type ="com.ssafy.model.dto.report" 		alias ="report"/>
    	<typeAlias type ="com.ssafy.model.dto.unlikes" 		alias ="unlikes"/>
    	<typeAlias type ="com.ssafy.model.dto.user" 		alias ="user"/>
+   	<typeAlias type ="com.ssafy.model.dto.newsFeed" 		alias ="newsFeed"/>
    	<!-- <typeAlias type ="com.ssafy.model.dto.FoodPageBean" alias ="pagebean"/> -->
 
   </typeAliases>
@@ -29,6 +30,7 @@
      <mapper resource = "static/report_query.xml"/>
      <mapper resource = "static/unlikes_query.xml"/>
      <mapper resource = "static/user_query.xml"/>
+     <mapper resource = "static/newsFeed_query.xml"/>
   </mappers>
    <!-- query 설정 끝 -->
 </configuration>

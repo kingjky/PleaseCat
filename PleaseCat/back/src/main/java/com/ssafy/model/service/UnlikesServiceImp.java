@@ -1,12 +1,14 @@
 package com.ssafy.model.service;
 
-import java.util.HashMap; 
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.model.dao.UnlikesDao;
 import com.ssafy.model.dto.PleaseCatException;
+import com.ssafy.model.dto.likes;
 import com.ssafy.model.dto.unlikes;
 
 @Service
@@ -16,6 +18,18 @@ public class UnlikesServiceImp implements UnlikesService {
 	private UnlikesDao dao;
 	
 	HashMap<String, Object> map;
+	
+	//싫어요 목록 출력
+	@Override
+	public List<likes> searchAllUnLikes(int user_no) {
+		try { 
+			return dao.searchAllUnLikes(user_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("좋아요 전체 목록을 불러오는데 실패했습니다.");
+		}
+	}
+	
 	//싫어요 여부
 	@Override
 	public String searchUnlikes(int user_no, int post_no) {

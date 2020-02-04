@@ -1,6 +1,7 @@
 package com.ssafy.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,5 @@ public interface LikesDao {
 	public likes searchLikes(HashMap<String, Object> map);
 	public void insertLikes(HashMap<String, Object> map);
 	public void deleteLikes(HashMap<String, Object> map);
-
+	public List<likes> searchAllLikes(int user_no);
 }
