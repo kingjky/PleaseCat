@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,12 @@ public class UnlikesRestController {
 		resultMap.put("state", "fail");
 		resultMap.put("data", data);
 		return new ResponseEntity<Map<String,Object>>(resultMap, state); 
+	}
+	
+	@ApiOperation("모든 싫어요 정보를 찾는다.")
+	@GetMapping("/searchAllUnLikes")
+	public ResponseEntity<Map<String, Object>> searchAllUnLikes(@RequestParam int user_no) throws Exception{
+		return handleSuccess(unlikesService.searchAllUnLikes(user_no));
 	}
 	
 	@ApiOperation("회원번호와 게시물번호로 싫어요 여부를 찾는다.")

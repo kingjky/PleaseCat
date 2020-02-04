@@ -8,6 +8,11 @@
 					values(#{user_no:INTEGER},
 						   #{post_no:INTEGER})	
 	</insert>
+	
+	<select id = "searchAllUnLikes" parameterType="int" resultType="unlikes">
+    	select * from unlikes 
+    	where user_no=#{user_no}
+    </select>
    
     <select id = "searchUnlikes"  parameterType="hashmap" resultType="unlikes">
     	SELECT * FROM unlikes 

@@ -37,7 +37,7 @@
 		</dependency>
 	<!--  Spring Boot -->
 	
-		  	<!-- for JWT -->
+		  	<!-- for JWT
  	<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-web</artifactId>
@@ -60,7 +60,7 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-jwt</artifactId>
 		    <version>1.1.0.RELEASE</version>
-		</dependency> 
+		</dependency>  -->
 		
 		<!-- jackson (for json Handling) -->
 		<dependency>
