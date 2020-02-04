@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # PJT III - catProfile in Frontend Branch
+=======
+# PJT III - This is Frontend Branch
+>>>>>>> dev/front
 - Branch Name
     - master
     - dev/master : Develop Master Branch
