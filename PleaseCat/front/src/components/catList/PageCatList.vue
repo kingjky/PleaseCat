@@ -28,7 +28,7 @@ export default {
         pullCat(){
             const vm = this;
             axios
-                .get(`${this.server}/api/cat/searchAll`)
+                .get(`${vm.server}/api/cat/searchAll`)
                 .then(res => {
                     // handle success
                     vm.cats = res.data.data

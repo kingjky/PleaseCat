@@ -55,7 +55,7 @@ export default {
             console.log(this.no);
             const vm = this;
             axios
-                .get(`${this.server}/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
+                .get(`${this.server}/api/cat/searchCat/?cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
@@ -72,7 +72,7 @@ export default {
         pullMan(){
             const vm = this;
             axios
-                .get(`http://70.12.247.116:8080/api/user/searchUserNo/{user_no}?user_no=${vm.cat.cat_manager}`)
+                .get(`${this.server}/api/user/searchUserNo/?user_no=${vm.cat.cat_manager}`)
                 .then(res => {
                     // handle success
                     vm.man = res.data.data

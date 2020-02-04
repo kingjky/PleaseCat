@@ -6,8 +6,6 @@
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
             <img id="catPhoto" :src='cat.cat_no!=null?require(`@/assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
-            
-            
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{cat.cat_name}}</h1></div>
@@ -29,7 +27,8 @@
     <div id="photoView">
         <div id="photoList">
             <span class="photo" v-for="n in cnt_pics" :key=n>
-                <img :src='require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)' alt="pic">
+                <img :src='cat.cat_no!=null?require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`):null' :alt='`pic${n}`'>
+                
             </span>
         </div>
     </div>
@@ -55,10 +54,9 @@ export default {
     },
     methods: {
         pullCat(){
-            console.log(this.no);
             const vm = this;
             axios
-                .get(`${vm.server}/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
+                .get(`${vm.server}/api/cat/searchCat/?cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
