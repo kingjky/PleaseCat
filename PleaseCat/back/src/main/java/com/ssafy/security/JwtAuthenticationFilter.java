@@ -1,5 +1,6 @@
 package com.ssafy.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;   
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -24,11 +25,12 @@ UsernamePasswordAuthenticationFilter 로 전달해야 할 것입니다.
 */
 
 public class JwtAuthenticationFilter extends GenericFilterBean {
-
+	
+	@Autowired
     private JwtTokenProvider jwtTokenProvider;
-
+	
     // Jwt Provier 주입
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+	public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -37,6 +39,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
     	//헤더에서 JWT를 받아옵니다.
     	String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+
     	//유요한 토큰인지 확인합니다.
     	if (token != null && jwtTokenProvider.validateToken(token)) {
             // 토큰이 유효하면 토큰으로부터 유저 정보를 받아옵니다.

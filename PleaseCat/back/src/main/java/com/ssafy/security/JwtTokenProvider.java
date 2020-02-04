@@ -27,13 +27,18 @@ JWT에는 토큰 만료 시간이나 회원 권한 정보등을 저장할 수 �
 @Component
 public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
-    @Value("${spring.jwt.secret}")
-    private String secretKey;
+    //@Value("${spring.jwt.secret}")
+    private String secretKey = "cat";
 
-    private long tokenValidMilisecond = 1000L * 60 * 60 * 24; // 24시간만 토큰 유효
+    // 토큰 유효시간 30분
+    private long tokenValidTime = 30 * 60 * 1000L;
+    
+    
+    //private long tokenValidMilisecond = 1000L * 60 * 60 * 24; // 24시간만 토큰 유효
 
     private UserDetailsService userDetailsService;
 
+    // 객체 초기화, secretKey를 Base64로 인코딩한다.
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -47,7 +52,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
         return Jwts.builder()
                 .setClaims(claims) // 데이터 (정보 저장)
                 .setIssuedAt(now) // 토큰 발행일자 시간 정보 
-                .setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
+                .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘,  signature 에 들어갈  secret값 세팅
                 .compact();
     }
@@ -65,7 +70,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
     public String resolveToken(HttpServletRequest req) {
-        return req.getHeader("X-AUTH-TOKEN");
+        return req.getHeader("token");
     }
 
     // Jwt 토큰의 유효성 + 만료일자 확인

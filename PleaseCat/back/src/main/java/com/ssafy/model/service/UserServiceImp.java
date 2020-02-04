@@ -59,7 +59,7 @@ public class UserServiceImp implements UserService {
 			if(find != null) {
 				throw new PleaseCatException();
 			}else {
-				String pw = passwordEncoder.encode(User.getPassword());
+				String pw = passwordEncoder.encode(User.getUser_pw());
 				User.setUser_pw(pw);
 				dao.insertUser(User);
 				System.out.println("user 입력 성공");
@@ -114,14 +114,14 @@ public class UserServiceImp implements UserService {
 	}
 	
 	//회원 로그인
-	public boolean login(String user_email, String user_pw){
+	public String login(String user_email, String user_pw){
 		try {
-			user User = searchUserEmail(user_email);
-				if(user_pw.equals(User.getUser_pw())) {
-					return true;
-				}else {
+			user find = searchUserEmail(user_email);
+				if(!passwordEncoder.matches(user_pw, find.getUser_pw()))
 					throw new PleaseCatException("비밀 번호 오류");
-				}
+				return jwtTokenProvider.createToken(user_email,null);	
+				//return jwtTokenProvider.createToken(user_email, roles); 아직 권한 기능은 못쓰니 구현을 하지않았다
+				
 		} catch (Exception e) {
 			throw new PleaseCatException();
 		}

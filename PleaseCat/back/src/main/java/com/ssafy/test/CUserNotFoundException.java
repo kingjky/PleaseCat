@@ -1,7 +1,8 @@
 package com.ssafy.test;
 
-public class CUserNotFoundException extends RuntimeException {
-    public CUserNotFoundException(String msg, Throwable t) {
+public class CUserNotFoundException { //extends RuntimeException {
+/*
+	public CUserNotFoundException(String msg, Throwable t) {
         super(msg, t);
     }
 
@@ -12,4 +13,5 @@ public class CUserNotFoundException extends RuntimeException {
     public CUserNotFoundException() {
         super();
     }
+*/
 }

@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class CommonDateEntity implements Serializable {
-    @CreatedDate
+public abstract class CommonDateEntity {//implements Serializable {
+    /*
+	@CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+    */
 }

@@ -29,6 +29,7 @@ roles는 회원이 가지고 있는 권한 정보이고,
 
 */
 
+//public class user implements UserDetails {
 public class user implements UserDetails {
 	private int user_no; 
 	private String user_email; 
@@ -108,12 +109,11 @@ public class user implements UserDetails {
 	private List<String> roles = new ArrayList<>();
 
 	//권한은 회원당 여러 개가 세팅될 수 있으므로 Collection으로 선언합니다.
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles.stream()
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-	}
+	/*
+	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
+	 * return this.roles.stream() .map(SimpleGrantedAuthority::new)
+	 * .collect(Collectors.toList()); }
+	 */
 
 	@Override
 	public String getPassword() {
@@ -154,6 +154,12 @@ public class user implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	} 
 	
 }

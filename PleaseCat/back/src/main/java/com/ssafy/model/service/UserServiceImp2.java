@@ -9,7 +9,7 @@ import com.ssafy.model.dao.UserDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.user;
 
-@Service
+
 public class UserServiceImp2 implements UserService {
 	@Autowired
 	private UserDao dao;
@@ -106,11 +106,11 @@ public class UserServiceImp2 implements UserService {
 	}
 	
 	//회원 로그인
-	public boolean login(String user_email, String user_pw){
+	public String login(String user_email, String user_pw){
 		try {
 			user User = searchUserEmail(user_email);
 				if(user_pw.equals(User.getUser_pw())) {
-					return true;
+					return "굿";
 				}else {
 					throw new PleaseCatException("비밀 번호 오류");
 				}

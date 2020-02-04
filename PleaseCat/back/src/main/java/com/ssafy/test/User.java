@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Builder // builder를 사용할수 있게 합니다.
-@Entity // jpa entity임을 알립니다.
+@Entity // jpa entity임을 알립니다.   -  ★★★ Entity를 넣어주고 DB에 table이름을 맞춰주면 알아서 연동됨
 @Getter // user 필드값의 getter를 자동으로 생성합니다.
 @Setter
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.

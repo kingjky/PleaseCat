@@ -83,7 +83,7 @@ public class UserRestController {
 	@ApiOperation("로그인 처리")
 	@GetMapping("/login")
 	public ResponseEntity<Map<String, Object>> searchUser(@RequestParam String user_email, @RequestParam String user_pw ) throws Exception{
-		
+		String token = userService.login(user_email,user_pw);
 		return handleSuccess(userService.login(user_email,user_pw));
 	}
 	
