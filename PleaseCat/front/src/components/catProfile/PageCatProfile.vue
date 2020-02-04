@@ -1,34 +1,37 @@
 <template>
 <div id="catProfile">
-    <div id="photoView">
-        <div id="cat">
+    <div id="profileView">
+        <div id="leftPart">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='cat.cat_no!=null?require(`../../assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
-            <h1 id="catName" class="text">{{cat.cat_name}}</h1>
+            <img id="catPhoto" :src='cat.cat_no!=null?require(`@/assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
+            
+            
         </div>
-        <div id="man">
-            <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
-            <img id="manPhoto" :src='man.user_no!=null?require(`../../assets/images/man/${man.user_no}.jpg`):null' alt="" >
-            <h1 id="manName" class="text">{{man.user_id}}</h1>
+        <section id="rightPart">
+            <div id="name"><h1 id="catName" class="text">{{cat.cat_name}}</h1></div>
+            <div id="buttons">
+                <span id="followButton" class="btn text">
+                    <button>팔로우</button>
+                </span>
+                <span id="detailButton" class="btn text">
+                    <button>상세 정보</button>
+                </span>
+            </div>
+        </section>
+    </div>
+    <div id="summaryView" class="text">
+        <span class="summary">게시물<br>123</span>
+        <span class="summary">팔로우<br>123</span>
+        <span class="summary">좋아요<br>123</span>
+    </div>
+    <div id="photoView">
+        <div id="photoList">
+            <span class="photo" v-for="n in cnt_pics" :key=n>
+                <img :src='require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)' alt="pic">
+            </span>
         </div>
-    </div>
-    <div class="emptySpace"></div>
-    <div id="descView" class="text">
-        나이: {{cat.age}}
-        <br>털색: {{cat.hair_color}}
-        <br>눈색: {{cat.eye_color}}
-        <br>중성화: {{cat.neuter}}
-        <br>피부병:  {{cat.skin_disease}}
-        <br>다친곳: {{cat.hurt}}
-        <br>마지막 밥 먹은 시간: {{cat.meal_time}}
-    </div>
-    <div id="mapView">
-
-    </div>
-    <div id="rankView">
-
     </div>
 </div>
 </template>
@@ -46,6 +49,7 @@ export default {
             cat: {},
             man: {},
             no: '',
+            cnt_pics: 10,
         }
     },
     methods: {
@@ -91,50 +95,63 @@ export default {
 #catProfile{
     text-align: center;
 }
-#photoView{
-    padding: 10px;
+#catProfile .btn{
+    margin: 8px;
+}
+#catProfile button {
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    color: #262626;
+    font-size: 2.7vw;
+    padding: 3px 12px 3px 12px;
+}
+#profileView{
+    padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
     width: 90%;
     vertical-align: middle;
     text-align: center;
-    background-color: grey;
+    background-color: white;
+
+    // border: 2px solid red;
 }
-#photoView::after{
+#profileView::after{
     content: "";
     display: block;
-    padding-bottom: 50%;
+    padding-bottom: 40%;
 }
-#photoView img{
+#profileView img{
     width: 100%;
     border-radius: 100%;
 }
-#photoView img::after{
+#profileView img::after{
     content: "";
     display: block;
     padding-bottom: 100%;
 }
-#photoView h1{
+#profileView h1{
     font-size: 7vw;
 }
-#photoView > div{
+#profileView > div{
     display: inline;
 }
-#photoView #cat{
+#profileView #leftPart{
     width: 30%;
     position: absolute;
-    left: 30px;
+    left: 5%;
+    
     // box-sizing: border-box;
     // border: 1px solid red;
 }
-#photoView #man{
-    width: 30%;
+#profileView #rightPart{
     position: absolute;
-    right: 30px;
+    left: 40%;
+    
     // box-sizing: border-box;
-    // border: 1px solid blue;
+    // border: 1px solid red;
 }
-#photoView .line { 
+#profileView .line { 
     display: inline-block;
     width: 50%; 
     text-align: center; 
@@ -149,17 +166,53 @@ export default {
 }
 .text {
     // transition:all 0.4s ease-out;
-    text-shadow: 4px 2px 2px black;
+    // text-shadow: 4px 2px 2px black;
     font-weight: bold;
-    color: #fff;
+    color: black;
 }
-#descView{
+#summaryView{
     display: inline-block;
+    font-size: 3vw;
     width: 90%;
-    text-align: left;
-    margin-bottom: 100px;
-    background-color: grey;
-    padding: 10px;
-    font-size: 4vw
+    text-align: center;
+    padding: 5px 0 5px 0;
+    // box-sizing: border-box;
+    // border: 1px solid blue;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#summaryView .summary{
+    display: inline-block;
+    width: 33.3%;
+    text-align: center;
+
+    // box-sizing: border-box;
+    // border: 1px solid red;
+}
+#photoView {
+    width: 90%;
+    padding: 0, 1%, 0, 1%;
+    text-align: center;
+}
+#photoList {
+    display: block;
+    text-align: center;
+}
+#photoView .photo{
+    display: inline-block;
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+}
+#photoView .photo::after{
+    // content: "";
+    // display: block;
+    // padding-bottom: 100%;
+}
+.photo img{
+    display: inline-block; /* Otherwise it keeps some space around baseline */
+    min-width: 100%; /* Scale up to fill container width */
+    min-height: 100%; /* Scale up to fill container height */
+    -ms-interpolation-mode: bicubic; /* Scaled images look a bit better in IE now */
 }
 </style>
