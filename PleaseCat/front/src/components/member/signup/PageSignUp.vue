@@ -63,7 +63,7 @@ export default {
         res => {
           if (res.status == 200) {
             if ((res.data.state = "ok")) {
-              this.$router.push("/");
+              this.$router.push("/login");
             } else {
               // 실패
             }
