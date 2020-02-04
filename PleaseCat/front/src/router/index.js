@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Test from '../components/Test.vue'
-import Login from '../components/member/login/PageLogin'
-import SignUp from '../components/member/signup/PageSignUp'
-import Home from '../components/newsfeed/Home.vue'
-import NewsFeed from '../components/newsfeed/NewsFeed.vue'
-import PageCatList from '../components/catList/PageCatList.vue'
-import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
-import PageCatMap from '../components/catMap/PageMap.vue'
+import Test from '@/components/Test.vue'
+import Login from '@/components/member/login/PageLogin'
+import SignUp from '@/components/member/signup/PageSignUp'
+import Home from '@/components/newsfeed/Home.vue'
+import NewsFeed from '@/components/newsfeed/NewsFeed.vue'
+import PageCatList from '@/components/catList/PageCatList.vue'
+import PageCatProfile from '@/components/catProfile/PageCatProfile.vue'
+import PageCatMap from '@/components/catMap/PageMap.vue'
+import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
     path: '/catProfile',
     name: 'PageCatProfile',
     component: PageCatProfile
+  },
+  {
+    path: '/catDetail',
+    name: 'PageCatDetail',
+    component: PageCatDetail
   },
   {
     path: '/catMap',
