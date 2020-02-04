@@ -62,11 +62,11 @@ export default {
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: cover;
-    opacity: 0.5;
+    opacity: 1.0;
     transition:opacity 0.3s;
 }
 .card.hover .bg {
-    opacity: 1.0;
+    opacity: 0.5;
     transition:opacity 0.3;
 }
 .text {

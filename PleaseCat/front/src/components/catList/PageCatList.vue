@@ -11,11 +11,14 @@ import axios from 'axios'
 
 export default {
     created() {
+        this.server = this.$store.state.server;
         this.pullCat();
+        console.log(this.url);
     },
     data() {
       return {
-          cats: []
+          server: '',
+          cats: [],
       }
     },
     components: {
@@ -25,7 +28,7 @@ export default {
         pullCat(){
             const vm = this;
             axios
-                .get('http://70.12.247.116:8080/api/cat/searchAll')
+                .get(`${this.server}/api/cat/searchAll`)
                 .then(res => {
                     // handle success
                     vm.cats = res.data.data

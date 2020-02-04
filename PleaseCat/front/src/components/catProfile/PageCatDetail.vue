@@ -38,11 +38,13 @@ import axios from 'axios';
 export default {
     name: 'catProfile',
     created() {
+        this.server = this.$store.state.server;
         this.no = this.$route.params.no;
         this.pullCat();
     },
     data(){
         return{
+            server: '',
             cat: {},
             man: {},
             no: '',
@@ -53,7 +55,7 @@ export default {
             console.log(this.no);
             const vm = this;
             axios
-                .get(`http://70.12.247.116:8080/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
+                .get(`${this.server}/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data

@@ -16,7 +16,7 @@
                     <button>팔로우</button>
                 </span>
                 <span id="detailButton" class="btn text">
-                    <button>상세 정보</button>
+                    <router-link :to="{name:'PageCatDetail', params: {no: no}}"><button>상세 정보</button></router-link>
                 </span>
             </div>
         </section>
@@ -41,13 +41,14 @@ import axios from 'axios';
 export default {
     name: 'catProfile',
     created() {
+        this.server = this.$store.state.server;
         this.no = this.$route.params.no;
         this.pullCat();
     },
     data(){
         return{
+            server: '',
             cat: {},
-            man: {},
             no: '',
             cnt_pics: 10,
         }
@@ -57,7 +58,7 @@ export default {
             console.log(this.no);
             const vm = this;
             axios
-                .get(`http://70.12.247.116:8080/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
+                .get(`${vm.server}/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
@@ -68,25 +69,8 @@ export default {
                 .then(() => {
                     // always executed
                     console.log(vm.cat);
-                    this.pullMan();
                 });
         },
-        pullMan(){
-            const vm = this;
-            axios
-                .get(`http://70.12.247.116:8080/api/user/searchUserNo/{user_no}?user_no=${vm.cat.cat_manager}`)
-                .then(res => {
-                    // handle success
-                    vm.man = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    console.log(vm.man);
-                });
-        }
     }
 }
 </script>
@@ -201,8 +185,7 @@ export default {
 #photoView .photo{
     display: inline-block;
     overflow: hidden;
-    width: 200px;
-    height: 200px;
+    width: 33%;
 }
 #photoView .photo::after{
     // content: "";
