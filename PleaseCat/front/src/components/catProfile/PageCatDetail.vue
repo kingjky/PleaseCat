@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import RankComponent from './rankView/Rank';
+import RankComponent from './view/Rank';
 import axios from 'axios';
 
 export default {

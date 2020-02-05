@@ -35,7 +35,8 @@ export default {
     display: inline-block;
     position: relative;
     margin: 10px;
-    width: 45%;
+    width: 43vw;
+    height: 43vw;
     // border: 1px solid red;
     display: inline-block;
     .text {
@@ -88,11 +89,11 @@ export default {
         }
     }
 }
-.card-box:after{
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
+// .card-box:after{
+//     content: "";
+//     display: block;
+//     padding-bottom: 100%;
+// }
 .card.hover .bg {
     opacity: 0.5;
     transition:opacity 0.3;

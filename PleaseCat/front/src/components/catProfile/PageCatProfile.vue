@@ -28,6 +28,7 @@
     <div id="photoView">
         <div id="photoList" v-if="cat.cat_no" >
             <span class="photo" v-for="n in cnt_pics" :key=n :style="{'background-image' : `url(${require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)})`}" :alt='`pic${n}`'>
+            <router-link :to="{name:''}"></router-link>
             </span>
         </div>
     </div>
