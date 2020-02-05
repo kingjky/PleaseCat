@@ -1,8 +1,8 @@
 <template>
   <div class="card-box" >
       <router-link :to="{name:'PageCatProfile', params: {no: src}}">
-      <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mouseout="isHovering=false">
-          <div class="bg" :style="{'background-image': 'url('+require(`../../../assets/images/cat/${src}.jpg`)+')'}"></div>
+      <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
+          <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cat/${src}.jpg`)+')'}"></div>
           <div class="text name">
               <h3>{{name}}</h3>
           </div>
@@ -44,8 +44,14 @@ export default {
         text-shadow: 4px 2px 2px black;
         font-weight: bold;
         color: #fff;
-        h1 {
-            display: inline-block;
+        h3 {
+            font-size: 7vw;
+        }
+        h4 {
+            font-size: 6vw;
+        }
+        h5 {
+            font-size: 4vw;
         }
     }
     .name{

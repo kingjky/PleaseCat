@@ -49,12 +49,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 #catList {
     text-align: center;
-}
-.emptySpace {
-    height: 70px;
-    text-align: center;
+    .emptySpace {
+        // display: block;
+        height: 100px;
+        text-align: center;
+    }
 }
 </style>
