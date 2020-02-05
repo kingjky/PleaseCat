@@ -1,6 +1,8 @@
 package com.ssafy.model.dto;
 
-public class user {
+
+//public class user implements UserDetails {
+public class user{
 	private int user_no; 
 	private String user_email; 
 	private String user_pw; 
@@ -66,10 +68,5 @@ public class user {
 		this.user_desc = user_desc;
 	}
 
-	@Override
-	public String toString() {
-		return "user [user_no=" + user_no + ", user_email=" + user_email + ", user_pw=" + user_pw + ", user_id="
-				+ user_id + ", user_image=" + user_image + ", user_desc=" + user_desc + "]";
-	} 
 	
 }

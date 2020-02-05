@@ -31,6 +31,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -50,6 +51,7 @@
     		<groupId>javax.xml.bind</groupId>
     		<artifactId>jaxb-api</artifactId>
     		</dependency>
+
 	<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -101,7 +103,6 @@
 		</dependency>
 		<!-- 커넥션 풀(connection pool) 라이브러리 -->
 		
-
 		
 		<!-- JSTL (for EL문) -->
 		<dependency>
@@ -123,6 +124,21 @@
 			</exclusions>
 		</dependency>
 		<!--  junit  test -->
+		
+		<!-- for JWT -->
+ 		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    </dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    </dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-crypto</artifactId>
+		    </dependency>
 	
 		<!-- jwt -->
 		<dependency>
