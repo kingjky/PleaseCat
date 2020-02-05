@@ -7,7 +7,7 @@ import Home from '../components/newsfeed/Home.vue'
 import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
-import SelectPhoto from '../components/addPost/PageSelectPhoto'
+import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
 import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 

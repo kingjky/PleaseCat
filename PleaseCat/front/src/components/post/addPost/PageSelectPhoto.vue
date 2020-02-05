@@ -16,7 +16,7 @@
 
     <p>
       <input
-        v-on:change="fileSelect($event.target.name, $event.target.files)"
+        v-on:change="fileSelect"
         ref="post_image"
         type="file"
         name="photo"
@@ -33,7 +33,7 @@
 
 
 <script>
-import PostingApi from "../../apis/PostingApi";
+import PostingApi from "@/apis/PostingApi";
 import axios from 'axios'
 export default {
   data() {
@@ -62,11 +62,11 @@ export default {
     submit() {
       var multer = require('multer');
 
-      // var storage = multer.diskStorage({
-      //   destination: function(req, file, cb) {
-      //     cb,
-      //   }
-      // })
+      var storage = multer.diskStorage({
+        destination: function(req, file, cb) {
+          // cb,
+        }
+      })
       
 
       const formData = new FormData();
@@ -84,16 +84,16 @@ export default {
       // axios로 multipart/form-data POST 요청 
       
 
-      axios.post(this.$store.state.server + `/addpost`, formData, {
-        headers: {
-          'Content-Type' : 'multipart/form-data'
-        }
-      }).then((res) => {
-        console.log(res)
-        console.log()
-      }).catch((err) => {
-        console.log(err)
-      })
+      // axios.post(this.$store.state.server + `/SelectPhoto`, formData, {
+      //   headers: {
+      //     'Content-Type' : 'multipart/form-data'
+      //   }
+      // }).then((res) => {
+      //   console.log(res)
+      //   console.log()
+      // }).catch((err) => {
+      //   console.log(err)
+      // })
 
       let { cat_no, user_no, post_image } = this;
       let data = {
@@ -107,7 +107,7 @@ export default {
         return false;
       }
       
-      /*
+      
       PostingApi.requestAddPost(
         this.$store.state.server,
         data,
@@ -126,7 +126,7 @@ export default {
           console.log("서버 에러 입니다");
         }
       )
-      */
+      
 
 
     },
