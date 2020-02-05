@@ -12,6 +12,7 @@ public class newsFeed {
 	private String post_time;
 	private int post_no;
 	private boolean like;
+	private boolean unlike;
 	
 	public newsFeed() {
 		super();
@@ -30,6 +31,7 @@ public class newsFeed {
 		this.post_time = post_time;
 		this.post_no = post_no;
 		this.like =false;
+		this.unlike=false;
 	}
 	
 	public String getCat_name() {
