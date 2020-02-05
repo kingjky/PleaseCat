@@ -12,5 +12,5 @@ public interface UserService  {
 	public List<user> searchAllUser();
 	public user searchUserEmail(String user_email);
 	public String login(String user_email, String user_pw);
-	public boolean checkToken(String token);
+	public String checkToken(String token);
 }
