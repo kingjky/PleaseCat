@@ -1,22 +1,22 @@
 <template>
   <div class="selectPhoto">
     <div class="title-selectPhoto">NEW POST</div>
-<!--
+    <!--
     <div class="preview">
       <div class="uploadPhoto">
         <div class="post-btn"></div>
       </div>
     </div>
-!-->
+    !-->
 
     <p>포스트 이미지 추가</p>
     <div class="canvas-wrap">
       <canvas id="uploadCanvas"></canvas>
     </div>
-    
+
     <p>
       <input
-        v-on:change="fileSelect()"
+        v-on:change="fileSelect($event.target.name, $event.target.files)"
         ref="post_image"
         type="file"
         name="photo"
@@ -26,60 +26,110 @@
     </p>
 
     <p>
-      <input class="btn-upload" v-on:click="submit" type="submit" value="저장~!"/>
+      <input class="btn-upload" v-on:click="submit" type="submit" value="저장~!" />
     </p>
   </div>
 </template>
 
 
 <script>
+import PostingApi from "../../apis/PostingApi";
+import axios from 'axios'
 export default {
   data() {
     return {
-      user_no: "",
-      cat_no: "",
+      cat_no: "1",  // cat 받아와서 바꿔야함
+      user_no: "2", // user 받아와서 바꿔야함
       post_image: "",
       post_time: "",
       post_content: "",
       post_location: "",
-      uploadImageFile: "",
+      // uploadImageFile: "",
     };
   },
-
+  created() {
+        this.server = this.$store.state.server;
+    },
   methods: {
 
     fileSelect() {
       // file 태그애 Vue 인스턴스로 접근하기 위해 $refs 속성을 사용해야한답니다.
-      console.log(this.$refs);
+      // console.log(this.$refs);
       this.post_image = this.$refs.post_image.files[0];
       console.log(this.post_image);
     },
+    
     submit() {
+      var multer = require('multer');
+
+      // var storage = multer.diskStorage({
+      //   destination: function(req, file, cb) {
+      //     cb,
+      //   }
+      // })
       
-      if(this.post_image!=null) {
+
+      const formData = new FormData();
+      formData.append('cat_no', 1) // cat 받아와서 바꿔야함
+      formData.append('user_no', 2) // user 받아와서 바꿔야함
+      // formData.append('post_content', this.post_content)
+      // formData.append('post_location', this.post_location)
+      formData.append('post_image', this.post_image.name)
+      // console.log(formData)
+      // for (let key of formData.entries()) {
+      //   console.log(`${key}`)
+      // }
+      // console.log(formData)
+
+      // axios로 multipart/form-data POST 요청 
+      
+
+      axios.post(this.$store.state.server + `/addpost`, formData, {
+        headers: {
+          'Content-Type' : 'multipart/form-data'
+        }
+      }).then((res) => {
+        console.log(res)
+        console.log()
+      }).catch((err) => {
+        console.log(err)
+      })
+
+      let { cat_no, user_no, post_image } = this;
+      let data = {
+        cat_no,
+        user_no,
+        // post_content,
+        // post_location,
+        post_image
+      };
+      if(this.post_image==null) {
         return false;
       }
-      const fd = new FormData();
-      fd.append('user_no', 1) // user 받아와서 바꿔야함
-      // fd.append('post_content', this.post_content)
-      // fd.append('post_location', this.post_location)
-      // fd.append('post_image', this.post_image)
-      console.log("Aa")
-      console.log(fd)
+      
+      /*
+      PostingApi.requestAddPost(
+        this.$store.state.server,
+        data,
+        res => {
+          if (res.status == 200) {
+            if (res.data.state == "ok") {
+              console.log(res.data.state)
+              //성공
+              // this.$router.push("/");
+            } else {
+              console.log(res)
+            }
+          }
+        },
+        error => {
+          console.log("서버 에러 입니다");
+        }
+      )
+      */
+
+
     },
-    handleImage(e) {
-      var fr = new FileReader();
-      fr.onload = function(event) {
-        var img = new Image();
-        img.onload = function() {
-          uploadCanvas.width = 300;
-          uploadCanvas.height = 300;
-          ctx.drawImage(img, 0, 0, 300, 300);
-        };
-        img.src = event.target.result;
-      };
-      fr.readAsDataURL(e.target.files[0]);
-    }
   }
 };
 </script>
@@ -108,6 +158,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-
-
 </style>

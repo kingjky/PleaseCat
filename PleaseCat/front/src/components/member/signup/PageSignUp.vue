@@ -59,6 +59,7 @@ export default {
       };
 
       UserApi.requestSignup(
+        this.$store.state.server,
         data,
         res => {
           if (res.status == 200) {
