@@ -1,6 +1,6 @@
 package com.ssafy.model.service;
 
-import java.util.List; 
+import java.util.List;  
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +8,19 @@ import org.springframework.stereotype.Service;
 import com.ssafy.model.dao.UserDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.user;
+import com.ssafy.util.JwtTokenProvider;
+
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+
 
 @Service
 public class UserServiceImp implements UserService {
 	@Autowired
 	private UserDao dao;
+	@Autowired
+	private JwtTokenProvider jwt;
 
 	//회원번호로 회원검색
 	public user searchUser(int no) {
@@ -106,11 +114,11 @@ public class UserServiceImp implements UserService {
 	}
 	
 	//회원 로그인
-	public boolean login(String user_email, String user_pw){
+	public String login(String user_email, String user_pw){
 		try {
 			user User = searchUserEmail(user_email);
 				if(user_pw.equals(User.getUser_pw())) {
-					return true;
+					return jwt.createToken(User);
 				}else {
 					throw new PleaseCatException("비밀 번호 오류");
 				}
@@ -119,4 +127,17 @@ public class UserServiceImp implements UserService {
 		}
 	
 	}
+	
+	  public boolean checkToken(String token) {
+	    	try {
+	    		jwt.getUserPk(token); //수행 되면 정상
+	    		return true;
+	    	} catch (ExpiredJwtException exception) {
+	    		//토큰 만료
+	    		return false;
+	    	} catch (JwtException exception) {
+	    		//토큰 변조
+	    		return false;
+	    	} 
+	    }
 }

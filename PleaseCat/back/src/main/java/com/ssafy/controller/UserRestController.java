@@ -99,4 +99,10 @@ public class UserRestController {
 		return handleSuccess("회원 수정완료");
 	}
 	
+	@ApiOperation("토큰을 확인")
+	@GetMapping("/checkToken")
+	public ResponseEntity<Map<String, Object>> checkToken(@RequestParam String token) throws Exception{
+		return handleSuccess(userService.checkToken(token));
+	}
+	
 }
