@@ -58,8 +58,8 @@ public class CatRestController {
 	
 	@ApiOperation("고양이 관리번호로 고양이 정보를 찾는다.")
 	@GetMapping("/searchCat")
-	public ResponseEntity<Map<String, Object>> searchCat(@RequestParam int cat_no) throws Exception{
-		return handleSuccess(catService.searchCat(cat_no));
+	public ResponseEntity<Map<String, Object>> searchCat(@RequestParam int Cat_no) throws Exception{
+		return handleSuccess(catService.searchCat(Cat_no));
 	}
 
 	@ApiOperation("모든 고양이를 찾는다.")
