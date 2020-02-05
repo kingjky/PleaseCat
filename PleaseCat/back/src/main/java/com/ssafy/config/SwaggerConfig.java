@@ -22,8 +22,8 @@ public class SwaggerConfig {
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.ssafy.controller")) //서비스할 애들.
 				.paths(PathSelectors.ant("/api/**")) //경로 잡아주기 . ant로 pattern처리 phone으로 들어오는 모든것
-				.build(); //빌드패턴 : 객체 생성할때 .을 통해서 다양한 설정을 해주고나서 마지막에 build로 마무리함
-		
+				.build() //빌드패턴 : 객체 생성할때 .을 통해서 다양한 설정을 해주고나서 마지막에 build로 마무리함
+				.useDefaultResponseMessages(false);
 		
 	}
 	private ApiInfo info() {
