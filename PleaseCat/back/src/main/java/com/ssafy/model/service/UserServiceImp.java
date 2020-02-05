@@ -130,16 +130,18 @@ public class UserServiceImp implements UserService {
 	
 	}
 	
-	  public boolean checkToken(String token) {
+	  public String checkToken(String token) {
 	    	try {
-	    		jwt.getUserPk(token); //수행 되면 정상
-	    		return true;
+
+	    		return jwt.getUserPk(token); //수행 되면 정상
 	    	} catch (ExpiredJwtException exception) {
 	    		//토큰 만료
-	    		return false;
+	    		throw new PleaseCatException("토큰만료");
+	    		//return false;
 	    	} catch (JwtException exception) {
 	    		//토큰 변조
-	    		return false;
+	    		throw new PleaseCatException("토큰변조");
+	    		//return false;
 	    	} 
 	    }
 }
