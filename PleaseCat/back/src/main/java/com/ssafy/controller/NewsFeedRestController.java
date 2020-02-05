@@ -11,23 +11,26 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.model.service.Etc_Service;
+import com.ssafy.model.dto.cat;
+import com.ssafy.model.service.NewsFeedService;
 import com.ssafy.model.service.Following_catService;
 import com.ssafy.model.service.cat_MapService;
 
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
-@RequestMapping("/api/Etc")
+@RequestMapping("/api/NewsFeed")
 @RestController
-public class EtcRestController {
+public class NewsFeedRestController {
 	
 	@Autowired
-	private Etc_Service etcService;
+	private NewsFeedService newsFeedService;
 	
 	@Autowired
 	private cat_MapService catMapService;
@@ -60,6 +63,6 @@ public class EtcRestController {
 	@ApiOperation("모든 뉴스피드 정보를 찾는다.")
 	@GetMapping("/searchAll/{follower_no}")
 	public ResponseEntity<Map<String, Object>> searchAllNewsFeed(@RequestParam int follower_no) throws Exception{
-		return handleSuccess(etcService.searchAllNewsFeed(follower_no));
+		return handleSuccess(newsFeedService.searchAllNewsFeed(follower_no));
 	}
 }

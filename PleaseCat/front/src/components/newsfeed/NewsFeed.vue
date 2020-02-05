@@ -1,3 +1,7 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <template>
 <div>
   <!-- <header>
@@ -9,7 +13,7 @@
         <div class="top">
           <router-link v-bind:to="{name:'Home'}">
             <button id="profileButton">
-              <img :src="require(`../../assets/images/${post.cat_image}`)" id="profile" />
+              <img :src="require(`../../assets/images/cat/${post.cat_image}`)" id="profile" />
             </button>
           </router-link>
         </div>
@@ -17,26 +21,38 @@
         <div class="top" id="time">{{post.post_time}}</div>
       </div>
       <div id="content">
-        <img :src="require(`../../assets/images/${post.cat_image}`)" id="img" />
+        <img :src="require(`../../assets/images/cat/${post.post_image}`)" id="img" />
       </div>
-      <div v-if="post.like === 'true'" class="HR">
-        <button v-on:click="like" class="btnSize">
-          <img :src="require('../../assets/images/2019090300416_0.png')" class="HRSize" />
+      <div v-if="post.like === 'true'" class="HR" id="likeDisabled">
+        <button
+          v-on:click="likeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
+          class="btnSize"
+        >
+          <img :src="require('../../assets/images/icons/2019090300416_0.png')" class="HRSize" />
         </button>
       </div>
-      <div v-if="post.like === 'false'" class="HR">
-        <button v-on:click="like" class="btnSize">
-          <img :src="require('../../assets/images/untitled.png')" class="HRSize" />
+      <div v-if="post.like === 'false'" class="HR" id="likeActivation">
+        <button
+          v-on:click="likeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
+          class="btnSize"
+        >
+          <img :src="require('../../assets/images/icons/untitled.png')" class="HRSize" />
         </button>
       </div>
       <div v-if="post.unlike === 'true'" class="HR">
-        <button v-on:click="unLike" class="btnSize">
-          <img :src="require('../../assets/images/125082_154162_3227.jpg')" class="HRSize" />
+        <button
+          v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
+          class="btnSize"
+        >
+          <img :src="require('../../assets/images/icons/125082_154162_3227.jpg')" class="HRSize" />
         </button>
       </div>
       <div v-if="post.unlike === 'false'" class="HR">
-        <button v-on:click="unLike" class="btnSize">
-          <img :src="require('../../assets/images/unnamed.png')" class="HRSize" />
+        <button
+          v-on:click="unLikeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
+          class="btnSize"
+        >
+          <img :src="require('../../assets/images/icons/unnamed.png')" class="HRSize" />
         </button>
       </div>
       <br />
@@ -58,11 +74,14 @@ import "../../assets/css/style.css";
 import InfiniteLoading from "vue-infinite-loading";
 
 const api =
-  "http://70.12.247.116:8080/api/Etc/searchAll/{follower_no}?follower_no=1";
+  "http://localhost:8080/api/NewsFeed/searchAll/{follower_no}?follower_no=1";
 const api2 = "http://localhost:8080/api/Likes/searchAllLikes?user_no=1";
 const api3 = "http://localhost:8080/api/Unlikes/searchAllUnLikes?user_no=1";
+const likeActivationApi = "http://localhost:8080/api/Likes/insert?post_no=";
+const likeDisabledApi = "http://localhost:8080/api/Likes/delete?post_no=";
+const unLikeActivationApi = "http://localhost:8080/api/Unlikes/insert?post_no=";
+const unLikeDisabledApi = "http://localhost:8080/api/Unlikes/delete?post_no=";
 
-// import Vue from 'vue'
 export default {
   created() {
     axios.get(api2, {}).then(({ data }) => {
@@ -77,63 +96,48 @@ export default {
     InfiniteLoading
   },
   methods: {
-    like() {
-      // id, pw가 DB에 존재하는지 확인
-      let { user_email, user_pw } = this;
-      let data = {
-        user_email,
-        user_pw
-      };
-
-      UserApi.requestLogin(
-        data,
-        res => {
-          if (res.status == 200) {
-            if (res.data.state == "ok") {
-              //성공
-              this.$router.push("/");
-            } else {
-              //실패
-            }
-          }
-        },
-        error => {
-          //요청이 끝나면 버튼 활성화
-          // console.log("리턴")
-          console.log("서버 에러");
-          this.isSubmit = true;
-        }
-      );
+    likeActivation(post_no, newsFeedIndex) {
+      axios.post(likeActivationApi + post_no + "&user_no=1");
+      this.posts[newsFeedIndex].like = "true";
+      if (this.posts[newsFeedIndex].unlike == "true") {
+        this.unLikeDisabled(post_no, newsFeedIndex);
+      }
+      this.posts[newsFeedIndex].post_like++;
+      this.updateLikes(this.posts[newsFeedIndex].post_like, post_no);
     },
-    unLike2() {
-      // id, pw가 DB에 존재하는지 확인
-      let { user_email, user_pw } = this;
-      let data = {
-        user_email,
-        user_pw
-      };
-
-      UserApi.requestLogin(
-        data,
-        res => {
-          if (res.status == 200) {
-            if (res.data.state == "ok") {
-              //성공
-              this.$router.push("/");
-            } else {
-              //실패
-            }
-          }
-        },
-        error => {
-          //요청이 끝나면 버튼 활성화
-          // console.log("리턴")
-          console.log("서버 에러");
-          this.isSubmit = true;
-        }
-      );
+    likeDisabled(post_no, newsFeedIndex) {
+      axios.delete(likeDisabledApi + post_no + "&user_no=1");
+      this.posts[newsFeedIndex].like = "false";
+      this.posts[newsFeedIndex].post_like--;
+      this.updateLikes(this.posts[newsFeedIndex].post_like,post_no);
     },
-
+    unLikeActivation(post_no, newsFeedIndex) {
+      axios.post(unLikeActivationApi + post_no + "&user_no=1");
+      this.posts[newsFeedIndex].unlike = "true";
+      if (this.posts[newsFeedIndex].like == "true") {
+        this.likeDisabled(post_no, newsFeedIndex);
+      }
+      this.posts[newsFeedIndex].post_unlike++;
+      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike,post_no);
+    },
+    unLikeDisabled(post_no, newsFeedIndex) {
+      axios.delete(unLikeDisabledApi + post_no + "&user_no=1");
+      this.posts[newsFeedIndex].unlike = "false";
+      this.posts[newsFeedIndex].post_unlike--;
+      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike,post_no);
+    },
+    updateLikes(postLike, postNo) {
+      axios.put(`http://localhost:8080/api/post/updateLikes`, {
+        post_like: postLike,
+        post_no: postNo
+      });
+    },
+    updateUnLikes(postUnLike, postNo) {
+      axios.put(`http://localhost:8080/api/post/updateUnLikes`, {
+        post_unlike: postUnLike,
+        post_no: postNo,
+      });
+    },
     infiniteHandler($state) {
       axios
         .get(api, {
@@ -173,6 +177,7 @@ export default {
                 data.data[this.page].unlike = "true";
               }
             }
+            data.data[this.page].newsFeedIndex = this.page;
             this.posts.push(data.data[this.page]);
             this.postNo = data.data[this.page].post_no;
             this.page += 1;
@@ -186,6 +191,8 @@ export default {
   },
   data: () => {
     return {
+      post_no: 0,
+      post_like: 0,
       unLike: [],
       isLike: [],
       page: 0,

@@ -12,4 +12,6 @@ public interface PostService {
 	public void insertPost(post user);
 	public void updatePost(post user);
 	public void deletePost(int no);
+	public void updateLikes(post post);
+	public void updateUnLikes(post post);
 }

@@ -56,7 +56,7 @@ public class PostServiceImp implements PostService {
 	@Override
 	public List<post> searchPostCat(int no) {
 		try { 
-			List<post> finds = dao.searchPostUser(no);
+			List<post> finds = dao.searchPostCat(no);
 			if(finds == null) {
 				throw new PleaseCatException("찾으려는 정보가 없습니다");
 		
@@ -127,6 +127,29 @@ public class PostServiceImp implements PostService {
 		}	
 	}
 
+	//좋아요 갯수 수정
+	@Override
+	public void updateLikes(post Post) {
+		try {
+			searchPost(Post.getPost_no());
+			dao.updateLikes(Post);
+			System.out.println("좋아요 갯수 업데이트 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException();
+		}
+	}
 
-
+	//싫어요 갯수 수정
+	@Override
+	public void updateUnLikes(post Post) {
+		try {
+			searchPost(Post.getPost_no());
+			dao.updateUnLikes(Post);
+			System.out.println("싫어요 갯수 업데이트 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException();
+		}
+	}
 }
