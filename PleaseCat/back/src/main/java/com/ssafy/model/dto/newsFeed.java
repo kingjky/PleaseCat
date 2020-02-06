@@ -14,7 +14,38 @@ public class newsFeed {
 	private boolean like;
 	private boolean unlike;
 	private int newsFeedIndex;
+	private String detail;
 	
+	public newsFeed() {
+		super();
+	}
+
+	public newsFeed(String cat_name, String cat_image, String user_id, int post_like, int post_unlike,
+			String post_image, String post_content, String post_time, int post_no) {
+		super();
+		this.cat_name = cat_name;
+		this.cat_image = cat_image;
+		this.user_id = user_id;
+		this.post_like = post_like;
+		this.post_unlike = post_unlike;
+		this.post_image = post_image;
+		this.post_content = post_content;
+		this.post_time = post_time;
+		this.post_no = post_no;
+		this.like =false;
+		this.unlike=false;
+		this.newsFeedIndex=0;
+		this.detail="Init";
+	}
+	
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
 	public boolean isLike() {
 		return like;
 	}
@@ -37,27 +68,6 @@ public class newsFeed {
 
 	public void setNewsFeedIndex(int newsFeedIndex) {
 		this.newsFeedIndex = newsFeedIndex;
-	}
-
-	public newsFeed() {
-		super();
-	}
-
-	public newsFeed(String cat_name, String cat_image, String user_id, int post_like, int post_unlike,
-			String post_image, String post_content, String post_time, int post_no) {
-		super();
-		this.cat_name = cat_name;
-		this.cat_image = cat_image;
-		this.user_id = user_id;
-		this.post_like = post_like;
-		this.post_unlike = post_unlike;
-		this.post_image = post_image;
-		this.post_content = post_content;
-		this.post_time = post_time;
-		this.post_no = post_no;
-		this.like =false;
-		this.unlike=false;
-		this.newsFeedIndex=0;
 	}
 	
 	public String getCat_name() {

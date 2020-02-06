@@ -23,7 +23,7 @@
       <div id="content">
         <img :src="require(`../../assets/images/cat/${post.post_image}`)" id="img" />
       </div>
-      <div v-if="post.like === 'true'" class="HR" id="likeDisabled">
+      <div v-if="post.like === true" class="HR" id="likeDisabled">
         <button
           v-on:click="likeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
           class="btnSize"
@@ -31,7 +31,7 @@
           <img :src="require('../../assets/images/icons/2019090300416_0.png')" class="HRSize" />
         </button>
       </div>
-      <div v-if="post.like === 'false'" class="HR" id="likeActivation">
+      <div v-if="post.like === false" class="HR" id="likeActivation">
         <button
           v-on:click="likeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
           class="btnSize"
@@ -39,7 +39,7 @@
           <img :src="require('../../assets/images/icons/untitled.png')" class="HRSize" />
         </button>
       </div>
-      <div v-if="post.unlike === 'true'" class="HR">
+      <div v-if="post.unlike === true" class="HR">
         <button
           v-on:click="unLikeDisabled(`${post.post_no}`,`${post.newsFeedIndex}`)"
           class="btnSize"
@@ -47,7 +47,7 @@
           <img :src="require('../../assets/images/icons/125082_154162_3227.jpg')" class="HRSize" />
         </button>
       </div>
-      <div v-if="post.unlike === 'false'" class="HR">
+      <div v-if="post.unlike === false" class="HR">
         <button
           v-on:click="unLikeActivation(`${post.post_no}`,`${post.newsFeedIndex}`)"
           class="btnSize"
@@ -61,8 +61,17 @@
       <div class="like">싫어요</div>
       <div class="like">{{post.post_unlike}}개</div>
       <div class="content">{{post.user_id}}</div>
+      <div v-if="post.detail === 'Init'">
       <div class="content">{{post.post_content}}</div>
-      <!-- <div>{{post.post_image}}</div> -->
+      </div>
+      <div v-if="post.detail === 'true'">
+      <div id="detailTrue">{{post.post_content}}</div>
+        <button v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
+      </div>
+      <div v-if="post.detail === 'false'">
+      <div id="detailFalse">{{post.post_content}}</div>
+        <button v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
+      </div>
     </div>
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </body>
@@ -96,10 +105,16 @@ export default {
     InfiniteLoading
   },
   methods: {
+    detailTrue(newsFeedIndex){
+      this.posts[newsFeedIndex].detail="false";
+    },
+    detailFalse(newsFeedIndex){
+      this.posts[newsFeedIndex].detail="true";
+    },
     likeActivation(post_no, newsFeedIndex) {
       axios.post(likeActivationApi + post_no + "&user_no=1");
-      this.posts[newsFeedIndex].like = "true";
-      if (this.posts[newsFeedIndex].unlike == "true") {
+      this.posts[newsFeedIndex].like = true;
+      if (this.posts[newsFeedIndex].unlike) {
         this.unLikeDisabled(post_no, newsFeedIndex);
       }
       this.posts[newsFeedIndex].post_like++;
@@ -107,24 +122,24 @@ export default {
     },
     likeDisabled(post_no, newsFeedIndex) {
       axios.delete(likeDisabledApi + post_no + "&user_no=1");
-      this.posts[newsFeedIndex].like = "false";
+      this.posts[newsFeedIndex].like = false;
       this.posts[newsFeedIndex].post_like--;
-      this.updateLikes(this.posts[newsFeedIndex].post_like,post_no);
+      this.updateLikes(this.posts[newsFeedIndex].post_like, post_no);
     },
     unLikeActivation(post_no, newsFeedIndex) {
       axios.post(unLikeActivationApi + post_no + "&user_no=1");
-      this.posts[newsFeedIndex].unlike = "true";
-      if (this.posts[newsFeedIndex].like == "true") {
+      this.posts[newsFeedIndex].unlike = true;
+      if (this.posts[newsFeedIndex].like) {
         this.likeDisabled(post_no, newsFeedIndex);
       }
       this.posts[newsFeedIndex].post_unlike++;
-      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike,post_no);
+      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike, post_no);
     },
     unLikeDisabled(post_no, newsFeedIndex) {
       axios.delete(unLikeDisabledApi + post_no + "&user_no=1");
-      this.posts[newsFeedIndex].unlike = "false";
+      this.posts[newsFeedIndex].unlike = false;
       this.posts[newsFeedIndex].post_unlike--;
-      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike,post_no);
+      this.updateUnLikes(this.posts[newsFeedIndex].post_unlike, post_no);
     },
     updateLikes(postLike, postNo) {
       axios.put(`http://localhost:8080/api/post/updateLikes`, {
@@ -135,7 +150,7 @@ export default {
     updateUnLikes(postUnLike, postNo) {
       axios.put(`http://localhost:8080/api/post/updateUnLikes`, {
         post_unlike: postUnLike,
-        post_no: postNo,
+        post_no: postNo
       });
     },
     infiniteHandler($state) {
@@ -165,21 +180,23 @@ export default {
               data.data[this.page].post_time =
                 Math.floor(data.data[this.page].post_time / 525600) + "년 전";
             }
-            data.data[this.page].like = "false";
-            data.data[this.page].unlike = "false";
+            console.log(data.data[this.page].post_content.length);
             for (var i = 0; i < this.isLike.length; i++) {
               if (data.data[this.page].post_no == this.isLike[i].post_no) {
-                data.data[this.page].like = "true";
+                data.data[this.page].like = true;
               }
             }
             for (var j = 0; j < this.unLike.length; j++) {
               if (data.data[this.page].post_no == this.unLike[j].post_no) {
-                data.data[this.page].unlike = "true";
+                data.data[this.page].unlike = true;
               }
             }
-            data.data[this.page].newsFeedIndex = this.page;
+            data.data[this.page].detail="Init";
+            if(data.data[this.page].post_content.length>33)
+            data.data[this.page].detail = 'true';
             this.posts.push(data.data[this.page]);
             this.postNo = data.data[this.page].post_no;
+            data.data[this.page].newsFeedIndex=this.page;
             this.page += 1;
             $state.loaded();
           } else {
@@ -210,8 +227,52 @@ export default {
 </script>
  
 <style lang="scss" scoped>
+#detailTrue{
+  font-size: 17px;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+  white-space: normal;
+  line-height: 1.2;
+  // height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+#detailFalse{
+  font-size: 17px;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+  white-space: normal;
+  line-height: 1.2;
+  // height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 .content {
-  font-size: 3vw;
+  font-size: 17px;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 여러 줄 자르기 추가 스타일 */
+  white-space: normal;
+  line-height: 1.2;
+  // height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 #HR {
   display: inline;
