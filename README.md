@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # PJT III - This is Frontend Branch
+=======
+# PJT III - This is Developer-master Branch
+>>>>>>> dev/master
 - Branch Name
     - master
     - dev/master : Develop Master Branch

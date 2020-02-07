@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.model.service.Etc_Service;
 import com.ssafy.model.service.Following_catService;
+import com.ssafy.model.service.cat_MapService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -27,6 +28,9 @@ public class EtcRestController {
 	
 	@Autowired
 	private Etc_Service etcService;
+	
+	@Autowired
+	private cat_MapService catMapService;
 	
 	@ExceptionHandler
 	public ResponseEntity<Map<String, Object>> handle(Exception e){
@@ -45,6 +49,12 @@ public class EtcRestController {
 		resultMap.put("state", "fail");
 		resultMap.put("data", data);
 		return new ResponseEntity<Map<String,Object>>(resultMap, state); 
+	}
+	
+	@ApiOperation("모든 고양이 지도 정보를 찾는다.")
+	@GetMapping("/searchAllCatLocation/")
+	public ResponseEntity<Map<String, Object>> searchAllCatLocation() throws Exception{
+		return handleSuccess(catMapService.searchAllCatLocation());
 	}
 	
 	@ApiOperation("모든 뉴스피드 정보를 찾는다.")

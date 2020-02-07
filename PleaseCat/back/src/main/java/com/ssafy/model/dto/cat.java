@@ -47,6 +47,7 @@ public class cat {
 		this.skin_disease = skin_disease;
 		this.neuter = neuter;
 		this.hurt = hurt;
+		
 	}
 	public int getCat_no() {
 		return cat_no;
