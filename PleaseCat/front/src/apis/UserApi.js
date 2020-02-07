@@ -8,7 +8,7 @@ const UserApi = {
 
 const requestLogin = (url, data, callback, errorCallback) => {
     //백앤드와 로그인 통신하는 부분
-    axios.get(url + `/api/user/login?user_email=${data.user_email}&user_pw=${data.user_pw}`)
+    axios.get(`${data.url}/api/user/login?user_email=${data.user_email}&user_pw=${data.user_pw}`)
         .then((res) => {
             callback(res);
         })
@@ -17,8 +17,8 @@ const requestLogin = (url, data, callback, errorCallback) => {
         });
 
 }
-const requestSignup = (url, data, callback, errorCallback) => {
-    axios.post(url + `/api/user/insert`, {
+const requestSignup = (data, callback, errorCallback) => {
+    axios.post(`${date.url}/api/user/insert`, {
             user_id: data.user_id,
             user_pw: data.user_pw,
             user_email: data.user_email,
