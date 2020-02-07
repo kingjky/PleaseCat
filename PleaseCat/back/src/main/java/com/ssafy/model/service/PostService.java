@@ -14,4 +14,6 @@ public interface PostService {
 	public void insertPost(MultipartFile postImg, post user);
 	public void updatePost(post user);
 	public void deletePost(int no);
+	public void updateLikes(post post);
+	public void updateUnLikes(post post);
 }

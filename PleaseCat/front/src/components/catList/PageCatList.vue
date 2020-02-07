@@ -1,34 +1,40 @@
 <template>
     <div id="catList">
+        <div class="emptySpace">-Navigation Bar-</div>
         <!-- <CatCardComponent key="1" name="name" desc1="♀" desc2="loca" src="1" /> -->
         <CatCardComponent v-for="cat in cats" :key=cat.cat_no :name=cat.cat_name :desc1="cat.sex==='남'?'♂':'♀'" :desc2=cat.cat_location :src=cat.cat_no  />
-    <div class="emptySpace"></div>
+        <div class="emptySpace">-Tab Bar-</div>
     </div>
 </template>
 <script>
 import CatCardComponent from './catCard/CatCard'
 import axios from 'axios'
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     created() {
-        this.server = this.$store.state.server;
         this.pullCat();
-        console.log(this.url);
+        console.log('this.url : ' + this.url);
     },
     data() {
-      return {
-          server: '',
-          cats: [],
+        return {
+            cats: [],
       }
     },
     components: {
         CatCardComponent,
     },
+    computed: {
+        ...mapGetters({
+            url: 'getServer',
+        }),
+    },
     methods: {
         pullCat(){
             const vm = this;
+            // console.log('this.url2 : ' + this.url);
             axios
-                .get(`${vm.server}/api/cat/searchAll`)
+                .get(`${this.url}/api/cat/searchAll`)
                 .then(res => {
                     // handle success
                     vm.cats = res.data.data
@@ -48,12 +54,13 @@ export default {
 }
 </script>
 
-<style>
-#catList{
-    /* padding-bottom: 75px; */
-    
-}
-.emptySpace {
-    height: 75px;
+<style lang="scss" scoped>
+#catList {
+    text-align: center;
+    .emptySpace {
+        // display: block;
+        height: 100px;
+        text-align: center;
+    }
 }
 </style>
