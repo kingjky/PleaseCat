@@ -37,7 +37,12 @@ CREATE TABLE CAT (
         cat_desc			varchar(300),	# 고양이 소개
         hurt				boolean		,	# 상처 여부
         hair_color			varchar(100),	# 털 색
-        eye_color			varchar(100)	# 눈 색
+        eye_color			varchar(100),	# 눈 색
+		cat_x				double,			# x좌표
+        cat_y				double,			# y좌표
+        countPosts			int,			# 고양이게시물 수
+        countFollowers		int, 			# 고양이 팔로워 수
+        countLikes			int				# 고양이 총 좋아요 수
 );
 
 # POST 테이블
@@ -52,6 +57,8 @@ CREATE TABLE POST (
         post_unlike			int,					# 싫어요 숫자
         post_location		varchar(100),			# 사진 위치
         post_report			int,					# 신고 숫자
+        post_x				double,					# X좌표
+		post_y				double,					# y좌표
         foreign key(user_no) references user(user_no), 
         foreign key(cat_no) references cat(cat_no)
 );
