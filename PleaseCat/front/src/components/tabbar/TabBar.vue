@@ -50,7 +50,7 @@ export default {
         { id: 2, name: "Location", route: `/catList` },
         { id: 3, name: "AddPost", route: `/addpost` },
         { id: 4, name: "Search", route: `/login` },
-        { id: 5, name: "Map", route: `/catMap` }
+        { id: 5, name: "Map", route: `/catPostMap` }
         // { id: 5, name: "TimeLine", route: `/user/${this.id}` }
       ]
     };

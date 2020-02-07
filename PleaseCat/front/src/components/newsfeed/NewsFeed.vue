@@ -2,6 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<script src="https://unpkg.com/vue@2.4.2"></script>
 <template>
 <div>
   <!-- <header>
@@ -55,6 +56,7 @@
           <img :src="require('../../assets/images/icons/unnamed.png')" class="HRSize" />
         </button>
       </div>
+      <div id="app"></div>
       <br />
       <div class="like">좋아요</div>
       <div class="like">{{post.post_like}}개,</div>
@@ -62,21 +64,90 @@
       <div class="like">{{post.post_unlike}}개</div>
       <div class="content">{{post.user_id}}</div>
       <div v-if="post.detail === 'Init'">
-      <div class="content">{{post.post_content}}</div>
+        <div class="content">{{post.post_content}}</div>
       </div>
       <div v-if="post.detail === 'true'">
-      <div id="detailTrue">{{post.post_content}}</div>
+        <div id="detailTrue">{{post.post_content}}</div>
         <button v-on:click="detailTrue(`${post.newsFeedIndex}`)">자세히보기</button>
       </div>
       <div v-if="post.detail === 'false'">
-      <div id="detailFalse">{{post.post_content}}</div>
+        <div id="detailFalse">{{post.post_content}}</div>
         <button v-on:click="detailFalse(`${post.newsFeedIndex}`)">간략히</button>
       </div>
+      <!--  -->
+      <!-- <div class="invest_list">
+        <div class="invest_box invest_item1"></div>
+        <div class="invest_box invest_item2"></div>
+        <div class="invest_box invest_item3"></div>
+      </div>
+
+      <div class="loading_img txt_center">
+        <img src="/img/invest_loading_img.gif" alt="로딩이미지" title="로딩이미지" />
+      </div>
+
+      <div class="load_btn_box txt_center">
+        <a href="javascript:;" class="invest_plus">더 불러오기</a>
+      </div> -->
+
+      <!--  -->
     </div>
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </body>
 </div>
-</template>/
+</template>
+
+// 
+<script type="text/javascript">
+  var maxlength = 2;
+	var start_number = 0;
+
+	$(".invest_plus").on("click", function() {
+		start_number = start_number + 1;
+		if(start_number > maxlength) {
+			return false;
+		}
+		$(".loading_img").stop().fadeIn("fast");
+		$(".load_btn_box").fadeOut("fast");
+		$.ajax({
+			url: './ajax_invest_list.php', //주소
+			type: 'post', // get 또는 post 방식으로
+			data: {
+				// 보낼 데이터
+			},
+			success : function(data, status, xhr) { 
+				//성공시 동작
+				
+				$(".invest_list").append(data);
+				$(".loading_img").stop().fadeOut("fast");
+				if(start_number >= maxlength) {
+					$(".load_btn_box").fadeOut("fast");
+					return false;
+				}
+				$(".load_btn_box").fadeIn("fast");
+				
+			},
+
+			fail: function(error) {
+				// 실패 시 동작
+			},
+			always: function(response) {
+				// 성공하든 실패하든 항상 할 동작
+			}
+		});
+  });
+  
+  <div class="invest_box invest_item1">
+	</div>
+
+	<div class="invest_box invest_item2">
+	</div>
+
+	<div class="invest_box invest_item3">
+	</div>
+</script>
+// 
+
+
 <script>
 import axios from "axios";
 import "../../assets/css/style.css";
@@ -105,11 +176,14 @@ export default {
     InfiniteLoading
   },
   methods: {
-    detailTrue(newsFeedIndex){
-      this.posts[newsFeedIndex].detail="false";
+    handle_toggle: function() {
+      this.is_show = !this.is_show; // #2, #3
     },
-    detailFalse(newsFeedIndex){
-      this.posts[newsFeedIndex].detail="true";
+    detailTrue(newsFeedIndex) {
+      this.posts[newsFeedIndex].detail = "false";
+    },
+    detailFalse(newsFeedIndex) {
+      this.posts[newsFeedIndex].detail = "true";
     },
     likeActivation(post_no, newsFeedIndex) {
       axios.post(likeActivationApi + post_no + "&user_no=1");
@@ -153,6 +227,7 @@ export default {
         post_no: postNo
       });
     },
+
     infiniteHandler($state) {
       axios
         .get(api, {
@@ -180,7 +255,6 @@ export default {
               data.data[this.page].post_time =
                 Math.floor(data.data[this.page].post_time / 525600) + "년 전";
             }
-            console.log(data.data[this.page].post_content.length);
             for (var i = 0; i < this.isLike.length; i++) {
               if (data.data[this.page].post_no == this.isLike[i].post_no) {
                 data.data[this.page].like = true;
@@ -191,12 +265,12 @@ export default {
                 data.data[this.page].unlike = true;
               }
             }
-            data.data[this.page].detail="Init";
-            if(data.data[this.page].post_content.length>33)
-            data.data[this.page].detail = 'true';
+            data.data[this.page].detail = "Init";
+            if (data.data[this.page].post_content.length > 33)
+              data.data[this.page].detail = "true";
             this.posts.push(data.data[this.page]);
             this.postNo = data.data[this.page].post_no;
-            data.data[this.page].newsFeedIndex=this.page;
+            data.data[this.page].newsFeedIndex = this.page;
             this.page += 1;
             $state.loaded();
           } else {
@@ -227,7 +301,44 @@ export default {
 </script>
  
 <style lang="scss" scoped>
-#detailTrue{
+.invest_list {
+  font-size: 0;
+  text-align: center;
+}
+.invest_box {
+  display: inline-block;
+  width: 31.333%;
+  height: 50px;
+  padding-bottom: 25%;
+  margin-left: 3%;
+  background-color: #f2849e;
+  border-radius: 5px;
+  margin-bottom: 3%;
+}
+.invest_box.invest_item1 {
+  margin-left: 0;
+}
+.txt_center {
+  text-align: center;
+}
+.invest_plus {
+  display: inline-block;
+  width: 180px;
+  height: 48px;
+  line-height: 46px;
+  background-color: #f2849e;
+  color: #fff;
+  border-radius: 5px;
+}
+.loading_img {
+  display: none;
+}
+.loading_img.on {
+  display: block;
+}
+
+//
+#detailTrue {
   font-size: 17px;
   display: inline-block;
   width: 200px;
@@ -243,7 +354,7 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-#detailFalse{
+#detailFalse {
   font-size: 17px;
   display: inline-block;
   width: 200px;

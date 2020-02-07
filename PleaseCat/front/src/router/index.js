@@ -9,7 +9,7 @@ import PageCatList from '@/components/catList/PageCatList.vue'
 import PageCatProfile from '@/components/catProfile/PageCatProfile.vue'
 import PageCatMap from '@/components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
-
+import CatPostMap from '@/components/catMap/catPostMap.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +52,11 @@ const routes = [
     path: '/catDetail',
     name: 'PageCatDetail',
     component: PageCatDetail
+  },
+  {
+    path: '/catPostMap',
+    name: 'CatPostMap',
+    component: CatPostMap
   },
   {
     path: '/catMap',
