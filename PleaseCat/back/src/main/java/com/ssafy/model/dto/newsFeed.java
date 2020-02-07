@@ -13,6 +13,8 @@ public class newsFeed {
 	private int post_no;
 	private boolean like;
 	private boolean unlike;
+	private int newsFeedIndex;
+	private String detail;
 	
 	public newsFeed() {
 		super();
@@ -32,6 +34,40 @@ public class newsFeed {
 		this.post_no = post_no;
 		this.like =false;
 		this.unlike=false;
+		this.newsFeedIndex=0;
+		this.detail="Init";
+	}
+	
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public boolean isLike() {
+		return like;
+	}
+
+	public void setLike(boolean like) {
+		this.like = like;
+	}
+
+	public boolean isUnlike() {
+		return unlike;
+	}
+
+	public void setUnlike(boolean unlike) {
+		this.unlike = unlike;
+	}
+
+	public int getNewsFeedIndex() {
+		return newsFeedIndex;
+	}
+
+	public void setNewsFeedIndex(int newsFeedIndex) {
+		this.newsFeedIndex = newsFeedIndex;
 	}
 	
 	public String getCat_name() {

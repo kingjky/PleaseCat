@@ -14,7 +14,7 @@ import com.ssafy.model.dto.user;
 
 
 @Service
-public class Etc_ServiceImp implements Etc_Service {
+public class NewsFeedServiceImp implements NewsFeedService {
 
 	@Autowired
 	private NewsFeedDao dao;

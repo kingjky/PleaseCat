@@ -10,6 +10,7 @@ import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
 import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
 import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
+import CatPostMap from '@/components/catMap/catPostMap.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
 
 Vue.use(VueRouter)
@@ -59,6 +60,11 @@ const routes = [
     path: '/catDetail',
     name: 'PageCatDetail',
     component: PageCatDetail
+  },
+  {
+    path: '/catPostMap',
+    name: 'CatPostMap',
+    component: CatPostMap
   },
   {
     path: '/catMap',

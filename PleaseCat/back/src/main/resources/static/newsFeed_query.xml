@@ -3,7 +3,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ssafy.model.dao.NewsFeedDao">
-
 	<select id="searchAllNewsFeed" resultType="newsFeed">
 		SELECT c.cat_name, c.cat_image, u.user_id, p.post_like, p.post_unlike,
 		p.post_image, p.post_content, TIMESTAMPDIFF(minute, p.post_time, NOW()) AS post_time, p.post_no
