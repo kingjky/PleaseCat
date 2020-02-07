@@ -10,6 +10,7 @@ import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
 import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
 import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
+import PageAddCat from '../components/post/addCat/PageAddCat'
 
 Vue.use(VueRouter)
 
@@ -64,11 +65,11 @@ const routes = [
     name: 'PageCatMap',
     component: PageCatMap
   },
-  // {
-  //   path: '/login_id',
-  //   name: 'login_id',
-  //   component: Login_id
-  // },
+  {
+    path: '/addCat',
+    name: 'PageAddCat',
+    component: PageAddCat
+  },
   // {
   //   path: '/about',
   //   name: 'about',
