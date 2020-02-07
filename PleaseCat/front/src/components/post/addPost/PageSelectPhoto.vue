@@ -101,7 +101,8 @@ export default {
         user_no,
         // post_content,
         // post_location,
-        post_image
+        post_image,
+        url: this.$store.getters.getServer,
       };
       if(this.post_image==null) {
         return false;
@@ -109,7 +110,6 @@ export default {
       
       
       PostingApi.requestAddPost(
-        this.$store.state.server,
         data,
         res => {
           if (res.status == 200) {

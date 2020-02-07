@@ -154,7 +154,7 @@ export default {
       console.log(fd);
 
       axios
-        .post(this.$store.state.server + `/api/cat/insert`, fd, {
+        .post(this.$store.getters.getServer + `/api/cat/insert`, fd, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
