@@ -39,6 +39,7 @@
 <script>
 import RankComponent from './view/Rank';
 import axios from 'axios';
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     name: 'catProfile',

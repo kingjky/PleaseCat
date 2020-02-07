@@ -1,23 +1,25 @@
 <template>
-  <div class="card-box" >
-      <router-link :to="{name:'PageCatProfile', params: {no: src}}">
+  <div class="card-box" @click="selectCat({n: src})">
+      <router-link :to="{name:'PageCatProfile'}">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
           <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cat/${src}.jpg`)+')'}"></div>
           <div class="text name">
-              <h3>{{name}}</h3>
+              <h3>{{ name }}</h3>
           </div>
           <div class="text desc1">
-              <h4>{{desc1}}</h4>
+              <h4>{{ desc1 }}</h4>
           </div>
           <div class="text desc2">
               <img src=""/>
-              <h5>{{desc2}}</h5>
+              <h5>{{ no }}</h5>
           </div>
       </div>
       </router-link>
   </div>
 </template>
 <script>
+import { mapActions, mapMutations, mapGetters } from "vuex";
+
 export default {
   name: 'CatCard',
   props: ['name', 'desc1', 'desc2', 'src'],
@@ -26,6 +28,19 @@ export default {
           isHovering: false,
       }
   },
+  computed: {
+      ...mapGetters({
+          no: 'selectedCatNo',
+      })
+  },
+  methods: {
+      ...mapActions([
+          'selectCat',
+      ]),
+      ...mapMutations([
+          'selectCat',
+      ])
+  }
 }
 </script>
 

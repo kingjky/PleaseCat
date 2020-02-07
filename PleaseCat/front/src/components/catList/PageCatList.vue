@@ -9,27 +9,32 @@
 <script>
 import CatCardComponent from './catCard/CatCard'
 import axios from 'axios'
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     created() {
-        this.server = this.$store.state.server;
         this.pullCat();
-        console.log(this.url);
+        console.log('this.url : ' + this.url);
     },
     data() {
-      return {
-          server: '',
-          cats: [],
+        return {
+            cats: [],
       }
     },
     components: {
         CatCardComponent,
     },
+    computed: {
+        ...mapGetters({
+            url: 'getServer',
+        }),
+    },
     methods: {
         pullCat(){
             const vm = this;
+            // console.log('this.url2 : ' + this.url);
             axios
-                .get(`${vm.server}/api/cat/searchAll`)
+                .get(`${this.url}/api/cat/searchAll`)
                 .then(res => {
                     // handle success
                     vm.cats = res.data.data

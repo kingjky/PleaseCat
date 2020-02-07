@@ -38,32 +38,38 @@
 
 <script>
 import axios from 'axios';
+import { mapActions, mapMutations, mapGetters } from "vuex";
+
 export default {
     name: 'catProfile',
     created() {
-        this.server = this.$store.state.server;
-        this.no = this.$route.params.no;
         this.pullCat();
     },
     data(){
         return{
-            server: '',
             cat: {},
-            no: '',
             cnt_pics: 10,
         }
+    },
+    computed:{
+        ...mapGetters({
+            url: 'getServer',
+        })
     },
     methods: {
         pullCat(){
             const vm = this;
+            console.log('current cat no : ' + this.no);
             axios
-                .get(`${vm.server}/api/cat/searchCat/?cat_no=${vm.no}`)
+                .get(`${this.url}/api/cat/searchCat/?Cat_no=1`)
+                // .get(`${vm.url}/api/cat/searchCat/?Cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
                 })
                 .catch(err =>  {
                     // handle error
+                    console.log(err);
                 })
                 .then(() => {
                     // always executed

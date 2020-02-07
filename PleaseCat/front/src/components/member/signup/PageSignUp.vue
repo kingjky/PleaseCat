@@ -55,7 +55,8 @@ export default {
         user_id,
         user_pw,
         user_email,
-        user_name
+        user_name,
+        url: this.$store.getters.getServer,
       };
 
       UserApi.requestSignup(
