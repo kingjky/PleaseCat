@@ -6,7 +6,7 @@ const PostingApi = {
 }
 
 const requestAddCat = (url, data, callback, errorCallback) => {
-    axios.post(url + `/api/post/insert`, {
+    axios.post(server + `/api/post/insert`, {
         catImg: data.catPostImage,
         cat_no: data.cat_no,
         user_no: data.user_no,

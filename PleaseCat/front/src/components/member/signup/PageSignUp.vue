@@ -1,8 +1,6 @@
 <template>
   <div class="signup text">
-    <div class="title-signup">
-      Sign Up
-    </div>
+    <div class="title-signup">Sign Up</div>
     <div class="input-wrap">
       <!-- 입력받을 정보: name, email, id, pw, image, desc -->
       <div class="input-row">
@@ -47,6 +45,9 @@ export default {
       }
     };
   },
+  created() {
+    this.server = this.$store.state.server;
+  },
 
   methods: {
     signup() {
@@ -59,7 +60,7 @@ export default {
       };
 
       UserApi.requestSignup(
-        this.$store.state.server,
+        this.server,
         data,
         res => {
           if (res.status == 200) {
@@ -89,7 +90,7 @@ export default {
   padding-top: 10px;
   padding-bottom: 125px;
 }
-.signup .title-signup{
+.signup .title-signup {
   margin-top: 60px;
   margin-bottom: 40px;
   font-weight: bold;

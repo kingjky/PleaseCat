@@ -9,7 +9,7 @@
     </div>
     !-->
 
-    <p>포스트 이미지 추가</p>
+    <p>ORIGINAL 포스트 이미지 추가</p>
     <div class="canvas-wrap">
       <canvas id="uploadCanvas"></canvas>
     </div>
@@ -20,7 +20,7 @@
         ref="post_image"
         type="file"
         name="photo"
-        id="photo"
+        id="uploadPhoto"
         required="required"
       />
     </p>

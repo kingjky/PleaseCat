@@ -44,7 +44,9 @@ export default {
       pwChecked: false
     };
   },
-
+  created() {
+        this.server = this.$store.state.server;
+    },
   methods: {
     login() {
       // id, pw가 DB에 존재하는지 확인
@@ -55,7 +57,7 @@ export default {
       };
 
       UserApi.requestLogin(
-        this.$store.state.server,
+        this.server,
         data,
         res => {
           if (res.status == 200) {

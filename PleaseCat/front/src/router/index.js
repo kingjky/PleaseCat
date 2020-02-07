@@ -50,11 +50,11 @@ const routes = [
     name: 'PageCatProfile',
     component: PageCatProfile
   },
-  {
-    path: '/addPost',
-    name: 'SelectPhoto',
-    component: SelectPhoto
-  },
+  // {
+  //   path: '/addPost',
+  //   name: 'SelectPhoto',
+  //   component: SelectPhoto
+  // },
   {
     path: '/catDetail',
     name: 'PageCatDetail',
@@ -66,7 +66,7 @@ const routes = [
     component: PageCatMap
   },
   {
-    path: '/addCat',
+    path: '/addPost',
     name: 'PageAddCat',
     component: PageAddCat
   },
