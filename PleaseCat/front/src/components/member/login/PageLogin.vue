@@ -29,7 +29,7 @@
 
 
 <script>
-import UserApi from "../../../apis/UserApi";
+import UserApi from "@/apis/UserApi";
 
 export default {
   data() {
@@ -51,7 +51,8 @@ export default {
       let { user_email, user_pw } = this;
       let data = {
         user_email,
-        user_pw
+        user_pw,
+        url: this.$store.getters.getServer,
       };
 
       UserApi.requestLogin(
@@ -92,7 +93,7 @@ export default {
   margin-top: 60px;
   margin-bottom: 40px;
   font-weight: bold;
-  font-size: 42px;
+  font-size: 42px;                         
 }
 .login label {
   display: inline-block;

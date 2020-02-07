@@ -56,22 +56,28 @@
 import axios from "axios";
 import "../../assets/css/style.css";
 import InfiniteLoading from "vue-infinite-loading";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
-const api =
-  "http://70.12.247.116:8080/api/Etc/searchAll/{follower_no}?follower_no=1";
-const api2 = "http://localhost:8080/api/Likes/searchAllLikes?user_no=1";
-const api3 = "http://localhost:8080/api/Unlikes/searchAllUnLikes?user_no=1";
-
+const api = "/api/Etc/searchAll/{follower_no}?follower_no=1";
+const api2 = "/api/Likes/searchAllLikes?user_no=1"        ;
+const api3 = "/api/Unlikes/searchAllUnLikes?user_no=1";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 // import Vue from 'vue'
 export default {
   created() {
-    axios.get(api2, {}).then(({ data }) => {
+    console.log("urlurl : " + this.url);
+    axios.get(this.url + api2, {}).then(({ data }) => {
       this.isLike = data.data;
     }),
-      axios.get(api3, {}).then(({ data }) => {
-        this.unLike = data.data;
-        console.log(this.unLike);
-      });
+    axios.get(this.url + api3, {}).then(({ data }) => {
+      this.unLike = data.data;
+      console.log(this.unLike);
+    });
+  },
+  computed: {
+    ...mapGetters({
+        url: 'getServer',
+    }),
   },
   components: {
     InfiniteLoading
@@ -136,7 +142,7 @@ export default {
 
     infiniteHandler($state) {
       axios
-        .get(api, {
+        .get(this.url + api, {
           params: {
             postNo: 0
           }
@@ -178,7 +184,7 @@ export default {
             this.page += 1;
             $state.loaded();
           } else {
-            state.complete();
+            $state.complete();
           }
           console.log(this.posts);
         });
