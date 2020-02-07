@@ -15,7 +15,7 @@
                     <button>팔로우</button>
                 </span>
                 <span id="detailButton" class="btn text">
-                    <router-link :to="{name:'PageCatDetail', params: {no: no}}"><button>상세 정보</button></router-link>
+                    <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
                 </span>
             </div>
         </section>
@@ -43,25 +43,27 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
     name: 'catProfile',
     created() {
+        this.no = this.$route.params.cat_no;
         this.pullCat();
     },
     data(){
         return{
             cat: {},
             cnt_pics: 10,
+            no: '',
         }
     },
     computed:{
         ...mapGetters({
             url: 'getServer',
-        })
+        }),
     },
     methods: {
         pullCat(){
             const vm = this;
             console.log('current cat no : ' + this.no);
             axios
-                .get(`${this.url}/api/cat/searchCat/?Cat_no=1`)
+                .get(`${this.url}/api/cat/searchCat/?Cat_no=${this.no}`)
                 // .get(`${vm.url}/api/cat/searchCat/?Cat_no=${vm.no}`)
                 .then(res => {
                     // handle success

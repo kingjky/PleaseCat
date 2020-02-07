@@ -1,6 +1,6 @@
 <template>
-  <div class="card-box" @click="selectCat({n: src})">
-      <router-link :to="{name:'PageCatProfile'}">
+  <div class="card-box">
+      <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
           <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cat/${src}.jpg`)+')'}"></div>
           <div class="text name">
@@ -11,7 +11,7 @@
           </div>
           <div class="text desc2">
               <img src=""/>
-              <h5>{{ no }}</h5>
+              <h5>{{ desc2 }}</h5>
           </div>
       </div>
       </router-link>
@@ -30,15 +30,12 @@ export default {
   },
   computed: {
       ...mapGetters({
-          no: 'selectedCatNo',
       })
   },
   methods: {
       ...mapActions([
-          'selectCat',
       ]),
       ...mapMutations([
-          'selectCat',
       ])
   }
 }

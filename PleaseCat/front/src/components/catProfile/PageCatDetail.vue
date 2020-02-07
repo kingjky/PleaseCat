@@ -27,10 +27,10 @@
     <div id="mapView">
     </div>
     <div id="rankView">
-        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" :alt="rank"></div>
-        <RankComponent :rank='1' :name="'채집사'" :user_no='1' :score='100'/>
-        <RankComponent :rank='2' :name="'김집사'" :user_no='3' :score='97'/>
-        <RankComponent :rank='3' :name="'박집사'" :user_no='2' :score='89'/>
+        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
+        <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
+        <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
+        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/>
     </div>
     <div class="emptySpace">-Tab Bar-</div>
 </div>
@@ -39,14 +39,16 @@
 <script>
 import RankComponent from './view/Rank';
 import axios from 'axios';
-import { mapActions, mapMutations, mapGetters } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     name: 'catProfile',
     created() {
+        this.no = this.$route.params.cat_no;
         this.server = this.$store.state.server;
-        this.no = this.$route.params.no;
         this.pullCat();
+        // console.log(this.$store.state.moduleCat);
+        console.log(this.a);
     },
     data(){
         return{
@@ -56,18 +58,22 @@ export default {
             no: '',
         }
     },
+    computed: {
+        a: state => state.moduleCat,
+    },
     components: {
         RankComponent,
     },
     methods: {
         pullCat(){
-            console.log(this.no);
+            // console.log(this.no);
             const vm = this;
             axios
-                .get(`${this.server}/api/cat/searchCat/?cat_no=${vm.no}`)
+                .get(`${this.server}/api/cat/searchCat/?Cat_no=${this.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
+                    // console.log(vm.cat);
                 })
                 .catch(err =>  {
                     // handle error
