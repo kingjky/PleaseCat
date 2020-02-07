@@ -15,7 +15,6 @@
 <script>
 export default {
     name: 'Rank',
-    props: ['rank', 'name', 'user_no', 'score'],
     data() {
         return{
             
