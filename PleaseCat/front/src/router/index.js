@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Test from '@/components/Test.vue'
-import Login from '@/components/member/login/PageLogin'
-import SignUp from '@/components/member/signup/PageSignUp'
-import Home from '@/components/newsfeed/Home.vue'
-import NewsFeed from '@/components/newsfeed/NewsFeed.vue'
-import PageCatList from '@/components/catList/PageCatList.vue'
-import PageCatProfile from '@/components/catProfile/PageCatProfile.vue'
-import PageCatMap from '@/components/catMap/PageMap.vue'
+import Test from '../components/Test.vue'
+import Login from '../components/member/login/PageLogin'
+import SignUp from '../components/member/signup/PageSignUp'
+import Home from '../components/newsfeed/Home.vue'
+import NewsFeed from '../components/newsfeed/NewsFeed.vue'
+import PageCatList from '../components/catList/PageCatList.vue'
+import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
+import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
+import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
+import PageAddCat from '../components/post/addCat/PageAddCat'
 
 Vue.use(VueRouter)
 
@@ -48,6 +50,11 @@ const routes = [
     name: 'PageCatProfile',
     component: PageCatProfile
   },
+  // {
+  //   path: '/addPost',
+  //   name: 'SelectPhoto',
+  //   component: SelectPhoto
+  // },
   {
     path: '/catDetail',
     name: 'PageCatDetail',
@@ -58,11 +65,11 @@ const routes = [
     name: 'PageCatMap',
     component: PageCatMap
   },
-  // {
-  //   path: '/login_id',
-  //   name: 'login_id',
-  //   component: Login_id
-  // },
+  {
+    path: '/addPost',
+    name: 'PageAddCat',
+    component: PageAddCat
+  },
   // {
   //   path: '/about',
   //   name: 'about',
