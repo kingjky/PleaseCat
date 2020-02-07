@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.user;
 import com.ssafy.model.service.UserService;
@@ -52,8 +53,8 @@ public class UserRestController {
 	
 	@ApiOperation("새로운 유저 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody user User) throws Exception{
-		userService.insertUser(User);
+	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody MultipartFile catImg, user User) throws Exception{
+		userService.insertUser(catImg,User);
 		return handleSuccess("유저 등록 완료");
 	}
 	

@@ -23,6 +23,17 @@
 	where	post_no = #{post_no:INTEGER}	
 	</update>
 	
+	<update id ="updateLikes" parameterType="post">
+		UPDATE post 
+		SET post_like=#{post_like}
+		WHERE post_no=#{post_no};
+	</update>
+
+	<update id ="updateUnLikes" parameterType="post">
+		UPDATE post 
+		SET post_unlike=#{post_unlike}
+		WHERE post_no=#{post_no};
+	</update>
 	
 	<delete id="deletePost" parameterType="int">
 		delete from post where post_no=#{no}

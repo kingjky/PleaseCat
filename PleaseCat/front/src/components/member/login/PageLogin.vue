@@ -29,7 +29,7 @@
 
 
 <script>
-import UserApi from "../../../apis/UserApi";
+import UserApi from "@/apis/UserApi";
 
 export default {
   data() {
@@ -44,17 +44,21 @@ export default {
       pwChecked: false
     };
   },
-
+  created() {
+        this.server = this.$store.state.server;
+    },
   methods: {
     login() {
       // id, pw가 DB에 존재하는지 확인
       let { user_email, user_pw } = this;
       let data = {
         user_email,
-        user_pw
+        user_pw,
+        url: this.$store.getters.getServer,
       };
 
       UserApi.requestLogin(
+        this.server,
         data,
         res => {
           if (res.status == 200) {
@@ -69,7 +73,7 @@ export default {
         error => {
           //요청이 끝나면 버튼 활성화
           // console.log("리턴")
-          console.log("서버 에러");
+          console.log("서버 에러 입니다");
           this.isSubmit = true;
         }
       );
@@ -92,7 +96,7 @@ export default {
   margin-top: 60px;
   margin-bottom: 40px;
   font-weight: bold;
-  font-size: 42px;
+  font-size: 42px;                         
 }
 .login label {
   display: inline-block;

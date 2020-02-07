@@ -28,7 +28,7 @@ export default {
 <style lang="scss" scoped>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-.text{
+* {
     font-family: "Noto Sans KR", sans-serif;
 }
 </style>

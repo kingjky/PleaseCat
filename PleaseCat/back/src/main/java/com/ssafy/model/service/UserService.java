@@ -1,12 +1,14 @@
 package com.ssafy.model.service;
 
-import java.util.List; 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.user;
 
 public interface UserService  {
 	public user searchUser(int no) ;
-	public void insertUser(user User) ;
+	public void insertUser(MultipartFile userImg, user User) ;
 	public void updateUser(user User);
 	public void deleteUser(int no);
 	public List<user> searchAllUser();

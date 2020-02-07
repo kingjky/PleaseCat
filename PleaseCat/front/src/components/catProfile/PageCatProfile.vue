@@ -1,5 +1,6 @@
 <template>
 <div id="catProfile">
+    <div class="emptySpace">-Navigation Bar-</div>
     <div id="profileView">
         <div id="leftPart">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
@@ -20,13 +21,14 @@
         </section>
     </div>
     <div id="summaryView" class="text">
-        <span class="summary">게시물<br>123</span>
-        <span class="summary">팔로우<br>123</span>
-        <span class="summary">좋아요<br>123</span>
+        <span class="summary">게시물<br>120</span>
+        <span class="summary">팔로우<br>345</span>
+        <span class="summary">좋아요<br>3.4k</span>
     </div>
     <div id="photoView">
-        <div id="photoList">
+        <div id="photoList" v-if="cat.cat_no" >
             <span class="photo" v-for="n in cnt_pics" :key=n :style="{'background-image' : `url(${require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)})`}" :alt='`pic${n}`'>
+            <router-link :to="{name:''}"></router-link>
             </span>
         </div>
     </div>
@@ -36,32 +38,38 @@
 
 <script>
 import axios from 'axios';
+import { mapActions, mapMutations, mapGetters } from "vuex";
+
 export default {
     name: 'catProfile',
     created() {
-        this.server = this.$store.state.server;
-        this.no = this.$route.params.no;
         this.pullCat();
     },
     data(){
         return{
-            server: '',
             cat: {},
-            no: '',
             cnt_pics: 10,
         }
+    },
+    computed:{
+        ...mapGetters({
+            url: 'getServer',
+        })
     },
     methods: {
         pullCat(){
             const vm = this;
+            console.log('current cat no : ' + this.no);
             axios
-                .get(`${vm.server}/api/cat/searchCat/?cat_no=${vm.no}`)
+                .get(`${this.url}/api/cat/searchCat/?Cat_no=1`)
+                // .get(`${vm.url}/api/cat/searchCat/?Cat_no=${vm.no}`)
                 .then(res => {
                     // handle success
                     vm.cat = res.data.data
                 })
                 .catch(err =>  {
                     // handle error
+                    console.log(err);
                 })
                 .then(() => {
                     // always executed
@@ -89,7 +97,7 @@ export default {
         font-size: 7vw;
     }
     .emptySpace {
-        height: 66px;
+        height: 70px;
     }
     .text {
         // transition:all 0.4s ease-out;
@@ -163,20 +171,24 @@ export default {
     #photoList {
         text-align: left;
         .photo{
+            background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: 33%;
+            width: calc((100% - 6px) / 3);
             text-align: center;
-            vertical-align: middle; 
+            vertical-align: middle;
             box-sizing: border-box;
+            margin: 1px;
             // border: 1px solid red;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            // max-width: 100%; /* Scale up to fill container width */
+            // max-height: 100%; /* Scale up to fill container height */
+            // min-width: 100%; /* Scale up to fill container width */
+            // min-height: 100%; /* Scale up to fill container height */
             div {
-                background-position-x: -50px;
-                background-position-y: -50px;
                 overflow: hidden;
                 display: inline-block; /* Otherwise it keeps some space around baseline */
-                min-width: 100%; /* Scale up to fill container width */
-                min-height: 100%; /* Scale up to fill container height */
                 // max-width: 100%; /* Scale up to fill container width */
                 // max-height: 100%; /* Scale up to fill container height */
                 -ms-interpolation-mode: bicubic; /* Scaled images look a bit better in IE now */
