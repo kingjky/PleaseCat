@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.cat;
 import com.ssafy.model.dto.post;
@@ -52,8 +53,8 @@ public class PostRestController {
 	
 	@ApiOperation("새로운 게시글 정보를 등록한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertPost(@RequestBody post Post) throws Exception{
-		postService.insertPost(Post);
+	public ResponseEntity<Map<String, Object>> insertPost(@RequestBody MultipartFile catImg,  post Post) throws Exception{
+		postService.insertPost(catImg, Post);
 		return handleSuccess("게시글 등록 완료");
 	}
 	

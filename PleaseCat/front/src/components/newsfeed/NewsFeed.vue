@@ -96,81 +96,93 @@
 </div>
 </template>
 
-// 
+
 <script type="text/javascript">
-  var maxlength = 2;
-	var start_number = 0;
+  // var maxlength = 2;
+	// var start_number = 0;
 
-	$(".invest_plus").on("click", function() {
-		start_number = start_number + 1;
-		if(start_number > maxlength) {
-			return false;
-		}
-		$(".loading_img").stop().fadeIn("fast");
-		$(".load_btn_box").fadeOut("fast");
-		$.ajax({
-			url: './ajax_invest_list.php', //주소
-			type: 'post', // get 또는 post 방식으로
-			data: {
-				// 보낼 데이터
-			},
-			success : function(data, status, xhr) { 
-				//성공시 동작
+	// $(".invest_plus").on("click", function() {
+	// 	start_number = start_number + 1;
+	// 	if(start_number > maxlength) {
+	// 		return false;
+	// 	}
+	// 	$(".loading_img").stop().fadeIn("fast");
+	// 	$(".load_btn_box").fadeOut("fast");
+	// 	$.ajax({
+	// 		url: './ajax_invest_list.php', //주소
+	// 		type: 'post', // get 또는 post 방식으로
+	// 		data: {
+	// 			// 보낼 데이터
+	// 		},
+	// 		success : function(data, status, xhr) { 
+	// 			//성공시 동작
 				
-				$(".invest_list").append(data);
-				$(".loading_img").stop().fadeOut("fast");
-				if(start_number >= maxlength) {
-					$(".load_btn_box").fadeOut("fast");
-					return false;
-				}
-				$(".load_btn_box").fadeIn("fast");
+	// 			$(".invest_list").append(data);
+	// 			$(".loading_img").stop().fadeOut("fast");
+	// 			if(start_number >= maxlength) {
+	// 				$(".load_btn_box").fadeOut("fast");
+	// 				return false;
+	// 			}
+	// 			$(".load_btn_box").fadeIn("fast");
 				
-			},
+	// 		},
 
-			fail: function(error) {
-				// 실패 시 동작
-			},
-			always: function(response) {
-				// 성공하든 실패하든 항상 할 동작
-			}
-		});
-  });
+	// 		fail: function(error) {
+	// 			// 실패 시 동작
+	// 		},
+	// 		always: function(response) {
+	// 			// 성공하든 실패하든 항상 할 동작
+	// 		}
+	// 	});
+  // });
   
-  <div class="invest_box invest_item1">
-	</div>
+  // <div class="invest_box invest_item1">
+	// </div>
 
-	<div class="invest_box invest_item2">
-	</div>
+	// <div class="invest_box invest_item2">
+	// </div>
 
-	<div class="invest_box invest_item3">
-	</div>
+	// <div class="invest_box invest_item3">
+	// </div>
 </script>
-// 
 
 
 <script>
 import axios from "axios";
 import "../../assets/css/style.css";
 import InfiniteLoading from "vue-infinite-loading";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
-const api =
-  "http://localhost:8080/api/NewsFeed/searchAll/{follower_no}?follower_no=1";
-const api2 = "http://localhost:8080/api/Likes/searchAllLikes?user_no=1";
-const api3 = "http://localhost:8080/api/Unlikes/searchAllUnLikes?user_no=1";
-const likeActivationApi = "http://localhost:8080/api/Likes/insert?post_no=";
-const likeDisabledApi = "http://localhost:8080/api/Likes/delete?post_no=";
-const unLikeActivationApi = "http://localhost:8080/api/Unlikes/insert?post_no=";
-const unLikeDisabledApi = "http://localhost:8080/api/Unlikes/delete?post_no=";
+const api = "/api/NewsFeed/searchAll/{follower_no}?follower_no=1";
+const api2 = "/api/Likes/searchAllLikes?user_no=1";
+const api3 = "/api/Unlikes/searchAllUnLikes?user_no=1";
+const likeActivationApi = "/api/Likes/insert?post_no=";
+const likeDisabledApi = "/api/Likes/delete?post_no=";
+const unLikeActivationApi = "/api/Unlikes/insert?post_no=";
+const unLikeDisabledApi = "/api/Unlikes/delete?post_no=";
+// const api = "http://localhost:8080/api/NewsFeed/searchAll/{follower_no}?follower_no=1";
+// const api2 = "http://localhost:8080/api/Likes/searchAllLikes?user_no=1";
+// const api3 = "http://localhost:8080/api/Unlikes/searchAllUnLikes?user_no=1";
+// const likeActivationApi = "http://localhost:8080/api/Likes/insert?post_no=";
+// const likeDisabledApi = "http://localhost:8080/api/Likes/delete?post_no=";
+// const unLikeActivationApi = "http://localhost:8080/api/Unlikes/insert?post_no=";
+// const unLikeDisabledApi = "http://localhost:8080/api/Unlikes/delete?post_no=";
 
 export default {
   created() {
-    axios.get(api2, {}).then(({ data }) => {
+    console.log("urlurl : " + this.url);
+    axios.get(this.url + api2, {}).then(({ data }) => {
       this.isLike = data.data;
     }),
-      axios.get(api3, {}).then(({ data }) => {
-        this.unLike = data.data;
-        console.log(this.unLike);
-      });
+    axios.get(this.url + api3, {}).then(({ data }) => {
+      this.unLike = data.data;
+      console.log(this.unLike);
+    });
+  },
+  computed: {
+    ...mapGetters({
+        url: 'getServer',
+    }),
   },
   components: {
     InfiniteLoading
@@ -186,7 +198,7 @@ export default {
       this.posts[newsFeedIndex].detail = "true";
     },
     likeActivation(post_no, newsFeedIndex) {
-      axios.post(likeActivationApi + post_no + "&user_no=1");
+      axios.post(this.url + likeActivationApi + post_no + "&user_no=1");
       this.posts[newsFeedIndex].like = true;
       if (this.posts[newsFeedIndex].unlike) {
         this.unLikeDisabled(post_no, newsFeedIndex);
@@ -195,13 +207,13 @@ export default {
       this.updateLikes(this.posts[newsFeedIndex].post_like, post_no);
     },
     likeDisabled(post_no, newsFeedIndex) {
-      axios.delete(likeDisabledApi + post_no + "&user_no=1");
+      axios.delete(this.url + likeDisabledApi + post_no + "&user_no=1");
       this.posts[newsFeedIndex].like = false;
       this.posts[newsFeedIndex].post_like--;
       this.updateLikes(this.posts[newsFeedIndex].post_like, post_no);
     },
     unLikeActivation(post_no, newsFeedIndex) {
-      axios.post(unLikeActivationApi + post_no + "&user_no=1");
+      axios.post(this.url + unLikeActivationApi + post_no + "&user_no=1");
       this.posts[newsFeedIndex].unlike = true;
       if (this.posts[newsFeedIndex].like) {
         this.likeDisabled(post_no, newsFeedIndex);
@@ -210,19 +222,19 @@ export default {
       this.updateUnLikes(this.posts[newsFeedIndex].post_unlike, post_no);
     },
     unLikeDisabled(post_no, newsFeedIndex) {
-      axios.delete(unLikeDisabledApi + post_no + "&user_no=1");
+      axios.delete(this.url + unLikeDisabledApi + post_no + "&user_no=1");
       this.posts[newsFeedIndex].unlike = false;
       this.posts[newsFeedIndex].post_unlike--;
       this.updateUnLikes(this.posts[newsFeedIndex].post_unlike, post_no);
     },
     updateLikes(postLike, postNo) {
-      axios.put(`http://localhost:8080/api/post/updateLikes`, {
+      axios.put(this.url + '/api/post/updateLikes', {
         post_like: postLike,
         post_no: postNo
       });
     },
     updateUnLikes(postUnLike, postNo) {
-      axios.put(`http://localhost:8080/api/post/updateUnLikes`, {
+      axios.put(this.url + '/api/post/updateUnLikes', {
         post_unlike: postUnLike,
         post_no: postNo
       });
@@ -230,7 +242,7 @@ export default {
 
     infiniteHandler($state) {
       axios
-        .get(api, {
+        .get(this.url + api, {
           params: {
             postNo: 0
           }
@@ -266,7 +278,7 @@ export default {
               }
             }
             data.data[this.page].detail = "Init";
-            if (data.data[this.page].post_content.length > 33)
+            if (data.data[this.page].post_content.length > 36)
               data.data[this.page].detail = "true";
             this.posts.push(data.data[this.page]);
             this.postNo = data.data[this.page].post_no;
@@ -274,7 +286,7 @@ export default {
             this.page += 1;
             $state.loaded();
           } else {
-            state.complete();
+            $state.complete();
           }
           console.log(this.posts);
         });
@@ -339,7 +351,7 @@ export default {
 
 //
 #detailTrue {
-  font-size: 17px;
+  font-size: 18px;
   display: inline-block;
   width: 200px;
   white-space: nowrap;
@@ -355,7 +367,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 #detailFalse {
-  font-size: 17px;
+  font-size: 18px;
   display: inline-block;
   width: 200px;
   white-space: nowrap;
@@ -370,7 +382,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 .content {
-  font-size: 17px;
+  font-size: 18px;
   display: inline-block;
   width: 200px;
   white-space: nowrap;
