@@ -9,7 +9,7 @@
             <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt="">
             <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
         </div>
-        <div id="man">
+        <div id="man" v-if="catManager">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
             <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt="">
             <h1 id="manName" class="text">{{catManager.user_id}}</h1>
