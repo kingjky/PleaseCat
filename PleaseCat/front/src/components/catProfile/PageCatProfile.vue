@@ -3,7 +3,7 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="profileView">
         <div id="leftPart">
-            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile" >
+            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
         <section id="rightPart">
             <div id="name"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
@@ -23,9 +23,12 @@
         <span class="summary">좋아요<br>{{ selectedCat.count_likes }}</span>
     </div>
     <div id="photoView">
-        <div id="photoList" v-if="selectedCat" >
-            <span class="photo" v-for="n in 14" :key=n :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}" :alt='`pic${n}`'>
-            <router-link :to="{name:''}"></router-link>
+        <div id="photoList">
+            <span v-for="n in selectedCat.count_posts" :key=n>
+                <router-link :to="{name:''}">
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}"  :alt='`pic${n}`'>
+                    </span>
+                </router-link>
             </span>
         </div>
     </div>
@@ -41,22 +44,21 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        this.selectedCat = this.catList[this.no - 1];
     },
     data(){
         return{
             no: '',
-            selectedCat: '',
         }
     },
     computed:{
         ...mapGetters('storeCat',[
             'catList',
         ]),
+        selectedCat: function() {
+            return this.catList[this.no - 1];
+        },
     },
     methods: {
-        ...mapActions('storeCat',[
-        ]),
     },
 }
 </script>

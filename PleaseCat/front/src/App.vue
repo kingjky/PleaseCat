@@ -20,7 +20,9 @@ export default {
     //
   }),
   created() {
+    // this.$store.dispatch('storeCat/getCatList');
     this.getCatList();
+    this.getUserList();
   },
   components: {
     // HelloWorld
@@ -30,6 +32,9 @@ export default {
   methods: {
       ...mapActions('storeCat',[
           'getCatList',
+      ]),
+      ...mapActions('storeUser',[
+          'getUserList',
       ]),
   },
 }

@@ -53,7 +53,7 @@ public class UserRestController {
 	
 	@ApiOperation("새로운 유저 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody MultipartFile catImg, user User) throws Exception{
+	public ResponseEntity<Map<String, Object>> insertUser(MultipartFile catImg, @RequestBody user User) throws Exception{
 		userService.insertUser(catImg,User);
 		return handleSuccess("유저 등록 완료");
 	}
