@@ -151,10 +151,11 @@ public class UserServiceImp implements UserService {
 	}
 	
 	//회원 로그인
-	public String login(String user_email, String user_pw){
+	public String login(user tmp){
 		try {
-			user User = searchUserEmail(user_email);
-			String orgPass = user_pw;
+			
+			user User = searchUserEmail(tmp.getUser_email());
+			String orgPass = tmp.getUser_pw();
             String shaPass = sha.getSha256(orgPass.getBytes());
             
 				if(BCrypt.checkpw(shaPass,User.getUser_pw())) {

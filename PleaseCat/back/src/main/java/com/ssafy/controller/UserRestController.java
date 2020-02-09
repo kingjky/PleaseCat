@@ -77,9 +77,9 @@ public class UserRestController {
 	}
 	
 	@ApiOperation("로그인 처리")
-	@GetMapping("/login")
-	public ResponseEntity<Map<String, Object>> searchUser(@RequestParam String user_email, @RequestParam String user_pw ) throws Exception{
-		return handleSuccess(userService.login(user_email,user_pw));
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> searchUser(@RequestBody user User) throws Exception{
+		return handleSuccess(userService.login(User));
 	}
 	
 	@ApiOperation("회원정보 삭제")

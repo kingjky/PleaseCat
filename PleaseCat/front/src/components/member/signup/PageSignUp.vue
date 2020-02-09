@@ -28,6 +28,7 @@
 
 <script>
 import UserApi from "@/apis/UserApi";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -45,7 +46,6 @@ export default {
     };
   },
   created() {
-    this.server = this.$store.state.server;
   },
 
   methods: {

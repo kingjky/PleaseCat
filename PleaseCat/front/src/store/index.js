@@ -28,9 +28,9 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        getLogin({ state, dispatch, commit, getters, rootGetters }, data) {
+        postLogin({ state, dispatch, commit, getters, rootGetters }, data) {
             axios
-                .get(`${getters.getServer}/api/user/login?user_email=${data.user_email}&user_pw=${data.user_pw}`)
+                .post(`${getters.getServer}/api/user/login`, data)
                 .then(res => {
                     // handle success
                     console.log(res.data);

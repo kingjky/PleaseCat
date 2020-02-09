@@ -48,7 +48,7 @@ export default {
     },
   methods: {
     ...mapActions([
-        'getLogin',
+        'postLogin',
     ]),
     login() {
       // id, pw가 DB에 존재하는지 확인
@@ -57,7 +57,7 @@ export default {
         user_email,
         user_pw,
       };
-      this.getLogin(data);
+      this.postLogin(data);
       
       // UserApi.requestLogin(
       //   data,
