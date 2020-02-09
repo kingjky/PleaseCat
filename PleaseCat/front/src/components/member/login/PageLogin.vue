@@ -19,7 +19,6 @@
         />
       </div>
     </div>
-
     <div class="btn-wrap">
       <a href="/signUp">가입하기</a>
       <button class="btn-login" v-on:click="login">로그인</button>
@@ -30,6 +29,7 @@
 
 <script>
 import UserApi from "@/apis/UserApi";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -48,6 +48,9 @@ export default {
         this.server = this.$store.state.server;
     },
   methods: {
+      ...mapActions([
+          'getLogin',
+      ]),
     login() {
       // id, pw가 DB에 존재하는지 확인
       let { user_email, user_pw } = this;
@@ -56,27 +59,29 @@ export default {
         user_pw,
         url: this.$store.getters.getServer,
       };
-
-      UserApi.requestLogin(
-        this.server,
-        data,
-        res => {
-          if (res.status == 200) {
-            if (res.data.state == "ok") {
-              //성공
-              this.$router.push("/");
-            } else {
-              //실패
-            }
-          }
-        },
-        error => {
-          //요청이 끝나면 버튼 활성화
-          // console.log("리턴")
-          console.log("서버 에러 입니다");
-          this.isSubmit = true;
-        }
-      );
+      this.getLogin(data);
+      
+      // UserApi.requestLogin(
+      //   data,
+      //   res => {
+      //     if (res.status == 200) {
+      //       if (res.data.state == "ok") {
+      //       console.log('로그인 성공');
+      //       console.log(res);
+      //         //성공
+      //         this.$router.push("/");
+      //       } else {
+      //         //실패
+      //       }
+      //     }
+      //   },
+      //   error => {
+      //     //요청이 끝나면 버튼 활성화
+      //     // console.log("리턴")
+      //     console.log("서버 에러 입니다");
+      //     this.isSubmit = true;
+      //   }
+      // );
     }
   }
 };

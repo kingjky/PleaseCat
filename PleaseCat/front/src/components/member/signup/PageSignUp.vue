@@ -61,7 +61,6 @@ export default {
       };
 
       UserApi.requestSignup(
-        this.server,
         data,
         res => {
           if (res.status == 200) {

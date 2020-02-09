@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 import moduleCat from './modules/moduleCat'
 import moduleUser from './modules/moduleUser'
 import modulePost from './modules/modulePost'
+import router from '@/router/index'
 
 Vue.use(Vuex)
 
@@ -16,25 +17,36 @@ export default new Vuex.Store({
         storePost: modulePost,
     },
     state: {
-        // selectedCatNo: '0',
         server: 'http://192.168.219.100:8080',
         token: '',
     },
     getters: {
-        // selectedCatNo: state => { return state.selectedCatNo },
         getServer: state => { return state.server },
+        getToken: state => { return state.token },
     },
     mutations: {
-        // selectCat(state, payload) {
-        //   state.selectedCatNo = payload.n;
-        // }
+        changeToken(state, payload, rootState) {
+            state.token = payload.data;
+        },
     },
     actions: {
-        // selectCat({ commit }, payload) {
-        //   commit('selectCat',{
-        //     n: payload.n,
-        //   })
-        // }
+        getLogin({ state, dispatch, commit, getters, rootGetters }, data) {
+            axios
+                .get(`${getters.getServer}/api/user/login?user_email=${data.user_email}&user_pw=${data.user_pw}`)
+                .then(res => {
+                    // handle success
+                    console.log(res.data);
+                    commit('changeToken', res.data);
+                    router.push("/");
+                })
+                .catch(err => {
+                    // handle error
+                    console.error(err);
+                })
+                .then(() => {
+                    // always executed
+                });
+        },
     },
 })
 

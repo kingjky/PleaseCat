@@ -20,6 +20,7 @@ export default {
     //
   }),
   created() {
+    // this.$store.dispatch('storeCat/getCatList');
     this.getCatList();
     this.getUserList();
   },
