@@ -17,25 +17,46 @@ export default new Vuex.Store({
     state: {
         server: 'http://192.168.219.100:8080',
         token: '',
+        loginId: '',
     },
     getters: {
         getServer: state => { return state.server },
         getToken: state => { return state.token },
+        getLoginId: state => { return state.loginId },
     },
     mutations: {
         changeToken(state, payload, rootState) {
             state.token = payload.data;
         },
+        changeLoginId(state, payload, rootState) {
+            state.loginId = payload.data;
+        }
     },
     actions: {
         postLogin({ state, dispatch, commit, getters, rootGetters }, data) {
             axios
                 .post(`${getters.getServer}/api/user/login`, data)
                 .then(res => {
-                    // handle success
-                    console.log(res.data);
+                    // console.log(res.data);
                     commit('changeToken', res.data);
-                    router.push("/");
+                    // handle success
+                    // 토큰을 헤더에 포함시켜서 유저 정보를 요청
+                    let config = {
+                        headers: {
+                            "token": getters.getToken,
+                        }
+                    }
+                    axios
+                        .get(`${getters.getServer}/api/user/checkToken`, config)
+                        .then(response => {
+                            console.log(response);
+                            commit('changeLoginId', response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        })
+
+                    // router.push("/");
                 })
                 .catch(err => {
                     // handle error

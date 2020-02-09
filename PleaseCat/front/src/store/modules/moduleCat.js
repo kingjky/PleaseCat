@@ -15,7 +15,7 @@ export default {
         */
         changeCatList(state, payload, rootState) {
             state.catList = payload;
-            console.log('Finally End getCatList')
+            // console.log('Finally End getCatList')
         },
     },
     // actions : 비동기 처리 logic

@@ -170,7 +170,6 @@ public class UserServiceImp implements UserService {
 	
 	  public String checkToken(String token) {
 	    	try {
-
 	    		return jwt.getUserPk(token); //수행 되면 정상
 	    	} catch (ExpiredJwtException exception) {
 	    		//토큰 만료
