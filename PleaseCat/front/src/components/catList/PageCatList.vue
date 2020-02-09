@@ -13,7 +13,6 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     created() {
-        this.getCatList();
     },
     data() {
         return {

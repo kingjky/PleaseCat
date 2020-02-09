@@ -12,17 +12,26 @@
 // import HelloWorld from './components/HelloWorld'
 import NavigationBar from './components/nav/NavigationBar'
 import TabBar from './components/tabbar/TabBar'
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   name: 'App',
+  data: () => ({
+    //
+  }),
+  created() {
+    this.getCatList();
+  },
   components: {
     // HelloWorld
     NavigationBar,
     TabBar
   },
-  data: () => ({
-    //
-  })
+  methods: {
+      ...mapActions('storeCat',[
+          'getCatList',
+      ]),
+  },
 }
 </script>
 <style lang="scss" scoped>
