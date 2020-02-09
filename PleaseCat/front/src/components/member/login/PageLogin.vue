@@ -45,19 +45,17 @@ export default {
     };
   },
   created() {
-        this.server = this.$store.state.server;
     },
   methods: {
-      ...mapActions([
-          'getLogin',
-      ]),
+    ...mapActions([
+        'getLogin',
+    ]),
     login() {
       // id, pw가 DB에 존재하는지 확인
       let { user_email, user_pw } = this;
       let data = {
         user_email,
         user_pw,
-        url: this.$store.getters.getServer,
       };
       this.getLogin(data);
       

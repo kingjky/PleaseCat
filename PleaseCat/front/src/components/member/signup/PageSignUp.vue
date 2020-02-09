@@ -20,7 +20,6 @@
         <input type="name" id="name" v-model="user_name" placeholder="이름을 입력하세요" />
       </div>
     </div>
-
     <div class="btn-wrap">
       <button class="btn-signup" v-on:click="signup">Create Account</button>
     </div>
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import UserApi from "../../../apis/UserApi";
+import UserApi from "@/apis/UserApi";
 export default {
   data() {
     return {
@@ -50,6 +49,9 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+        'postSignUp',
+    ]),
     signup() {
       let { user_id, user_pw, user_email, user_name } = this;
       let data = {
@@ -57,24 +59,24 @@ export default {
         user_pw,
         user_email,
         user_name,
-        url: this.$store.getters.getServer,
       };
+      this.postSignUp(data);
 
-      UserApi.requestSignup(
-        data,
-        res => {
-          if (res.status == 200) {
-            if ((res.data.state = "ok")) {
-              this.$router.push("/login");
-            } else {
-              // 실패
-            }
-          }
-        },
-        error => {
-          console.log("서버 에러");
-        }
-      );
+      // UserApi.requestSignup(
+      //   data,
+      //   res => {
+      //     if (res.status == 200) {
+      //       if ((res.data.state = "ok")) {
+      //         this.$router.push("/login");
+      //       } else {
+      //         // 실패
+      //       }
+      //     }
+      //   },
+      //   error => {
+      //     console.log("서버 에러");
+      //   }
+      // );
     }
   }
 };

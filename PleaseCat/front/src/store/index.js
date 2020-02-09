@@ -8,8 +8,6 @@ import router from '@/router/index'
 
 Vue.use(Vuex)
 
-// const moduleCat = 
-
 export default new Vuex.Store({
     modules: {
         storeCat: moduleCat,
@@ -45,6 +43,16 @@ export default new Vuex.Store({
                 })
                 .then(() => {
                     // always executed
+                });
+        },
+        postSignUp({ state, dispatch, commit, getters, rootGetters }, data) {
+            axios
+                .post(`${getters.getServer}/api/user/insert`, data)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.error(err);
                 });
         },
     },
