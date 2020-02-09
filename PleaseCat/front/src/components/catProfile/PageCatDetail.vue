@@ -45,45 +45,26 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        this.server = this.$store.state.server;
         this.pullCat();
         // console.log(this.$store.state.moduleCat);
         console.log(this.a);
     },
     data(){
         return{
-            server: '',
-            cat: {},
-            man: {},
             no: '',
+            selectedCat: {},
+            man: {},
         }
     },
     computed: {
-        a: state => state.moduleCat,
+        ...mapGetters('storeCat',[
+            'catList',
+        ]),
     },
     components: {
         RankComponent,
     },
     methods: {
-        pullCat(){
-            // console.log(this.no);
-            const vm = this;
-            axios
-                .get(`${this.server}/api/cat/searchCat/?Cat_no=${this.no}`)
-                .then(res => {
-                    // handle success
-                    vm.cat = res.data.data
-                    // console.log(vm.cat);
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    // console.log(vm.cat);
-                    this.pullMan();
-                });
-        },
         pullMan(){
             const vm = this;
             axios

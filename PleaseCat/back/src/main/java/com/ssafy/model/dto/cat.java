@@ -17,6 +17,9 @@ public class cat {
 	private int skin_disease;
 	private int neuter;
 	private int hurt;
+	private int count_posts;
+	private int count_likes;
+	private int count_followers;
 	
 	
 	
@@ -29,14 +32,16 @@ public class cat {
 	public cat() {
 		super();
 	}
-	public cat(int cat_no, int age, int cat_manager, String cat_name, String sex, String reg_date, String meal_time,
-			String cat_location, String cat_desc, String hair_color, String eye_color, int skin_disease, int neuter,
-			int hurt) {
+	
+	public cat(int cat_no, int age, int cat_manager, String cat_name, String cat_image, String sex, String reg_date,
+			String meal_time, String cat_location, String cat_desc, String hair_color, String eye_color,
+			int skin_disease, int neuter, int hurt, int count_posts, int count_likes, int count_followers) {
 		super();
 		this.cat_no = cat_no;
 		this.age = age;
 		this.cat_manager = cat_manager;
 		this.cat_name = cat_name;
+		this.cat_image = cat_image;
 		this.sex = sex;
 		this.reg_date = reg_date;
 		this.meal_time = meal_time;
@@ -47,7 +52,9 @@ public class cat {
 		this.skin_disease = skin_disease;
 		this.neuter = neuter;
 		this.hurt = hurt;
-		
+		this.count_posts = count_posts;
+		this.count_likes = count_likes;
+		this.count_followers = count_followers;
 	}
 	public int getCat_no() {
 		return cat_no;
@@ -133,14 +140,31 @@ public class cat {
 	public void setHurt(int hurt) {
 		this.hurt = hurt;
 	}
+	public int getCount_posts() {
+		return count_posts;
+	}
+	public void setCount_posts(int count_posts) {
+		this.count_posts = count_posts;
+	}
+	public int getCount_likes() {
+		return count_likes;
+	}
+	public void setCount_likes(int count_likes) {
+		this.count_likes = count_likes;
+	}
+	public int getCount_followers() {
+		return count_followers;
+	}
+	public void setCount_followers(int count_followers) {
+		this.count_followers = count_followers;
+	}
 	@Override
 	public String toString() {
 		return "cat [cat_no=" + cat_no + ", age=" + age + ", cat_manager=" + cat_manager + ", cat_name=" + cat_name
-				+ ", sex=" + sex + ", reg_date=" + reg_date + ", meal_time=" + meal_time + ", cat_location="
-				+ cat_location + ", cat_desc=" + cat_desc + ", hair_color=" + hair_color + ", eye_color=" + eye_color
-				+ ", skin_disease=" + skin_disease + ", neuter=" + neuter + ", hurt=" + hurt + "]";
-	}
-	
-	
-	
+				+ ", cat_image=" + cat_image + ", sex=" + sex + ", reg_date=" + reg_date + ", meal_time=" + meal_time
+				+ ", cat_location=" + cat_location + ", cat_desc=" + cat_desc + ", hair_color=" + hair_color
+				+ ", eye_color=" + eye_color + ", skin_disease=" + skin_disease + ", neuter=" + neuter + ", hurt="
+				+ hurt + ", count_posts=" + count_posts + ", count_likes=" + count_likes + ", count_followers="
+				+ count_followers + "]";
+	}	
 }

@@ -41,25 +41,23 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        this.getSelectedCat({
-            cat_no: this.no,
-        });
+        this.selectedCat = this.catList[this.no - 1];
     },
     data(){
         return{
             no: '',
+            selectedCat: '',
         }
     },
     computed:{
         ...mapGetters('storeCat',[
-            'selectedCat',
+            'catList',
         ]),
     },
     methods: {
         ...mapActions('storeCat',[
-            'getSelectedCat',
         ]),
-    }
+    },
 }
 </script>
 
