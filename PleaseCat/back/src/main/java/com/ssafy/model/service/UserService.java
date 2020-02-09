@@ -13,6 +13,6 @@ public interface UserService  {
 	public void deleteUser(int no);
 	public List<user> searchAllUser();
 	public user searchUserEmail(String user_email);
-	public String login(String user_email, String user_pw);
+	public String login(user User);
 	public String checkToken(String token);
 }

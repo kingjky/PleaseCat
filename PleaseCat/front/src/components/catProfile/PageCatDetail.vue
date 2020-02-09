@@ -6,31 +6,31 @@
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='require(`../../assets/images/cat/${cat.cat_no}.jpg`)' alt="" v-if="cat.cat_no">
-            <h1 id="catName" class="text">{{cat.cat_name}}</h1>
+            <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt="">
+            <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
         </div>
-        <div id="man">
+        <div id="man" v-if="catManager">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
-            <img id="manPhoto" :src='require(`../../assets/images/man/${man.user_no}.jpg`)' alt="" v-if="man.user_no">
-            <h1 id="manName" class="text">{{man.user_id}}</h1>
+            <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt="">
+            <h1 id="manName" class="text">{{catManager.user_id}}</h1>
         </div>
     </div>
     <div id="descView" class="text">
-        나이: {{cat.age}}
-        <br>털색: {{cat.hair_color}}
-        <br>눈색: {{cat.eye_color}}
-        <br>중성화: {{cat.neuter}}
-        <br>피부병:  {{cat.skin_disease}}
-        <br>다친곳: {{cat.hurt}}
-        <br>마지막 밥 먹은 시간: {{cat.meal_time}}
+        나이: {{selectedCat.age}}
+        <br>털색: {{selectedCat.hair_color}}
+        <br>눈색: {{selectedCat.eye_color}}
+        <br>중성화: {{selectedCat.neuter}}
+        <br>피부병:  {{selectedCat.skin_disease}}
+        <br>다친곳: {{selectedCat.hurt}}
+        <br>마지막 밥 먹은 시간: {{selectedCat.meal_time}}
     </div>
     <div id="mapView">
     </div>
     <div id="rankView">
-        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" :alt="rank"></div>
-        <RankComponent :rank='1' :name="'채집사'" :user_no='1' :score='100'/>
-        <RankComponent :rank='2' :name="'김집사'" :user_no='3' :score='97'/>
-        <RankComponent :rank='3' :name="'박집사'" :user_no='2' :score='89'/>
+        <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
+        <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
+        <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
+        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/>
     </div>
     <div class="emptySpace">-Tab Bar-</div>
 </div>
@@ -44,56 +44,33 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
     name: 'catProfile',
     created() {
-        this.server = this.$store.state.server;
-        this.no = this.$route.params.no;
-        this.pullCat();
+        this.no = this.$route.params.cat_no;
+        // this.server = this.$store.state.server;
+        // this.pullMan();
     },
     data(){
         return{
-            server: '',
-            cat: {},
-            man: {},
             no: '',
         }
+    },
+    computed:{
+        ...mapGetters('storeCat',[
+            'catList',
+        ]),
+        ...mapGetters('storeUser',[
+            'userList',
+        ]),
+        selectedCat: function() {
+            return this.catList[this.no - 1];
+        },
+        catManager: function() {
+            return this.userList[this.selectedCat.cat_manager];
+        },
     },
     components: {
         RankComponent,
     },
     methods: {
-        pullCat(){
-            console.log(this.no);
-            const vm = this;
-            axios
-                .get(`${this.server}/api/cat/searchCat/?cat_no=${vm.no}`)
-                .then(res => {
-                    // handle success
-                    vm.cat = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    // console.log(vm.cat);
-                    this.pullMan();
-                });
-        },
-        pullMan(){
-            const vm = this;
-            axios
-                .get(`${this.server}/api/user/searchUserNo/?user_no=${vm.cat.cat_manager}`)
-                .then(res => {
-                    // handle success
-                    vm.man = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    // console.log(vm.man);
-                });
-        }
     }
 }
 </script>

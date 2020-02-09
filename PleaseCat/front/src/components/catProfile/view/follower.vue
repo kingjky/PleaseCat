@@ -1,6 +1,5 @@
 <template>
 <div id="follower">
-
 </div>
 </template>
 
