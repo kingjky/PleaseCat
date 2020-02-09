@@ -47,7 +47,7 @@ const routes = [
     component: SignUp
   },
   {
-    path: '/catProfile',
+    path: '/catProfile/:cat_no',
     name: 'PageCatProfile',
     component: PageCatProfile
   },
@@ -57,7 +57,7 @@ const routes = [
   //   component: SelectPhoto
   // },
   {
-    path: '/catDetail',
+    path: '/catDetail/:cat_no',
     name: 'PageCatDetail',
     component: PageCatDetail
   },

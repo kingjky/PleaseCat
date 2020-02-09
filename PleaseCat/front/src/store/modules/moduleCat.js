@@ -11,7 +11,11 @@ export default {
     mutations: { // (state, rootState?)
         /*
             state.catList을 업데이트
+<<<<<<< HEAD
             호출 위치 : storeCat/actions.getCatList
+=======
+            호출 위치 : storeCat/getCatList
+>>>>>>> dev/front
         */
         changeCatList(state, payload, rootState) {
             console.log('Now I am in changeCatList in mutations in storeCat');
@@ -20,10 +24,13 @@ export default {
             state.catList = payload;
             console.log('Finally End getCatList')
         },
+<<<<<<< HEAD
         /*
             state.selectedCat을 업데이트
             호출 위치 : storeCat/actions.getSelectedCat
         */
+=======
+>>>>>>> dev/front
         changeSelectedCat(state, payload, rootState) {
             console.log('This is selectedCat from catList in state');
             console.log(state.catList[payload.no]);
@@ -33,7 +40,11 @@ export default {
     // actions : 비동기 처리 logic
     actions: { // ({ dispatch, commit, getters, rootGetters }) : context. 생략
         /*
+<<<<<<< HEAD
             DB에서 모든 고양이 정보를 읽어옴 -> storeCat/mutation.changeCatList 호출
+=======
+            DB에서 모든 고양이 정보를 읽어옴 -> mutation.changeCatList
+>>>>>>> dev/front
             호출 위치 : App.vue
         */
         getCatList({ state, dispatch, commit, getters, rootGetters }) {
@@ -59,7 +70,11 @@ export default {
                 });
         },
         /*
+<<<<<<< HEAD
             선택한 번호(data.cat_no)를 넘김 -> storeCat/mutation.changeSelectedCat 호출
+=======
+            Vuex에 가진 catList 중 선택한 번호(data.cat_no)의 고양이를 selectedCat에 저장
+>>>>>>> dev/front
             호출 위치 : PageCatProfile.vue
         */
         getSelectedCat({ state, dispatch, commit, getters, rootGetters }, data) {

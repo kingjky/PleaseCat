@@ -1,8 +1,8 @@
 <template>
-  <div class="card-box" @click="selectCat({n: src})">
-      <router-link :to="{name:'PageCatProfile'}">
+  <div class="card-box">
+      <router-link :to="`/catProfile/${src}`">
       <div class="card" :class="{hover: isHovering}" @mouseover="isHovering=true" @mousemove="isHovering=true" @mouseout="isHovering=false">
-          <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cat/${src}.jpg`)+')'}"></div>
+          <div class="bg" :style="{'background-image': 'url('+require(`@/assets/images/cats/_profile/${src}.jpg`)+')'}"></div>
           <div class="text name">
               <h3>{{ name }}</h3>
           </div>
@@ -11,7 +11,7 @@
           </div>
           <div class="text desc2">
               <img src=""/>
-              <h5>{{ no }}</h5>
+              <h5>{{ desc2 }}</h5>
           </div>
       </div>
       </router-link>
@@ -30,15 +30,12 @@ export default {
   },
   computed: {
       ...mapGetters({
-          no: 'selectedCatNo',
       })
   },
   methods: {
       ...mapActions([
-          'selectCat',
       ]),
       ...mapMutations([
-          'selectCat',
       ])
   }
 }
@@ -50,6 +47,11 @@ export default {
     display: inline-block;
     position: relative;
     margin: 10px;
+    // width: 43vw;
+    @media screen and (max-width: 500px) {
+        width: 90%;
+        height: 30vw;
+    }
     width: 43vw;
     height: 43vw;
     // border: 1px solid red;
@@ -92,12 +94,15 @@ export default {
         border-radius: 30px;
         height: 100%;
         .bg {
-            top: -30px;
-            left: -100px;
+            // top: -30px;
+            // left: -100px;
             width: calc(100%);
             height: calc(100%);
-            background-repeat: no-repeat;
-            background-position: 0 0;
+            // background-repeat: no-repeat;
+            // background-position: 0 0;
+            @media screen and (max-width: 500px) {
+                background-position-y: -20vw;
+            }
             background-size: cover;
             opacity: 1.0;
             transition:opacity 0.3s;
