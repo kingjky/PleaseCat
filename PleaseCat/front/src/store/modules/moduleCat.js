@@ -11,40 +11,44 @@ export default {
     mutations: { // (state, rootState?)
         /*
             state.catList을 업데이트
-            호출 위치 : storeCat/getCatList
+            호출 위치 : storeCat/actions.getCatList
         */
         changeCatList(state, payload, rootState) {
-            console.log('Now I am in changeCatList in mutations in storeCat');
-            console.log('And this is payload from getCatList in actions')
-            console.log(payload)
             state.catList = payload;
-            console.log('Finally End getCatList')
+            //    console.log('Now I am in changeCatList in mutations in storeCat');
+            //    console.log('And this is payload from getCatList in actions')
+            //    console.log(payload)
+            //    console.log('Finally End getCatList')
         },
+        /*
+            state.selectedCat을 업데이트
+            호출 위치 : storeCat/actions.getSelectedCat
+        */
         changeSelectedCat(state, payload, rootState) {
-            console.log('This is selectedCat from catList in state');
-            console.log(state.catList[payload.no]);
+            // console.log('This is selectedCat from catList in state');
+            // console.log(state.catList[payload.no]);
             state.selectedCat = state.catList[payload.no - 1];
         },
     },
     // actions : 비동기 처리 logic
     actions: { // ({ dispatch, commit, getters, rootGetters }) : context. 생략
         /*
-            DB에서 모든 고양이 정보를 읽어옴 -> mutation.changeCatList
+            DB에서 모든 고양이 정보를 읽어옴 -> storeCat/mutation.changeCatList 호출
             호출 위치 : App.vue
         */
         getCatList({ state, dispatch, commit, getters, rootGetters }) {
-            console.log('I am in getCatList in actions in storeCat');
-            console.log('This is getServer in rootGetters');
-            console.log(rootGetters.getServer);
+            // console.log('I am in getCatList in actions in storeCat');
+            // console.log('This is getServer in rootGetters');
+            // console.log(rootGetters.getServer);
             axios
                 .get(`${rootGetters.getServer}/api/cat/searchAll`)
                 .then(res => {
                     // handle success
-                    console.log('This is catList now');
-                    console.log(state.catList);
+                    // console.log('This is catList now');
+                    // console.log(state.catList);
 
-                    console.log('And This is res.data.data now');
-                    console.log(res.data.data);
+                    // console.log('And This is res.data.data now');
+                    // console.log(res.data.data);
                     commit('changeCatList', res.data.data);
                 })
                 .catch(err => {
@@ -55,7 +59,7 @@ export default {
                 });
         },
         /*
-            Vuex에 가진 catList 중 선택한 번호(data.cat_no)의 고양이를 selectedCat에 저장
+            선택한 번호(data.cat_no)를 넘김 -> storeCat/mutation.changeSelectedCat
             호출 위치 : PageCatProfile.vue
         */
         getSelectedCat({ state, dispatch, commit, getters, rootGetters }, data) {

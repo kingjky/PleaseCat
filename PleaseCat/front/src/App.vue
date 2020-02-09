@@ -21,6 +21,7 @@ export default {
   }),
   created() {
     this.getCatList();
+    this.getUserList();
   },
   components: {
     // HelloWorld
@@ -30,6 +31,9 @@ export default {
   methods: {
       ...mapActions('storeCat',[
           'getCatList',
+      ]),
+      ...mapActions('storeUser',[
+          'getUserList',
       ]),
   },
 }
