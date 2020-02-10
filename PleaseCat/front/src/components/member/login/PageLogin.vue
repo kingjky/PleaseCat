@@ -57,30 +57,6 @@ export default {
         user_email,
         user_pw,
       };
-<<<<<<< HEAD
-
-      UserApi.requestLogin(
-        this.server,
-        data,
-        res => {
-          if (res.status == 200) {
-            if (res.data.state == "ok") {
-            console.log("pk")
-              //성공
-              this.$router.push("/");
-            } else {
-              //실패
-            }
-          }
-        },
-        error => {
-          //요청이 끝나면 버튼 활성화
-          // console.log("리턴")
-          console.log("서버 에러 입니다");
-          this.isSubmit = true;
-        }
-      );
-=======
       this.postLogin(data);
       
       // UserApi.requestLogin(
@@ -104,7 +80,6 @@ export default {
       //     this.isSubmit = true;
       //   }
       // );
->>>>>>> dev/front
     }
   }
 };
