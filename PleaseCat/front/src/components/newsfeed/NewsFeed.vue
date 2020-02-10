@@ -170,7 +170,6 @@ const unLikeDisabledApi = "/api/Unlikes/delete?post_no=";
 
 export default {
   created() {
-    console.log("urlurl : " + this.url);
     axios.get(this.url + api2, {}).then(({ data }) => {
       this.isLike = data.data;
     }),

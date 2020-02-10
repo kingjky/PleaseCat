@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +54,7 @@ public class UserRestController {
 	
 	@ApiOperation("새로운 유저 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertUser(@RequestBody MultipartFile catImg, user User) throws Exception{
+	public ResponseEntity<Map<String, Object>> insertUser(MultipartFile catImg, @RequestBody user User) throws Exception{
 		userService.insertUser(catImg,User);
 		return handleSuccess("유저 등록 완료");
 	}
@@ -77,9 +78,9 @@ public class UserRestController {
 	}
 	
 	@ApiOperation("로그인 처리")
-	@GetMapping("/login")
-	public ResponseEntity<Map<String, Object>> searchUser(@RequestParam String user_email, @RequestParam String user_pw ) throws Exception{
-		return handleSuccess(userService.login(user_email,user_pw));
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> searchUser(@RequestBody user User) throws Exception{
+		return handleSuccess(userService.login(User));
 	}
 	
 	@ApiOperation("회원정보 삭제")
@@ -98,7 +99,7 @@ public class UserRestController {
 	
 	@ApiOperation("토큰을 확인")
 	@GetMapping("/checkToken")
-	public ResponseEntity<Map<String, Object>> checkToken(@RequestParam String token) throws Exception{
+	public ResponseEntity<Map<String, Object>> checkToken(@RequestHeader String token) throws Exception{
 		return handleSuccess(userService.checkToken(token));
 	}
 	

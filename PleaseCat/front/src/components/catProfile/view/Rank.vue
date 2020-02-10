@@ -1,7 +1,7 @@
 <template>
   <div id="rank-box">
       <span class="text">
-          <div v-if="user_no>0" class="square" :class="{rank1 : (rank==1), rank2 : (rank==2), rank3 : (rank==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" :alt="medal"></div>
+          <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" alt="medal"></div>
         <!-- <img class="square" :src='require(`@/assets/images/icons/rankMedal.jpg`)' alt=""> -->
       </span>
       <span>
@@ -15,10 +15,13 @@
 <script>
 export default {
     name: 'Rank',
+    props: ['ranking', 'name', 'user_no', 'score'],
     data() {
         return{
             
         }
+    },
+    created() {
     },
 }
 </script>

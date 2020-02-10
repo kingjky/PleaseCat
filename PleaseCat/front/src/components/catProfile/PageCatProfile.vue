@@ -3,32 +3,32 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="profileView">
         <div id="leftPart">
-            <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
-            <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
-            <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='cat.cat_no!=null?require(`@/assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
+            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{cat.cat_name}}</h1></div>
+            <div id="name"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
                 </span>
                 <span id="detailButton" class="btn text">
-                    <router-link :to="{name:'PageCatDetail', params: {no: no}}"><button>상세 정보</button></router-link>
+                    <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
                 </span>
             </div>
         </section>
     </div>
     <div id="summaryView" class="text">
-        <span class="summary">게시물<br>120</span>
-        <span class="summary">팔로우<br>345</span>
-        <span class="summary">좋아요<br>3.4k</span>
+        <span class="summary">게시물<br>{{ selectedCat.count_posts }}</span>
+        <span class="summary">팔로우<br>{{ selectedCat.count_followers }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.count_likes }}</span>
     </div>
     <div id="photoView">
-        <div id="photoList" v-if="cat.cat_no" >
-            <span class="photo" v-for="n in cnt_pics" :key=n :style="{'background-image' : `url(${require(`@/assets/images/cats/${cat.cat_no}/${n}.jpg`)})`}" :alt='`pic${n}`'>
-            <router-link :to="{name:''}"></router-link>
+        <div id="photoList">
+            <span v-for="n in selectedCat.count_posts" :key=n>
+                <router-link :to="{name:''}">
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}"  :alt='`pic${n}`'>
+                    </span>
+                </router-link>
             </span>
         </div>
     </div>
@@ -43,40 +43,23 @@ import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
     name: 'catProfile',
     created() {
-        this.pullCat();
+        this.no = this.$route.params.cat_no;
     },
     data(){
         return{
-            cat: {},
-            cnt_pics: 10,
+            no: '',
         }
     },
     computed:{
-        ...mapGetters({
-            url: 'getServer',
-        })
+        ...mapGetters('storeCat',[
+            'catList',
+        ]),
+        selectedCat: function() {
+            return this.catList[this.no - 1];
+        },
     },
     methods: {
-        pullCat(){
-            const vm = this;
-            console.log('current cat no : ' + this.no);
-            axios
-                .get(`${this.url}/api/cat/searchCat/?Cat_no=1`)
-                // .get(`${vm.url}/api/cat/searchCat/?Cat_no=${vm.no}`)
-                .then(res => {
-                    // handle success
-                    vm.cat = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                    console.log(err);
-                })
-                .then(() => {
-                    // always executed
-                    console.log(vm.cat);
-                });
-        },
-    }
+    },
 }
 </script>
 
@@ -182,6 +165,7 @@ export default {
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;
+            background-size: cover;
             // max-width: 100%; /* Scale up to fill container width */
             // max-height: 100%; /* Scale up to fill container height */
             // min-width: 100%; /* Scale up to fill container width */
