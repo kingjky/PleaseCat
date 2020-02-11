@@ -18,9 +18,9 @@
         </section>
     </div>
     <div id="summaryView" class="text">
-        <span class="summary">게시물<br>{{ selectedCat.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ selectedCat.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ selectedCat.count_likes }}</span>
+        <span class="summary">게시물<br>{{ selectedCat.countPosts }}</span>
+        <span class="summary">팔로우<br>{{ selectedCat.countFollowers }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.countLikes }}</span>
     </div>
     <div id="photoView">
         <div id="photoList">
