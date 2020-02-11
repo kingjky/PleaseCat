@@ -15,48 +15,45 @@ export default new Vuex.Store({
         storePost: modulePost,
     },
     state: {
-        server: 'http://192.168.219.100:8080',
+        server: 'http://localhost:8080',
         token: '',
         loginId: '',
+        isLogin: false,
     },
     getters: {
         getServer: state => { return state.server },
         getToken: state => { return state.token },
         getLoginId: state => { return state.loginId },
+        getIsLogin: state => { return state.isLogin },
     },
     mutations: {
-        changeToken(state, payload, rootState) {
+        changeToken(state, payload) {
             state.token = payload.data;
         },
         changeLoginId(state, payload, rootState) {
             state.loginId = payload.data;
+            state.isLogin = true;
+        },
+        changeLogout(state) {
+            state.isLogin = false;
+            state.loginId = '';
+            state.token = '';
+            localStorage.removeItem('savedToken');
         }
     },
     actions: {
+        logout({ state, dispatch, commit, getters, rootGetters }){
+            commit('changeLogout');
+        },
         postLogin({ state, dispatch, commit, getters, rootGetters }, data) {
             axios
                 .post(`${getters.getServer}/api/user/login`, data)
                 .then(res => {
-                    // console.log(res.data);
-                    commit('changeToken', res.data);
                     // handle success
-                    // 토큰을 헤더에 포함시켜서 유저 정보를 요청
-                    let config = {
-                        headers: {
-                            "token": getters.getToken,
-                        }
-                    }
-                    axios
-                        .get(`${getters.getServer}/api/user/checkToken`, config)
-                        .then(response => {
-                            console.log(response);
-                            commit('changeLoginId', response.data);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        })
-
-                    // router.push("/");
+                    // console.log(res.data);
+                    let token = res.data.data;
+                    localStorage.setItem('savedToken', token);
+                    dispatch('checkToken');
                 })
                 .catch(err => {
                     // handle error
@@ -76,6 +73,31 @@ export default new Vuex.Store({
                     console.error(err);
                 });
         },
+        checkToken({ state, dispatch, commit, getters, rootGetters }) {
+            // 토큰을 헤더에 포함시켜서 유저 정보를 요청
+            let token = localStorage.getItem('savedToken');
+            
+            let config = {
+                headers: {
+                    "token": token,
+                }
+            }
+            axios
+                .get(`${getters.getServer}/api/user/checkToken`, config)
+                .then(response => {
+                    console.log(response);
+                    console.log(response.data.data);
+                    if(response.data.state === 'ok'){
+                        commit('changeLoginId', response.data);
+                        router.push("/");
+                    } else {
+                        dispatch('logout');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        }
     },
 })
 

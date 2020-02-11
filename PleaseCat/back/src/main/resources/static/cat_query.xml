@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.model.dao.CatDao" >
 	
 	<insert id ="insertCat" parameterType="cat">
-	insert into cat(cat_name,cat_image,age,sex,reg_date,meal_time,skin_disease,
+	insert into CAT(cat_name,cat_image,age,sex,reg_date,meal_time,skin_disease,
 					cat_location, cat_manager, neuter, cat_desc, hurt,
 					hair_color, eye_color) 
 				values(  <!-- INT로 써줘서 오류 났었음 INTEGER해줘야함 -->
@@ -26,7 +26,7 @@
 	</insert>
 	
 	<update id ="updateCat" parameterType="cat">
-	update cat set cat_name = #{cat_name:VARCHAR},
+	update CAT set cat_name = #{cat_name:VARCHAR},
 						cat_image=#{cat_image:VARCHAR},
 				   		age=#{age:INTEGER},
 				   		sex=#{sex:VARCHAR},
@@ -43,15 +43,15 @@
 	</update>
    
     <select id = "searchCat" parameterType="int" resultType="cat">
-    	select * from cat where cat_no=#{no}
+    	select * from CAT where cat_no=#{no}
     </select>
     
     <select id = "searchAllCat" resultType="cat">
-    	select * from cat
+    	select * from CAT
     </select>
     
     <delete id="deleteCat" parameterType="int">
-    	delete from cat where cat_no=#{no}
+    	delete from CAT where cat_no=#{no}
     </delete>
     
 </mapper>
