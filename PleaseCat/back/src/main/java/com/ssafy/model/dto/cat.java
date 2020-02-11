@@ -20,22 +20,15 @@ public class cat {
 	private int count_posts;
 	private int count_likes;
 	private int count_followers;
+	private double cat_x;
+	private double cat_y;
 	
 	
-	
-	public String getCat_image() {
-		return cat_image;
-	}
-	public void setCat_image(String cat_image) {
-		this.cat_image = cat_image;
-	}
-	public cat() {
-		super();
-	}
 	
 	public cat(int cat_no, int age, int cat_manager, String cat_name, String cat_image, String sex, String reg_date,
 			String meal_time, String cat_location, String cat_desc, String hair_color, String eye_color,
-			int skin_disease, int neuter, int hurt, int count_posts, int count_likes, int count_followers) {
+			int skin_disease, int neuter, int hurt, int count_posts, int count_likes, int count_followers, double cat_x,
+			double cat_y) {
 		super();
 		this.cat_no = cat_no;
 		this.age = age;
@@ -55,6 +48,17 @@ public class cat {
 		this.count_posts = count_posts;
 		this.count_likes = count_likes;
 		this.count_followers = count_followers;
+		this.cat_x = cat_x;
+		this.cat_y = cat_y;
+	}
+	public String getCat_image() {
+		return cat_image;
+	}
+	public void setCat_image(String cat_image) {
+		this.cat_image = cat_image;
+	}
+	public cat() {
+		super();
 	}
 	public int getCat_no() {
 		return cat_no;
@@ -158,6 +162,18 @@ public class cat {
 	public void setCount_followers(int count_followers) {
 		this.count_followers = count_followers;
 	}
+	public double getCat_x() {
+		return cat_x;
+	}
+	public void setCat_x(double cat_x) {
+		this.cat_x = cat_x;
+	}
+	public double getCat_y() {
+		return cat_y;
+	}
+	public void setCat_y(double cat_y) {
+		this.cat_y = cat_y;
+	}
 	@Override
 	public String toString() {
 		return "cat [cat_no=" + cat_no + ", age=" + age + ", cat_manager=" + cat_manager + ", cat_name=" + cat_name
@@ -165,6 +181,6 @@ public class cat {
 				+ ", cat_location=" + cat_location + ", cat_desc=" + cat_desc + ", hair_color=" + hair_color
 				+ ", eye_color=" + eye_color + ", skin_disease=" + skin_disease + ", neuter=" + neuter + ", hurt="
 				+ hurt + ", count_posts=" + count_posts + ", count_likes=" + count_likes + ", count_followers="
-				+ count_followers + "]";
-	}	
+				+ count_followers + ", cat_x=" + cat_x + ", cat_y=" + cat_y + "]";
+	}
 }

@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.model.dao.PostDao" >
 	
 	<insert id ="insertPost" parameterType="post">
-	insert into post(user_no,cat_no, post_image, post_time, post_content,post_like,post_unlike,post_location,post_report) 
+	insert into POST(user_no,cat_no, post_image, post_time, post_content,post_like,post_unlike,post_location,post_report) 
 				values(  <!-- INT로 써줘서 오류 났었음 INTEGER해줘야함 -->
 					  #{user_no:INTEGER}
 					  ,#{cat_no:INTEGER}
@@ -19,40 +19,40 @@
 	</insert>
 	
 	<update id ="updatePost" parameterType="post">
-	update post set post_content=#{post_content:VARCHAR}) 
+	update POST set post_content=#{post_content:VARCHAR}) 
 	where	post_no = #{post_no:INTEGER}	
 	</update>
 	
 	<update id ="updateLikes" parameterType="post">
-		UPDATE post 
+		UPDATE POST 
 		SET post_like=#{post_like}
 		WHERE post_no=#{post_no};
 	</update>
 
 	<update id ="updateUnLikes" parameterType="post">
-		UPDATE post 
+		UPDATE POST 
 		SET post_unlike=#{post_unlike}
 		WHERE post_no=#{post_no};
 	</update>
 	
 	<delete id="deletePost" parameterType="int">
-		delete from post where post_no=#{no}
+		delete from POST where post_no=#{no}
 	</delete>
 	
 	<select id = "searchPost" parameterType="int" resultType="post">
-    	select * from post where post_no=#{no}
+    	select * from POST where post_no=#{no}
     </select>
    
     <select id = "searchPostUser" parameterType="int" resultType="post">
-    	select * from post where user_no=#{no}
+    	select * from POST where user_no=#{no}
     </select>
     
     <select id = "searchPostCat" parameterType="int" resultType="post">
-    	select * from post where cat_no=#{no}
+    	select * from POST where cat_no=#{no}
     </select>
     
     <select id = "searchAllPost" resultType="post">
-    	select * from post 
+    	select * from POST 
     </select>
 
     

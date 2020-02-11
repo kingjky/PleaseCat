@@ -5,19 +5,19 @@
 <mapper namespace="com.ssafy.model.dao.ReportDao" >
 	
 	<insert id ="insertReport" parameterType="hashmap" >
-		insert into report (user_no,post_no)
+		insert into REPORT (user_no,post_no)
 					values(#{user_no:INTEGER},
 						   #{post_no:INTEGER})	
 	</insert>
    
     <select id = "searchReport"  parameterType="hashmap" resultType="unlikes">
-    	SELECT * FROM report 
+    	SELECT * FROM REPORT 
     	WHERE user_no=#{user_no} 
     	AND post_no=#{post_no}
     </select>
     
     <delete id="deleteReport" parameterType="hashmap">
-    	DELETE FROM report
+    	DELETE FROM REPORT
     	WHERE user_no=#{user_no:INTEGER}
     	AND post_no=#{post_no:INTEGER}
     </delete>

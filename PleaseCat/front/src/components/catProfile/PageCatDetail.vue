@@ -1,8 +1,8 @@
 <template>
-<div id="catProfile">
+<div id="catProfile" v-if="selectedCat">
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="photoView">
-        <div id="cat">
+        <div id="cat" >
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
@@ -25,6 +25,7 @@
         <br>마지막 밥 먹은 시간: {{selectedCat.meal_time}}
     </div>
     <div id="mapView">
+        <mapComponent v-if="postList" txt="readPost" :pos="positions" />
     </div>
     <div id="rankView">
         <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import mapComponent from '@/components/catMap/map'
 import RankComponent from './view/Rank';
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
@@ -60,15 +62,38 @@ export default {
         ...mapGetters('storeUser',[
             'userList',
         ]),
+        ...mapGetters('storePost',[
+            'postList',
+        ]),
         selectedCat: function() {
             return this.catList[this.no - 1];
         },
         catManager: function() {
-            return this.userList[this.selectedCat.cat_manager];
+            if(this.selectedCat != null){
+                return this.userList[this.selectedCat.cat_manager];
+            } else {
+                return null;
+            }
         },
+        positions: function() {
+            let array = [];
+            if(this.postList != null){
+                this.postList.forEach(post => {
+                    if(post.cat_no == this.no){
+                        array.push({
+                            no: post.post_no,
+                            pos_x: post.post_x,
+                            pos_y: post.post_y,
+                        })
+                    }
+                });
+            }
+            return array;
+        }
     },
     components: {
         RankComponent,
+        mapComponent,
     },
     methods: {
     }
@@ -155,5 +180,9 @@ export default {
     .circle {
         border-radius: 100%;
     }
+}
+#mapView{
+    width: 80vw;
+    height: 80vw;
 }
 </style>
