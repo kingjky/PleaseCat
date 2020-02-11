@@ -27,29 +27,16 @@ export default {
             'catList',
         ]),
         positions: function() {
-            // console.log(Math.PI)
             let array = [];
-            // function function_one() {
-            //     function_two(); // considering the next alert, I figured you wanted to call function_two first
-            //     console.log("The function called 'function_one' has been called.");
-            // }
-            // function function_two() {
-            //     console.log("The function called 'function_two' has been called.");
-            // }
-            // function_one();
 
             function deg2rad(deg) {
-                // console.log(deg * Math.PI / 180.0);
-                // console.log(deg * Math.PI / 180.0);
                 return deg * Math.PI / 180.0;
             }
             function rad2deg(rad) {
-                // console.log("rad2deg")
                 return (rad * 180 / Math.PI);
             }
             function distance(lat1, lon1, lat2, lon2) {
                 let theta = lon1 - lon2;
-                // console.log(rad2deg(lat1));
                 let dist
                 dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
                 
