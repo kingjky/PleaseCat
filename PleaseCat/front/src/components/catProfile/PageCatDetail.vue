@@ -181,4 +181,8 @@ export default {
         border-radius: 100%;
     }
 }
+#mapView{
+    width: 80vw;
+    height: 80vw;
+}
 </style>

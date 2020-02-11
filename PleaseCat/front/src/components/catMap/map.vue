@@ -42,11 +42,12 @@ export default {
         };
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        // var map = new kakao.maps.StaticMap(mapContainer, mapOption); // 지도를 생성합니다
 
         // var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
         var markerImages = [];
         for (var i = 0; i < this.positions.length; i ++) {
-            var imageSrc = require(`@/assets/images/cats/_profile/${i+1}.jpg`), // 마커이미지의 주소입니다    
+            var imageSrc = require(`@/assets/images/cats/_profile/${this.positions[i].no}.jpg`), // 마커이미지의 주소입니다    
             imageSize = new kakao.maps.Size(60, 60), // 마커이미지의 크기입니다
             imageOption = {offset: new kakao.maps.Point(30, 30)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
             
@@ -109,16 +110,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.emptySpace {
-    // display: block;
-    height: 70px;
-    text-align: center;
-}
-#map{
-    width:100%;
+#map {
+    width: 100%;
     height: 100%;
 }
-#mapSection{
+#mapSection {
     width: 100%;
     height: 100%;
 }
