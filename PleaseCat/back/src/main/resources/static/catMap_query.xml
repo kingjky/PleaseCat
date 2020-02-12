@@ -6,6 +6,6 @@
 
 	<select id="searchAllCatLocation" resultType="catMap">
 		SELECT * 
-		FROM cat 
+		FROM CAT 
 	</select>
 </mapper>

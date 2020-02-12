@@ -52,6 +52,7 @@ export default {
     ...mapActions([
         'postSignUp',
     ]),
+    
     signup() {
       let { user_id, user_pw, user_email, user_name } = this;
       let data = {

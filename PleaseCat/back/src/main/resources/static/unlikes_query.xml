@@ -4,24 +4,24 @@
 	
 <mapper namespace="com.ssafy.model.dao.UnlikesDao" >
 	<insert id ="insertUnlikes" parameterType="hashmap" >
-		insert into unlikes (user_no,post_no)
+		insert into UNLIKES (user_no,post_no)
 					values(#{user_no:INTEGER},
 						   #{post_no:INTEGER})	
 	</insert>
 	
 	<select id = "searchAllUnLikes" parameterType="int" resultType="unlikes">
-    	select * from unlikes 
+    	select * from UNLIKES 
     	where user_no=#{user_no}
     </select>
    
     <select id = "searchUnlikes"  parameterType="hashmap" resultType="unlikes">
-    	SELECT * FROM unlikes 
+    	SELECT * FROM UNLIKES 
     	WHERE user_no=#{user_no} 
     	AND post_no=#{post_no}
     </select>
     
     <delete id="deleteUnlikes" parameterType="hashmap">
-    	DELETE FROM unlikes
+    	DELETE FROM UNLIKES
     	WHERE user_no=#{user_no:INTEGER}
     	AND post_no=#{post_no:INTEGER}
     </delete>
