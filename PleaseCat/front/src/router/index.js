@@ -7,11 +7,12 @@ import Home from '../components/newsfeed/Home.vue'
 import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
-import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
+import AddPost from '../components/post/addPost/PageAddPost'
 import PageCatMap from '../components/catMap/PageMap.vue'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 import CatPostMap from '@/components/catMap/catPostMap.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
+import ModalParent from '../components/post/addPost/ModalParent'
 
 Vue.use(VueRouter)
 
@@ -53,8 +54,8 @@ const routes = [
   },
   {
     path: '/addPost',
-    name: 'SelectPhoto',
-    component: SelectPhoto
+    name: 'AddPost',
+    component: AddPost
   },
   {
     path: '/catDetail/:cat_no',
@@ -75,6 +76,11 @@ const routes = [
     path: '/addCat',
     name: 'PageAddCat',
     component: PageAddCat
+  },
+  {
+    path: '/modalParent',
+    name: 'ModalParent',
+    component: ModalParent
   },
   // {
   //   path: '/about',
