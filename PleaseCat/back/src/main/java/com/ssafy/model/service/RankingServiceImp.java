@@ -1,12 +1,13 @@
 package com.ssafy.model.service;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.model.dao.RankingDao;
+import com.ssafy.model.dao.UserDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.ranking;
 
@@ -15,7 +16,9 @@ import com.ssafy.model.dto.ranking;
 public class RankingServiceImp implements RankingService {
 
 	@Autowired
-	private RankingDao dao;
+	private RankingDao rankDao;
+	@Autowired
+	private UserDao userDao;
 	
 	HashMap<String, Object> map;
 	
@@ -25,7 +28,7 @@ public class RankingServiceImp implements RankingService {
 			map.put("cat_no", cat_no);
 			map.put("user_no", user_no);
 			
-			ranking find = dao.searchRanking(map);
+			ranking find = rankDao.searchRanking(map);
 			
 			if(find==null) {
 				throw new PleaseCatException("랭크시스템에 없음");
@@ -42,10 +45,14 @@ public class RankingServiceImp implements RankingService {
 	@Override
 	public List<ranking> searchRankingCat(int cat_no) {
 		try {
-			List<ranking> list = dao.searchRankingCat(cat_no);
+			List<ranking> list = rankDao.searchRankingCat(cat_no);
+//			System.out.println(list.toString());
 			if(list==null) {
 				throw new PleaseCatException("고양이 점수를 가진 회원들이 없음");
 			}else {
+				for (ranking rank : list) {
+					rank.setUser_id(userDao.searchUser(rank.getUser_no()).getUser_id());
+				}
 				return list;
 			}
 		} catch (Exception e) {
@@ -63,7 +70,7 @@ public class RankingServiceImp implements RankingService {
 				map = new HashMap<String, Object>();
 				map.put("cat_no", cat_no);
 				map.put("user_no", user_no);
-				dao.insertRanking(map);
+				rankDao.insertRanking(map);
 				System.out.println("new Rank 등록");
 			}else {
 				throw new PleaseCatException("이미 존재합니다.");
@@ -84,7 +91,7 @@ public class RankingServiceImp implements RankingService {
 			map = new HashMap<String, Object>();
 			map.put("cat_no", cat_no);
 			map.put("user_no", user_no);
-			dao.deleteRanking(map);
+			rankDao.deleteRanking(map);
 			System.out.println("rank 삭제합니다.");
 		}else {
 			throw new PleaseCatException("삭제할 rank가 존재하지 않습니다.");
@@ -107,7 +114,7 @@ public class RankingServiceImp implements RankingService {
 				map.put("user_no", user_no);
 				map.put("rank_point", rank_point);
 				
-				dao.updateRanking(map);
+				rankDao.updateRanking(map);
 				System.out.println("ranking 점수를 수정했습니다.");
 			}
 		}catch (Exception e) {

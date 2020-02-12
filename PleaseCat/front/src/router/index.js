@@ -11,6 +11,7 @@ import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
 import PageNearMap from '@/components/catMap/PageNearMap'
+import PageMyProfile from '@/components/userProfile/PageMyProfile'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
     path: '/addPost',
     name: 'PageAddCat',
     component: PageAddCat
+  },
+  {
+    path: '/myProfile',
+    name: 'PageMyProfile',
+    component: PageMyProfile
   },
   // {
   //   path: '/about',

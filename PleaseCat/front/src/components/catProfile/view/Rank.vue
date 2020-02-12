@@ -22,6 +22,8 @@ export default {
         }
     },
     created() {
+        console.log("점수: " + this.score);
+        console.log("이름: " + this.name);
     },
 }
 </script>

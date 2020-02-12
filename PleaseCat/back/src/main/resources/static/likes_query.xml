@@ -10,9 +10,14 @@
 						   #{post_no:INTEGER})	
 	</insert>
    	
-   	<select id = "searchAllLikes" parameterType="int" resultType="likes">
+   	<select id = "searchAllLikesOfUser" parameterType="int" resultType="likes">
     	select * from LIKES 
     	where user_no=#{user_no}
+    </select>
+    
+   	<select id = "searchAllLikesOfPost" parameterType="int" resultType="likes">
+    	select * from LIKES 
+    	where post_no=#{post_no}
     </select>
    	
     <select id = "searchLikes"  parameterType="hashmap" resultType="likes">

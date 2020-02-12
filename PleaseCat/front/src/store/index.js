@@ -17,7 +17,7 @@ export default new Vuex.Store({
     state: {
         server: 'http://70.12.246.120:8080',
         token: '',
-        loginInfo: '',
+        loginInfo: null,
         isLogin: false,
     },
     getters: {
@@ -86,14 +86,14 @@ export default new Vuex.Store({
             axios
                 .get(`${getters.getServer}/api/user/checkToken`, config)
                 .then(response => {
-                    console.log(response.data);
                     var obj = eval("("+response.data.data+")");
-                    console.log(obj);
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
+                        dispatch('storePost/getUserPosts', state.loginInfo)
                     } else {
                         dispatch('logout');
                     }
+                    console.log(obj);
                 })
                 .catch(error => {
                     console.error(error);

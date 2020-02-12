@@ -14,6 +14,7 @@ public class post {
 	private String post_location;
 	private double post_x;
 	private double post_y;
+	
 	public post() {}
 	public post(int post_no, int user_no, int cat_no, String post_image, String post_time, String post_content,
 			int post_like, int post_unlike, int post_report, String post_location, double post_x, double post_y) {
@@ -109,5 +110,6 @@ public class post {
 				+ ", post_time=" + post_time + ", post_content=" + post_content + ", post_like=" + post_like
 				+ ", post_unlike=" + post_unlike + ", post_report=" + post_report + ", post_location=" + post_location
 				+ ", post_x=" + post_x + ", post_y=" + post_y + "]";
-	}	
+	}
+	
 }

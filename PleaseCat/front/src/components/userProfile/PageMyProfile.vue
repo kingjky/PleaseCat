@@ -1,12 +1,12 @@
 <template>
-<div id="catProfile">
+<div id="myProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView">
+    <div id="profileView" v-if="(getLoginInfo != null)">
         <div id="leftPart">
-            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
+            <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
         </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
+            <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -17,16 +17,16 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text">
-        <span class="summary">게시물<br>{{ selectedCat.countPosts }}</span>
-        <span class="summary">팔로우<br>{{ selectedCat.countFollowers }}</span>
-        <span class="summary">좋아요<br>{{ selectedCat.countLikes }}</span>
+    <div id="summaryView" class="text" v-if="(getLoginInfo != null)">
+        <span class="summary">게시물<br>{{ getLoginInfo.count_posts }}</span>
+        <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
+        <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
     </div>
-    <div id="photoView">
+    <div id="photoView" v-if="(userPosts != null)">
         <div id="photoList">
-            <span v-for="n in selectedCat.count_posts" :key=n>
+            <span v-for="(post, idx) in userPosts" :key="idx">
                 <router-link :to="{name:''}">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}"  :alt='`pic${n}`'>
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -41,30 +41,25 @@ import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
-    name: 'catProfile',
-    created() {
-        this.no = this.$route.params.cat_no;
-    },
+    name: 'myProfile',
     data(){
         return{
             no: '',
         }
     },
     computed:{
-        ...mapGetters('storeCat',[
-            'catList',
+        ...mapGetters('storePost',[
+            'userPosts',
         ]),
-        selectedCat: function() {
-            return this.catList[this.no - 1];
-        },
-    },
-    methods: {
+        ...mapGetters([
+            'getLoginInfo',
+        ]),
     },
 }
 </script>
 
 <style lang="scss" scoped>
-#catProfile{
+#myProfile{
     text-align: center;
     .btn{
         margin: 8px;
