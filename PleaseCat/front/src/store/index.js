@@ -17,13 +17,13 @@ export default new Vuex.Store({
     state: {
         server: 'http://70.12.246.120:8080',
         token: '',
-        loginId: '',
+        loginInfo: '',
         isLogin: false,
     },
     getters: {
         getServer: state => { return state.server },
         getToken: state => { return state.token },
-        getLoginId: state => { return state.loginId },
+        getLoginInfo: state => { return state.loginInfo },
         getIsLogin: state => { return state.isLogin },
     },
     mutations: {
@@ -31,12 +31,12 @@ export default new Vuex.Store({
             state.token = payload.data;
         },
         changeLoginId(state, payload, rootState) {
-            state.loginId = payload.data;
+            state.loginInfo = payload;
             state.isLogin = true;
         },
         changeLogout(state) {
             state.isLogin = false;
-            state.loginId = '';
+            state.loginInfo = '';
             state.token = '';
             localStorage.removeItem('savedToken');
         }
@@ -54,6 +54,7 @@ export default new Vuex.Store({
                     let token = res.data.data;
                     localStorage.setItem('savedToken', token);
                     dispatch('checkToken');
+                    router.push("/");
                 })
                 .catch(err => {
                     // handle error
@@ -85,11 +86,11 @@ export default new Vuex.Store({
             axios
                 .get(`${getters.getServer}/api/user/checkToken`, config)
                 .then(response => {
-                    console.log(response);
-                    console.log(response.data.data);
+                    console.log(response.data);
+                    var obj = eval("("+response.data.data+")");
+                    console.log(obj);
                     if(response.data.state === 'ok'){
-                        commit('changeLoginId', response.data);
-                        router.push("/");
+                        commit('changeLoginId', obj);
                     } else {
                         dispatch('logout');
                     }

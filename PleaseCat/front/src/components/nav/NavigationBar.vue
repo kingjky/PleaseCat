@@ -1,6 +1,6 @@
 <template>
   <div id="navBar">
-      <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginId }} 님 환영합니다.</span>
+      <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
       <span>
             <button v-if="!getIsLogin"><router-link to="/login">로그인</router-link></button>
             <button v-if="getIsLogin" v-on:click="logout">로그아웃</button>

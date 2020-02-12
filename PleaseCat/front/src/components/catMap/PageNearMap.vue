@@ -1,8 +1,19 @@
 <template>
 <div style="text-align: center">
-    <div id="mapView">
-    <mapComponent v-if="catList" txt="catProfile" :pos="positions" :curLoca="user" />
+    <div class="emptySpace"></div>
+    <div><span>내 주변 반경</span></div>
+    <div>
+        <input type="radio" id="d300" value="300" v-model="distance">
+        <label for="d300">300m</label>
+        <input type="radio" id="d500" value="500" v-model="distance">
+        <label for="d500">500m</label>
+        <input type="radio" id="d1000" value="1000" v-model="distance">
+        <label for="d1000">1000m</label>
     </div>
+    <div id="mapView">
+        <mapComponent v-if="catList" txt="catProfile" :pos="positions" :curLoca="user" :range="distance"/>
+    </div>
+    <div class="emptySpace"></div>
 </div>
 </template>
 
@@ -16,7 +27,8 @@ export default {
             user: {
                 pos_x: 37.54099,
                 pos_y: 127.09598,
-            }
+            },
+            distance: 500,
         }
     },
     components: {
@@ -26,7 +38,7 @@ export default {
         ...mapGetters('storeCat',[
             'catList',
         ]),
-        positions: function() {
+        positions: function(distance) {
             let array = [];
 
             function deg2rad(deg) {
@@ -54,7 +66,7 @@ export default {
             };
             if(this.catList != null){
                 this.catList.forEach(cat => {
-                    if(distance(this.user.pos_x, this.user.pos_y, cat.cat_x, cat.cat_y) < 500){
+                    if(distance(this.user.pos_x, this.user.pos_y, cat.cat_x, cat.cat_y) < this.distance){
                         array.push({
                             no: cat.cat_no,
                             pos_x: cat.cat_x,
@@ -67,15 +79,20 @@ export default {
         }
     },
     method:{
-        
     },
 }
 </script>
 
 <style>
+.emptySpace{
+    height: 70px;
+}
 #mapView {
     display: inline-block;
     width: 90vw;
-    height: 100vw; 
+    height: 50vw; 
 }
+ .dist{
+     margin-left: 5vw;
+ }
 </style>

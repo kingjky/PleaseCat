@@ -68,5 +68,11 @@ public class user{
 		this.user_desc = user_desc;
 	}
 
+	@Override
+	public String toString() {
+		return "{ user_no: \'" + user_no + "\', user_email: \'" + user_email + "\', user_pw: \'" + user_pw + "\', user_id: \'"
+				+ user_id + "\', user_image: \'" + user_image + "\', user_desc: \'" + user_desc + "\'}";
+	}
+
 	
 }

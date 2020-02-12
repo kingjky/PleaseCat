@@ -52,8 +52,9 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     
     // Jwt 토큰 생성
     public String createToken(user User) {
-    	Claims claims = Jwts.claims().setSubject(User.getUser_email());//JWT payload에 저장되는 정보단위
-    	claims.put("nickname", User.getUser_id());
+    	Claims claims = Jwts.claims().setSubject(User.toString());//JWT payload에 저장되는 정보단위
+//    	System.out.println(User.toString());
+//    	claims.put("nickname", User.getUser_id());
     	Map<String, Object> headerMap = new HashMap<>();
 		headerMap.put("typ", "JWT");
 		headerMap.put("alg", "HS256");
@@ -96,7 +97,11 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     
     // Jwt 토큰에서 회원 구별 정보 추출
     public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    	Claims claim = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        String str = claim.getSubject();
+//        System.out.println(str);
+        return str;
+//        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
     
 
