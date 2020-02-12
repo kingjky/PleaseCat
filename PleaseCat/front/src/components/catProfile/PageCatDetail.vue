@@ -27,11 +27,12 @@
     <div id="mapView">
         <mapComponent v-if="postList" txt="readPost" :pos="positions" />
     </div>
-    <div id="rankView">
+    <div id="rankView" v-if="rankList">
         <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
-        <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
+        <RankComponent v-for="(rank, idx) in rankList" :key="idx" :ranking="idx+1" :user_no="rank.user_no" :score='rank.rank_point' :name="rank.user_id"/>
+        <!-- <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
-        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/>
+        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/> -->
     </div>
     <div class="emptySpace">-Tab Bar-</div>
 </div>
@@ -47,8 +48,7 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        // this.server = this.$store.state.server;
-        // this.pullMan();
+        this.getRankList({cat_no: this.no});
     },
     data(){
         return{
@@ -65,12 +65,15 @@ export default {
         ...mapGetters('storePost',[
             'postList',
         ]),
+        ...mapGetters('storeUser/storeRank',[
+            'rankList',
+        ]),
         selectedCat: function() {
             return this.catList[this.no - 1];
         },
         catManager: function() {
             if(this.selectedCat != null){
-                return this.userList[this.selectedCat.cat_manager];
+                return this.userList[this.selectedCat.cat_manager-1];
             } else {
                 return null;
             }
@@ -96,6 +99,9 @@ export default {
         mapComponent,
     },
     methods: {
+        ...mapActions('storeUser/storeRank',[
+            'getRankList',
+        ]),
     }
 }
 </script>

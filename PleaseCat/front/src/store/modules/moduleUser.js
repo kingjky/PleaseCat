@@ -3,6 +3,41 @@ import axios from 'axios'
 
 export default {
     namespaced: true,
+    modules:{
+        storeRank: {
+            namespaced: true,
+            state: {
+                rankList: null,
+            },
+            getters: {
+                rankList: (state) => {
+                    return state.rankList;
+                },
+            },
+            mutations: {
+                changeRankList: (state, payload) => {
+                    state.rankList = payload.data;
+                },
+            },
+            actions: {
+                getRankList({ dispatch, commit, getters, rootGetters }, data){
+                    axios
+                    .post(`${rootGetters.getServer}/api/Ranking/searchRankingCat?cat_no=${data.cat_no}`)
+                    // .get(`${rootGetters.getServer}/api/cat/searchCat?Cat_no=${data.cat_no}`)
+                    .then(res => {
+                        // handle success
+                        commit('changeRankList', res.data);
+                    })
+                    .catch(err => {
+                        // handle error
+                    })
+                    .then(() => {
+                        // always executed
+                    });
+                }
+            },
+        },
+    },
     state: {
         userList: '',
     },

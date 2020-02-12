@@ -15,5 +15,6 @@ public interface LikesDao {
 	public likes searchLikes(HashMap<String, Object> map);
 	public void insertLikes(HashMap<String, Object> map);
 	public void deleteLikes(HashMap<String, Object> map);
-	public List<likes> searchAllLikes(int user_no);
+	public List<likes> searchAllLikesOfUser(int user_no);
+	public List<likes> searchAllLikesOfPost(int post_no);
 }

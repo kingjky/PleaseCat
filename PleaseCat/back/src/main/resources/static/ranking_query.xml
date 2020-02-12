@@ -12,7 +12,8 @@
 	
     <select id = "searchRankingCat"  parameterType="int" resultType="ranking">
     	SELECT * FROM RANKING 
-    	WHERE cat_no=#{cat_no} 
+    	WHERE cat_no=#{cat_no}
+    	ORDER BY rank_point DESC;
     </select>
 
 	<insert id ="insertRanking" parameterType="hashmap" >
