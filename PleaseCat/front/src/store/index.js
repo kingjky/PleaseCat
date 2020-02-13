@@ -16,6 +16,7 @@ export default new Vuex.Store({
     },
     state: {
         server: 'http://70.12.246.120:8080',
+        // server: 'http://localhost:8080',
         token: '',
         loginInfo: null,
         isLogin: false,
