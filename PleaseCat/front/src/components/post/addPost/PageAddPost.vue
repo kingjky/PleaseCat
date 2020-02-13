@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="btn-wrap">{{userGps}}
+    <div class="btn-wrap">test:{{userGps}}
       <div class="modal selectCat">
         <button
           id="show-modal-cat"
@@ -119,7 +119,7 @@ export default {
       post_location: "",
       postImage: "",
       nearCats: [],
-      gps: [],
+      photoGps: [],
       userGps: [],
       gpsX: "",
       gpsY: ""
@@ -127,26 +127,62 @@ export default {
   },
   created() {
     this.server = this.$store.state.server;
-    this.getUserLoc()
+    // this.getUserLoc();
   },
 
   methods: {
     toDecimal(gpsInfo) {
-      return 
+      return (
         gpsInfo[0].numerator +
         gpsInfo[1].numerator / (60 * gpsInfo[1].denominator) +
-        gpsInfo[2].numerator / (3600 * gpsInfo[2].denominator);
+        gpsInfo[2].numerator / (3600 * gpsInfo[2].denominator)
+      );
     },
-    getUserLoc() {  // 사용자의 현재 위치를 가져오는 함수
-      if(navigator.geolocation) {
-        var self = this
-        navigator.geolocation.getCurrentPosition( function(position) {
-          self.userGps = {
+    setGps() {
+      // 사진의 메타데이터에 gps 정보가 있는 경우.
+      if(this.photoGps) {
+        console.log("사진에 gps 정보 있음")
+        this.gps = this.photoGps
+      }
+      // 사진 메타데이터에 gps정보가 없는 경우, 사용자의 현재위치를 gps에 저장한다.
+      else if (!this.photoGps.latitude || !this.photoGps.longitude) {
+        console.log("사진에 gps 정보 없음...")
+        this.gps = this.userGps;
+      }
+      // 사용자의 현재위치가 없는 경우,  default값 설정
+      else if (!this.userGps.latitude || this.userGps.latitude) {
+        console.log("사용자의 현재위치 없음..")
+        this.gps = {
+          latitude: 37.558245,
+          longitude: 126.998207
+        }
+      }
+    },
+    getUserLoc() {
+      // 사용자의 현재 위치를 가져오는 함수
+      if (navigator.geolocation) {
+        var self = this;
+        navigator.geolocation.getCurrentPosition(
+
+          function(position) {
+            self.userGps = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
-            }
-        })
-      } 
+            };
+            alert("위도 : " + position.coords.latitude + ", 경도: " + position.coords.longitude);
+          },
+
+          function(err) {
+            console.log("error");
+            if (err.code == 1) { alert("Error: Access is denied!"); } 
+            else if (err.code == 2) { alert("Error: Position is unavailable!"); }
+          },
+          { timeout: 30000, enableHighAccuracy: true, maximumAge: 75000 }
+
+        );
+      } else {
+        alert("이 브라우저는 Geolocation을 지원하지 않음.");
+      }
     },
     fileSelect() {
       //사진 선택 시 canvas에서 사진 미리보기
@@ -184,12 +220,11 @@ export default {
       };
       reader.readAsDataURL(event.target.files[0]);
 
-
       // 사진 메타데이터 중 gps정보 가져오기
 
-      // clear gps list
-      this.gps = [];
-      
+      // clear photoGps list
+      this.photoGps = [];
+
       if (this.$refs.postImage.files[0]) {
         var self = this;
         // console.log(self)
@@ -208,30 +243,24 @@ export default {
             )
             */
 
-            // GPS 정보(시, 분, 초)를 소수로 바꿔 저장
+            // photoGps 정보(시, 분, 초)를 소수로 바꿔 저장
             var lat = EXIF.getTag(this, "GPSLatitude");
             var long = EXIF.getTag(this, "GPSLongitude");
+            console.log(lat, long);
             var dec_lat = self.toDecimal(lat);
             var dec_long = self.toDecimal(long);
-
-            self.gps = {
+            self.photoGps = {
               latitude: dec_lat,
               longitude: dec_long
             };
-            console.log(dec_lat,dec_long)
-            
+            console.log(dec_lat, dec_long);
           }
-          if (!self.gps.latitude || !self.gps.longitude) {
-            console.log("데이터 없음...");
-            // 데이터가 없는 경우, user의 현재위치를 gps에 저장 
-            
 
-          }
-          console.log(self.gps)
+          // 지도 선택 시 기준이 될 gps좌표 설정
+          // self.setGps();
           // 지도에서 위치 선택
 
-
-
+          
 
           // gps 정보 이용해 근처 고양이 목록 불러오기
           axios
@@ -265,10 +294,14 @@ export default {
       // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
     },
     regLocation() {
+      // 지도에서 위치를 선택
+
       // 선택한 위치 값 받아오기
       // this.gpsX = this.gps.latitude
       // this.gpsY = this.gps.longtitude
       // console.log(this.post_location, this.gpsX, this.gpsY)
+
+      
     },
     submit() {
       // postImage에 사진 등록
