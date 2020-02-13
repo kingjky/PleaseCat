@@ -55,5 +55,8 @@
     	select * from POST 
     </select>
 
+	<select id = "findNextPostNo" resultType="int">
+    	select max(post_no)+1 from post
+    </select>
     
 </mapper>
