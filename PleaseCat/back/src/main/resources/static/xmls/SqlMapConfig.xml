@@ -21,18 +21,18 @@
     
   <mappers>
      <!--  <mapper url = ""/> 리소스 or URL -->  
-     <mapper resource = "static/cat_query.xml"/>
-     <mapper resource = "static/comment_query.xml"/>
-     <mapper resource = "static/following_cat_query.xml"/>
-     <mapper resource = "static/following_user_query.xml"/>
-     <mapper resource = "static/likes_query.xml"/>
-     <mapper resource = "static/post_query.xml"/>
-     <mapper resource = "static/ranking_query.xml"/>
-     <mapper resource = "static/report_query.xml"/>
-     <mapper resource = "static/unlikes_query.xml"/>
-     <mapper resource = "static/user_query.xml"/>
-     <mapper resource = "static/newsFeed_query.xml"/>
-     <mapper resource = "static/catMap_query.xml"/>
+     <mapper resource = "static/xmls/cat_query.xml"/>
+     <mapper resource = "static/xmls/comment_query.xml"/>
+     <mapper resource = "static/xmls/following_cat_query.xml"/>
+     <mapper resource = "static/xmls/following_user_query.xml"/>
+     <mapper resource = "static/xmls/likes_query.xml"/>
+     <mapper resource = "static/xmls/post_query.xml"/>
+     <mapper resource = "static/xmls/ranking_query.xml"/>
+     <mapper resource = "static/xmls/report_query.xml"/>
+     <mapper resource = "static/xmls/unlikes_query.xml"/>
+     <mapper resource = "static/xmls/user_query.xml"/>
+     <mapper resource = "static/xmls/newsFeed_query.xml"/>
+     <mapper resource = "static/xmls/catMap_query.xml"/>
   </mappers>
    <!-- query 설정 끝 -->
 </configuration>
