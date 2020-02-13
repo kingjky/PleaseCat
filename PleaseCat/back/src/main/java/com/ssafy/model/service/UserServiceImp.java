@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +23,7 @@ import io.jsonwebtoken.JwtException;
 import work.crypt.BCrypt;
 import work.crypt.SHA256;
 
-
+@Component
 @Service
 public class UserServiceImp implements UserService {
 	@Autowired
@@ -34,6 +36,9 @@ public class UserServiceImp implements UserService {
 	private PostDao postDao;
 	@Autowired
 	private JwtTokenProvider jwt;
+	
+	@Value("${custom.path.upload-images}") 
+	String dir;
 
 	SHA256 sha = SHA256.getInsatnce();
 
@@ -86,7 +91,7 @@ public class UserServiceImp implements UserService {
 			throw new PleaseCatException();
 		}
 	}
-
+	
 	
 	//회원가입을 통한 회원추가
 	public void insertUser(MultipartFile userImg,user User) {
@@ -109,11 +114,13 @@ public class UserServiceImp implements UserService {
 					String ext =  oName.substring(oName.lastIndexOf('.')+1);
 	
 					//db에 저장될 post의 images에 값을 만들어줌 (파일 불러올 루트)
-					User.setUser_image("images/"+User.getUser_no()+"."+ext);
+					User.setUser_image("user/"+User.getUser_no()+"."+ext);
 	
 					//저장루트 설정 (드라이브 위치부터 하나하나 잡아줘야함)
-					String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
-	
+					//String dir = "C:\\SSAFY\\work_spring\\SpringSafeFood\\src\\main\\resources\\static";
+					
+					
+					
 					//저정루트뒤에 불러오는 루트를 붙여줘서 저장함
 					File dest = new File(dir+"\\"+User.getUser_image());
 					
