@@ -288,11 +288,6 @@ export default {
         console.log(`it's not a image`);
       }
     },
-    tagCat(no, name) {
-      // 선택한 고양이 값 받아오기
-      this.cat_no = no;
-      // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
-    },
     regLocation() {
       // 지도에서 위치를 선택
 
@@ -302,6 +297,11 @@ export default {
       // console.log(this.post_location, this.gpsX, this.gpsY)
 
       
+    },
+    tagCat(no, name) {
+      // 선택한 고양이 값 받아오기
+      this.cat_no = no;
+      // console.log("cat_no: " + no + ", cat_name: " + name + "  선택!!")
     },
     submit() {
       // postImage에 사진 등록
