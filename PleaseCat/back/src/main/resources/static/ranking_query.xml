@@ -5,30 +5,31 @@
 <mapper namespace="com.ssafy.model.dao.RankingDao" >
 	
 	<select id ="searchRanking" parameterType="hashmap" resultType="ranking" >
-    	SELECT * FROM ranking 
+    	SELECT * FROM RANKING 
     	WHERE cat_no=#{cat_no} 
     	AND user_no=#{user_no}
 	</select>
 	
     <select id = "searchRankingCat"  parameterType="int" resultType="ranking">
-    	SELECT * FROM ranking 
-    	WHERE cat_no=#{cat_no} 
+    	SELECT * FROM RANKING 
+    	WHERE cat_no=#{cat_no}
+    	ORDER BY rank_point DESC;
     </select>
 
 	<insert id ="insertRanking" parameterType="hashmap" >
-		insert into ranking (cat_no,user_no)
+		insert into RANKING (cat_no,user_no)
 					values(#{cat_no:INTEGER},
 						   #{user_no:INTEGER})	
 	</insert>
     
     <delete id="deleteRanking" parameterType="hashmap">
-    	DELETE FROM ranking
+    	DELETE FROM RANKING
     	WHERE cat_no=#{cat_no:INTEGER}
     	AND user_no=#{user_no:INTEGER}
     </delete>
     
     <update id="updateRanking"  parameterType="hashmap">
-    	UPDATE ranking SET rank_point=#{rank_point:INTEGER}
+    	UPDATE RANKING SET rank_point=#{rank_point:INTEGER}
     	WHERE cat_no=#{cat_no:INTEGER} AND user_no=#{user_no:INTEGER}
     </update>
     

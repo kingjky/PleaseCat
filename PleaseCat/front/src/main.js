@@ -13,6 +13,9 @@ Vue.prototype.moment = moment
 new Vue({
   router,
   store,
+  beforeCreate(){
+    this.$store.dispatch('checkToken');
+  },
   vuetify,
   render: h => h(App)
 }).$mount('#app')

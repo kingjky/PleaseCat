@@ -1,13 +1,35 @@
 <template>
   <div id="navBar">
-      <span id="greeting">{{ this.$store.getters.getLoginId }} 님 환영합니다.</span>      
+      <span id="greeting" v-if="getIsLogin">{{ this.$store.getters.getLoginInfo.user_id }} 님 환영합니다.</span>
+      <span>
+            <button v-if="!getIsLogin"><router-link to="/login">로그인</router-link></button>
+            <button v-if="getIsLogin" v-on:click="logout">로그아웃</button>
+      </span>
   </div>
 </template>
 
 <script>
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
     name: "NavigationBar",
+    data: () => {
+      return {
+
+      }
+    },
+    
+    computed: {
+      ...mapGetters([
+        'getIsLogin'
+      ])
+    },
+    methods: {
+      logout() {
+        // console.log('로그아웃');
+        this.$store.dispatch('logout');
+      },
+    }
 }
 </script>
 
@@ -21,5 +43,8 @@ export default {
   background-color: pink;
   z-index:100;
   text-align: right;
+  #greeting {
+    margin-right: 20px;
+  }
 }
 </style>

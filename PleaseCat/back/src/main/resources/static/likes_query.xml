@@ -5,24 +5,29 @@
 <mapper namespace="com.ssafy.model.dao.LikesDao" >
 	
 	<insert id ="insertLikes" parameterType="hashmap" >
-		insert into likes (user_no,post_no)
+		insert into LIKES (user_no,post_no)
 					values(#{user_no:INTEGER},
 						   #{post_no:INTEGER})	
 	</insert>
    	
-   	<select id = "searchAllLikes" parameterType="int" resultType="likes">
-    	select * from likes 
+   	<select id = "searchAllLikesOfUser" parameterType="int" resultType="likes">
+    	select * from LIKES 
     	where user_no=#{user_no}
+    </select>
+    
+   	<select id = "searchAllLikesOfPost" parameterType="int" resultType="likes">
+    	select * from LIKES 
+    	where post_no=#{post_no}
     </select>
    	
     <select id = "searchLikes"  parameterType="hashmap" resultType="likes">
-    	SELECT * FROM likes 
+    	SELECT * FROM LIKES 
     	WHERE user_no=#{user_no} 
     	AND post_no=#{post_no}
     </select>
     
     <delete id="deleteLikes" parameterType="hashmap">
-    	DELETE FROM likes
+    	DELETE FROM LIKES
     	WHERE user_no=#{user_no:INTEGER}
     	AND post_no=#{post_no:INTEGER}
     </delete>

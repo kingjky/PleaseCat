@@ -1,8 +1,8 @@
 <template>
-<div id="catProfile">
+<div id="catProfile" v-if="selectedCat">
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="photoView">
-        <div id="cat">
+        <div id="cat" >
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
@@ -25,18 +25,21 @@
         <br>마지막 밥 먹은 시간: {{selectedCat.meal_time}}
     </div>
     <div id="mapView">
+        <mapComponent v-if="postList" txt="readPost" :pos="positions" />
     </div>
-    <div id="rankView">
+    <div id="rankView" v-if="rankList">
         <div id="rankIcon" class="circle" :style="{'background-image' : `url(${require('@/assets/images/icons/rankIcon.jpg')})`}" alt="rank"></div>
-        <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
+        <RankComponent v-for="(rank, idx) in rankList" :key="idx" :ranking="idx+1" :user_no="rank.user_no" :score='rank.rank_point' :name="rank.user_id"/>
+        <!-- <RankComponent :ranking='1' :name="'채집사'" :user_no='1' :score='100'/>
         <RankComponent :ranking='2' :name="'김집사'" :user_no='3' :score='97'/>
-        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/>
+        <RankComponent :ranking='3' :name="'박집사'" :user_no='2' :score='89'/> -->
     </div>
     <div class="emptySpace">-Tab Bar-</div>
 </div>
 </template>
 
 <script>
+import mapComponent from '@/components/map/map'
 import RankComponent from './view/Rank';
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
@@ -45,8 +48,7 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
-        // this.server = this.$store.state.server;
-        // this.pullMan();
+        this.getRankList({cat_no: this.no});
     },
     data(){
         return{
@@ -60,17 +62,46 @@ export default {
         ...mapGetters('storeUser',[
             'userList',
         ]),
+        ...mapGetters('storePost',[
+            'postList',
+        ]),
+        ...mapGetters('storeUser/storeRank',[
+            'rankList',
+        ]),
         selectedCat: function() {
             return this.catList[this.no - 1];
         },
         catManager: function() {
-            return this.userList[this.selectedCat.cat_manager];
+            if(this.selectedCat != null){
+                return this.userList[this.selectedCat.cat_manager-1];
+            } else {
+                return null;
+            }
         },
+        positions: function() {
+            let array = [];
+            if(this.postList != null){
+                this.postList.forEach(post => {
+                    if(post.cat_no == this.no){
+                        array.push({
+                            no: post.post_no,
+                            pos_x: post.post_x,
+                            pos_y: post.post_y,
+                        })
+                    }
+                });
+            }
+            return array;
+        }
     },
     components: {
         RankComponent,
+        mapComponent,
     },
     methods: {
+        ...mapActions('storeUser/storeRank',[
+            'getRankList',
+        ]),
     }
 }
 </script>
@@ -155,5 +186,9 @@ export default {
     .circle {
         border-radius: 100%;
     }
+}
+#mapView{
+    width: 80vw;
+    height: 80vw;
 }
 </style>

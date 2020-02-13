@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.model.dao.Following_userDao;
+import com.ssafy.model.dao.LikesDao;
+import com.ssafy.model.dao.PostDao;
 import com.ssafy.model.dao.UserDao;
 import com.ssafy.model.dto.PleaseCatException;
 import com.ssafy.model.dto.post;
@@ -22,7 +25,13 @@ import work.crypt.SHA256;
 @Service
 public class UserServiceImp implements UserService {
 	@Autowired
-	private UserDao dao;
+	private UserDao userDao;
+	@Autowired
+	private Following_userDao followUserDao;
+	@Autowired
+	private LikesDao likesDao;
+	@Autowired
+	private PostDao postDao;
 	@Autowired
 	private JwtTokenProvider jwt;
 
@@ -32,11 +41,20 @@ public class UserServiceImp implements UserService {
 	//회원번호로 회원검색
 	public user searchUser(int no) {
 		try { 
-			user User = dao.searchUser(no);
+			user User = userDao.searchUser(no);
 			if(User == null) {
 				throw new PleaseCatException("찾으려는 정보가 없습니다");
 		
 			} else {
+				User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
+				List<post> postList = postDao.searchPostUser(User.getUser_no());
+				User.setCount_posts(postList.size());
+				int sumLikeAboutPost = 0;
+				for (post post : postList) {
+					sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
+				}
+				User.setCount_likes(sumLikeAboutPost);
+				System.out.println(User);
 				return User;
 			}
 		} catch (Exception e) {
@@ -48,10 +66,19 @@ public class UserServiceImp implements UserService {
 	//회원이메일로 회원검색
 	public user searchUserEmail(String user_email) {
 		try { 
-			user User = dao.searchUserEmail(user_email);
+			user User = userDao.searchUserEmail(user_email);
 			if(User == null) {
 				throw new PleaseCatException("찾으려는 정보가 없습니다");
 			} else {
+				User.setCount_followers(followUserDao.searchFollowedUser(User.getUser_no()).size());
+				List<post> postList = postDao.searchPostUser(User.getUser_no());
+				User.setCount_posts(postList.size());
+				int sumLikeAboutPost = 0;
+				for (post post : postList) {
+					sumLikeAboutPost += likesDao.searchAllLikesOfPost(post.getPost_no()).size();
+				}
+				User.setCount_likes(sumLikeAboutPost);
+				System.out.println(User);
 				return User;
 			}
 		} catch (Exception e) {
@@ -68,7 +95,7 @@ public class UserServiceImp implements UserService {
             String shaPass = sha.getSha256(orgPass.getBytes());
         	String bcPass = BCrypt.hashpw(shaPass, BCrypt.gensalt());
         	
-			user find = dao.searchUserEmail(User.getUser_email());
+			user find = userDao.searchUserEmail(User.getUser_email());
 			if(find != null) {
 				throw new PleaseCatException();
 			}else {
@@ -94,7 +121,7 @@ public class UserServiceImp implements UserService {
 					userImg.transferTo(dest);
 				}
 				
-				dao.insertUser(User);
+				userDao.insertUser(User);
 				System.out.println("user 입력 성공");
 			}
 		} catch (Exception e) {
@@ -113,7 +140,7 @@ public class UserServiceImp implements UserService {
             String shaPass = sha.getSha256(orgPass.getBytes());
         	String bcPass = BCrypt.hashpw(shaPass, BCrypt.gensalt());
         	User.setUser_pw(bcPass);
-			dao.updateUser(User);
+			userDao.updateUser(User);
 			System.out.println("user 업데이트 성공");
 			
 		} catch (Exception e) {
@@ -129,7 +156,7 @@ public class UserServiceImp implements UserService {
 	public void deleteUser(int no) {
 		try {
 			searchUser(no);
-			dao.deleteUser(no);
+			userDao.deleteUser(no);
 			System.out.println(no+"번 user 삭제를 완료했습니다.");
 			
 		} catch (Exception e) {
@@ -143,7 +170,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public List<user> searchAllUser() {
 		try { 
-			return dao.searchAllUser();
+			return userDao.searchAllUser();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PleaseCatException("회원 전체 목록을 불러오는데 실패했습니다.");
@@ -170,7 +197,8 @@ public class UserServiceImp implements UserService {
 	
 	  public String checkToken(String token) {
 	    	try {
-	    		return jwt.getUserPk(token); //수행 되면 정상
+	    		String str = jwt.getUserPk(token); //수행 되면 정상
+	    		return str; //수행 되면 정상
 	    	} catch (ExpiredJwtException exception) {
 	    		//토큰 만료
 	    		throw new PleaseCatException("토큰만료");

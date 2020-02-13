@@ -59,19 +59,19 @@ public class PostRestController {
 	}
 	
 	@ApiOperation("게시글 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPost/{Post_no}")
+	@GetMapping("/searchPost")
 	public ResponseEntity<Map<String, Object>> searchPost(@RequestParam int Post_no) throws Exception{
 		return handleSuccess(postService.searchPost(Post_no));
 	}
 	
 	@ApiOperation("회원 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostUser/{User_no}")
+	@GetMapping("/searchPostUser")
 	public ResponseEntity<Map<String, Object>> searchPostUser(@RequestParam int User_no) throws Exception{
 		return handleSuccess(postService.searchPostUser(User_no));
 	}
 	
 	@ApiOperation("고양이 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostCat/{Cat_no}")
+	@GetMapping("/searchPostCat")
 	public ResponseEntity<Map<String, Object>> searchPostCat(@RequestParam int Cat_no) throws Exception{
 		return handleSuccess(postService.searchPostCat(Cat_no));
 	}
