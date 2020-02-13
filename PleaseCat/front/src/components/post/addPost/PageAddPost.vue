@@ -5,11 +5,12 @@
     <div class="upload-wrap">
       <div class="selectPhoto">
         <p>ORIGINAL 포스트 이미지 추가</p>
-
+        
+        
         <div class="canvas-wrap">
           <canvas id="previewCanvas"></canvas>
         </div>
-
+ 
         <p>
           <input
             v-on:change="fileSelect"
@@ -34,7 +35,7 @@
       </div>
     </div>
 
-    <div class="btn-wrap">test:{{userGps}}
+    <div class="btn-wrap">
       <div class="modal selectCat">
         <button
           id="show-modal-cat"
@@ -78,6 +79,9 @@
           >
 
             <!-- 지도 component 추가 -->
+            <div id="mapCpnt">
+              <mapComponent/>
+            </div>
           </div>
         </modal>
       </div>
@@ -103,11 +107,25 @@ import PostingApi from "@/apis/PostingApi";
 import axios from "axios";
 import Modal from "@/components/post/addPost/Modal.vue";
 import EXIF from "../../../../node_modules/exif-js/exif";
+import mapComponent from '@/components/map/selectlLocationMap'
+
 
 export default {
-  components: { Modal: Modal },
+  components: { 
+    Modal: Modal, 
+    mapComponent,
+
+  },
   data() {
     return {
+      positions: [
+        {
+          no: '1', 
+          pos_x: 33.450705,
+          pos_y: 126.570677,
+        },
+      ],
+
       showModalSelectCat: false,
       showModalRegLocation: false,
 
@@ -127,7 +145,6 @@ export default {
   },
   created() {
     this.server = this.$store.state.server;
-    // this.getUserLoc();
   },
 
   methods: {
