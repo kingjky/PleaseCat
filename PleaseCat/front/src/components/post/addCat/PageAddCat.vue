@@ -9,7 +9,7 @@
     </div>
     !-->
 
-    <p>포스트 이미지 추가</p>
+    <p>고양이 이미지 추가</p>
     <div class="canvas-wrap">
       <canvas id="previewCanvas" :src="uploadImage"></canvas>
       <!-- <img class = "preview" :src="uploadImage"> -->
@@ -85,33 +85,18 @@ export default {
         var img = new Image();
 
         img.onload = function() {
-          // canvas.width = 300;
-          // canvas.height = 300;
-          // ctx.drawImage(img, 0,0, 300, 300)
-          var MAX_WIDTH = 420;
-          var MAX_HEIGHT = 420;
-          var width = img.width;
-					var height = img.height;
-					
-					// 이미지 리사이징
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-          canvas.width = width;
-          canvas.height = height;
-					ctx.drawImage(img, 0, 0, width, height);
+          canvas.width = 300;
+          canvas.height = 300;
+          ctx.drawImage(img, 0,0, 300, 300)
+          
         };
+
         img.src = event.target.result;
+
       };
+
       reader.readAsDataURL(event.target.files[0]);
+      
     },
     submit() {
       let {
@@ -122,8 +107,8 @@ export default {
         sex,
         cat_location,
         cat_desc,
-				catImg,
-				resizedImage,
+        catImg,
+        resizedImage
       } = this;
 
       let data = {
@@ -134,8 +119,8 @@ export default {
         sex,
         cat_location,
         cat_desc,
-				catImg,
-				resizedImage,
+        catImg,
+        resizedImage
       };
 
       const fd = new FormData();
@@ -159,38 +144,19 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(res => { 
-					console.log("200")
-					if (res.data.state == "ok") {
-						console.log("cat 저장 성공");
-          	console.log(res);
-					}else {
-						console.log("cat 등록 실패")
-					}
+        .then(res => {
+          console.log("200");
+          if (res.data.state == "ok") {
+            console.log("cat 저장 성공");
+            console.log(res);
+          } else {
+            console.log("cat 등록 실패");
+          }
         })
         .catch(err => {
           console.log("FAILURE");
           console.log(err);
         });
-
-      // PostingApi.requestAddCat(
-      //   this.$store.state.server,
-      //   fd,
-      //   res => {
-      //     if (res.status == 200) {
-      //       if (res.data.state == "ok") {
-      //         console.log(res.data.state);
-      //         //성공
-      //         // this.$router.push("/");
-      //       } else {
-      //         console.log(res);
-      //       }
-      //     }
-      //   },
-      //   error => {
-      //     console.log("서버 에러 입니다");
-      //   }
-      // );
     }
   }
 };
@@ -209,7 +175,7 @@ export default {
 .canvas-wrap {
   position: relative;
   width: 70%;
-	height: 360px
+  height: 360px;
 }
 .canvas-wrap:after {
   content: "";

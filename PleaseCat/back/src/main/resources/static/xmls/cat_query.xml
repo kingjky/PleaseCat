@@ -54,4 +54,8 @@
     	delete from CAT where cat_no=#{no}
     </delete>
     
+    <select id = "findNextCatNo" resultType="int">
+    	select max(cat_no)+1 from cat
+    </select>
+    
 </mapper>
