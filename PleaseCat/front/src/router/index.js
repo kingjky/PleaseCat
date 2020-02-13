@@ -7,9 +7,10 @@ import Home from '../components/newsfeed/Home.vue'
 import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
-import SelectPhoto from '../components/post/addPost/PageSelectPhoto'
+import AddPost from '../components/post/addPost/PageAddPost'
 import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
+import ModalParent from '../components/post/addPost/ModalParent'
 import PageNearMap from '@/components/map/PageNearMap'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
 import PageUserProfile from '@/components/userProfile/PageUserProfile'
@@ -57,20 +58,25 @@ const routes = [
     name: 'PageCatProfile',
     component: PageCatProfile
   },
-  // {
-  //   path: '/addPost',
-  //   name: 'SelectPhoto',
-  //   component: SelectPhoto
-  // },
+  {
+    path: '/addPost',
+    name: 'AddPost',
+    component: AddPost
+  },
   {
     path: '/catDetail/:cat_no',
     name: 'PageCatDetail',
     component: PageCatDetail
   },
   {
-    path: '/addPost',
+    path: '/addCat',
     name: 'PageAddCat',
     component: PageAddCat
+  },
+  {
+    path: '/modalParent',
+    name: 'ModalParent',
+    component: ModalParent
   },
   {
     path: '/myProfile',
