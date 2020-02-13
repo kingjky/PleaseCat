@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import mapComponent from '@/components/catMap/map'
+import mapComponent from '@/components/map/map'
 import RankComponent from './view/Rank';
 import axios from 'axios';
 import { mapActions, mapMutations, mapGetters } from "vuex";
