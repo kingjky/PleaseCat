@@ -17,14 +17,16 @@ export default new Vuex.Store({
     state: {
         server: 'http://70.12.246.120:8080',
         token: '',
-        loginInfo: '',
-        isLogin: false,
+        loginInfo: null,    // 로그인 회원 정보
+        isLogin: false,     // 로그인 여부
+        userLoc: {lat: 1, lng:1 },      // 유저 현재 위치
     },
     getters: {
         getServer: state => { return state.server },
         getToken: state => { return state.token },
         getLoginInfo: state => { return state.loginInfo },
         getIsLogin: state => { return state.isLogin },
+        getUserLoc: state => { return state.userLoc },
     },
     mutations: {
         changeToken(state, payload) {
@@ -39,6 +41,9 @@ export default new Vuex.Store({
             state.loginInfo = '';
             state.token = '';
             localStorage.removeItem('savedToken');
+        },
+        changeUserLoc(state, payload) {
+            state.userLoc = payload;
         }
     },
     actions: {
@@ -86,18 +91,31 @@ export default new Vuex.Store({
             axios
                 .get(`${getters.getServer}/api/user/checkToken`, config)
                 .then(response => {
-                    console.log(response.data);
                     var obj = eval("("+response.data.data+")");
-                    console.log(obj);
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
+                        dispatch('storePost/getUserPosts', state.loginInfo)
                     } else {
                         dispatch('logout');
                     }
+                    console.log(obj);
                 })
                 .catch(error => {
                     console.error(error);
                 })
+        },
+        findUserLoc({ state, dispatch, commit, getters, rootGetters }){
+            // console.log('위치찾기');
+            if (navigator.geolocation) {
+                // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude, // 위도
+                        lon = position.coords.longitude; // 경도
+                        commit('changeUserLoc', { lat: lat, lng: lon });
+                });
+            } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+                commit('changeUserLoc', { lat: 37.507072, lng: 127.0366208 });
+            }
         }
     },
 })

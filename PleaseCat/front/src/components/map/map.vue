@@ -9,6 +9,16 @@
 import router from '@/router/index';
 export default {
     props: ['txt', 'pos', 'curLoca', 'range'],
+    /* 
+        txt: 지도상 위치 클릭 시 이동할 url (ex, catProfile)
+            => this.url
+        pos: 지도상에 표시 할 좌표 배열 [{pos_x,pos_y}, {pos_x,pos_y}, ...]
+            => this.positions
+        curLoca: 현재 User 위치
+            => this. user
+        range: 지도상에 표시 할 동그라미 반지름 미터 단위
+            => this. dist
+    */
     data() {
         return {
             url: this.txt,

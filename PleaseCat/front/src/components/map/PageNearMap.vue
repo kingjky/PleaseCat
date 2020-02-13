@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import mapComponent from '@/components/catMap/map';
+import mapComponent from '@/components/map/map';
 import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
     name: 'nearMap',

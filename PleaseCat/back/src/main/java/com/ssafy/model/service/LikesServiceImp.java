@@ -18,16 +18,27 @@ public class LikesServiceImp implements LikesService {
 	
 	HashMap<String, Object> map;
 	
-	//좋아요 목록 출력
-			@Override
-			public List<likes> searchAllLikes(int user_no) {
-				try { 
-					return dao.searchAllLikes(user_no);
-				} catch (Exception e) {
-					e.printStackTrace();
-					throw new PleaseCatException("좋아요 전체 목록을 불러오는데 실패했습니다.");
-				}
-			}
+	//유저 번호로 좋아요 목록 출력
+	@Override
+	public List<likes> searchAllLikesOfUser(int user_no) {
+		try { 
+			return dao.searchAllLikesOfUser(user_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("좋아요 전체 목록을 불러오는데 실패했습니다.");
+		}
+	}
+	
+	//게시글 번호로 좋아요 목록 출력
+	@Override
+	public List<likes> searchAllLikesOfPost(int post_no) {
+		try { 
+			return dao.searchAllLikesOfPost(post_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PleaseCatException("좋아요 전체 목록을 불러오는데 실패했습니다.");
+		}
+	}
 	
 	
 	//회원번호와 게시글번호로 좋아요 존재 여부를 확인하고 없으면 execute 문장을 반환하고 있으면 cancel을 반환한다.
@@ -60,6 +71,7 @@ public class LikesServiceImp implements LikesService {
 				map.put("post_no", post_no);
 				dao.insertLikes(map);
 				System.out.println("좋아요 누를게요~");
+				
 			}else {
 				throw new PleaseCatException("이미 좋아요 눌렀습니다.");
 			}
@@ -88,5 +100,11 @@ public class LikesServiceImp implements LikesService {
 		e.printStackTrace();
 		throw new PleaseCatException("좋아요 실행중 오류");
 		}
+	}
+
+	@Override
+	public List<likes> searchAllLikes(int user_no) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
