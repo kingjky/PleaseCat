@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -24,6 +25,15 @@ export default {
             mark_y: 0,
             address: '',
         }
+    },
+    computed: {
+        ...mapGetters(['getUserLoc']),
+    },
+    methods: {
+        ...mapActions(['findUserLoc']),
+    },
+    created(){
+        this.findUserLoc();
     },
     mounted(){
         const vm = this;
@@ -35,43 +45,29 @@ export default {
         }; 
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        
+        console.log(vm.$store.state.userLoc);
+        var locPosition = new kakao.maps.LatLng(vm.getUserLoc.lat, vm.getUserLoc.lng); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            // message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+        
+        // 마커와 인포윈도우를 표시합니다
+        vm.mark_x = vm.getUserLoc.lat;
+        vm.mark_y = vm.getUserLoc.lng;
 
-        // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-        if (navigator.geolocation) {
-            
-            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-            navigator.geolocation.getCurrentPosition(function(position) {
-                
-                var lat = position.coords.latitude, // 위도
-                    lon = position.coords.longitude; // 경도
-                
-                var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-                    message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
-                
-                // 마커와 인포윈도우를 표시합니다
-                displayMarker(locPosition, message);
-
-                vm.mark_x = lat; 
-                vm.mark_y = lon;
-                var coord = new kakao.maps.LatLng(locPosition.getLat(), locPosition.getLng());
-                var callback = function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        vm.address = result[0].address.address_name;
-                    }
-                };
-                geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-            });
-            
-        } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-            
-            var locPosition = new kakao.maps.LatLng(37.507072, 127.0366208),    
-                message = 'geolocation을 사용할수 없어요..'
-                
-            displayMarker(locPosition, message);
-        }
+        var coord = new kakao.maps.LatLng(locPosition.getLat(), locPosition.getLng());
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                vm.address = result[0].address.address_name;
+            }
+        };
+        geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+        
+        displayMarker(locPosition);
 
         // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-        function displayMarker(locPosition, message) {
+        function displayMarker(locPosition) {
 
             // 마커를 생성합니다
             var marker = new kakao.maps.Marker({  
@@ -79,17 +75,6 @@ export default {
                 position: locPosition
             }); 
             
-            var iwContent = message, // 인포윈도우에 표시할 내용
-                iwRemoveable = true;
-
-            // 인포윈도우를 생성합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content : iwContent,
-                removable : iwRemoveable
-            });
-            
-            // 인포윈도우를 마커위에 표시합니다 
-            // infowindow.open(map, marker);
             marker.setDraggable(true); 
             // 지도 중심좌표를 접속위치로 변경합니다
             map.setCenter(locPosition);     

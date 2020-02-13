@@ -5,7 +5,7 @@ import CatApi from "@/apis/CatApi"
 export default {
     namespaced: true,
     state: {
-        catList: '',
+        catList: [],
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
