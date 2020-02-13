@@ -12,6 +12,7 @@ import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
 import PageAddCat from '../components/post/addCat/PageAddCat'
 import PageNearMap from '@/components/map/PageNearMap'
 import PageMyProfile from '@/components/userProfile/PageMyProfile'
+import PageUserProfile from '@/components/userProfile/PageUserProfile'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,11 @@ const routes = [
     path: '/myProfile',
     name: 'PageMyProfile',
     component: PageMyProfile
+  },
+  {
+    path: '/userProfile/:user_no',
+    name: 'PageUserProfile',
+    component: PageUserProfile
   },
   // {
   //   path: '/about',
