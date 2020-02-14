@@ -16,7 +16,7 @@
 
 <script>
 // import { mapGetters, mapActions} from 'vuex'
-import myModal from './ModalTest'
+import myModal from './TestModalTest'
 export default {
   name: 'parent',
   data(){

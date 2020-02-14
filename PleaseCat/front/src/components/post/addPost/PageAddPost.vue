@@ -65,23 +65,24 @@
       <div class="modal selectLoc">
         <button
           id="show-modal-loc"
-          @click="showModalRegLocation = true, regLocation"
+          @click="showModalRegLocation = true"
         >위치 추가</button>
 
         <modal
           v-if="showModalRegLocation"
           @close="showModalRegLocation = false"
         >
-          <h3 slot="header">위치</h3>
-          <div
-            slot="footer"
-            @click="showModalSelectCat = false"
-          >
+          <h3 slot="header">핀을 움직여 위치를 선택해주세요!</h3>
 
+          <div slot="footer">
             <!-- 지도 component 추가 -->
             <div id="mapCpnt">
-              <mapComponent/>
+              <mapComponent v-on:selectLoc-event="receiveLoc"></mapComponent>
             </div>
+
+          </div>
+          <div slot="footer" >
+            <button @click="showModalRegLocation = false"> 확인</button>
           </div>
         </modal>
       </div>
@@ -130,17 +131,19 @@ export default {
       showModalRegLocation: false,
 
       cat_no: "",
-      user_no: "2", // user 받아와서 바꿔야함
+      user_no: "1", // user 받아와서 바꿔야함
       post_image: "",
       post_time: "",
       post_content: "",
       post_location: "",
       postImage: "",
+      gpsX: "",
+      gpsY: "",
+
       nearCats: [],
       photoGps: [],
       userGps: [],
-      gpsX: "",
-      gpsY: ""
+      
     };
   },
   created() {
@@ -148,6 +151,13 @@ export default {
   },
 
   methods: {
+    receiveLoc(rLocation) {
+      this.gpsX = rLocation.X
+      this.gpsY = rLocation.Y
+      this.post_location = rLocation.Addr
+      console.log(this.gpsX, this.gpsY)
+      console.log(this.post_location)
+    },
     toDecimal(gpsInfo) {
       return (
         gpsInfo[0].numerator +
@@ -305,16 +315,6 @@ export default {
         console.log(`it's not a image`);
       }
     },
-    regLocation() {
-      // 지도에서 위치를 선택
-
-      // 선택한 위치 값 받아오기
-      // this.gpsX = this.gps.latitude
-      // this.gpsY = this.gps.longtitude
-      // console.log(this.post_location, this.gpsX, this.gpsY)
-
-      
-    },
     tagCat(no, name) {
       // 선택한 고양이 값 받아오기
       this.cat_no = no;
@@ -325,8 +325,17 @@ export default {
       // file 태그애 Vue 인스턴스로 접근하기 위해 $refs 속성을 사용함.
       this.postImage = this.$refs.postImage.files[0];
 
-      // 사진이 없으면 게시글 등록 불가
-      if (this.postImage == "") {
+      // 사진, 위치, 고양이 없으면 게시글 등록 불가 => 동작 test 후 alert로 바꾸기
+      if (this.postImage == null) {
+        console.log("고양이 사진 없음")
+        return false;
+      }
+      if(this.post_location == '') {
+        console.log("위치를 추가해주세요!")
+        return false;
+      }
+      if(this.cat_no == '') {
+        console.log("고양이를 태그해주세요!")
         return false;
       }
 
@@ -340,8 +349,8 @@ export default {
       );
       fd.append("post_content", this.post_content);
       fd.append("post_location", this.post_location);
-      fd.append("psot_x", this.gps.latitude);
-      fd.append("psot_y", this.gps.longitude);
+      fd.append("post_x", this.gpsX);
+      fd.append("post_y", this.gpsY);
       fd.append("catImg", this.postImage);
 
       // FormData 확인할 때 key 이용.
