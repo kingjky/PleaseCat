@@ -10,9 +10,11 @@
             <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
         </div>
         <div id="man" v-if="catManager">
+            <router-link :to="`/userProfile/${catManager.user_no}`">
             <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
             <img id="manPhoto" :src='require(`../../assets/images/man/${catManager.user_no}.jpg`)' alt="">
             <h1 id="manName" class="text">{{catManager.user_id}}</h1>
+            </router-link>
         </div>
     </div>
     <div id="descView" class="text">

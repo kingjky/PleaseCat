@@ -20,6 +20,7 @@ export default new Vuex.Store({
         loginInfo: null,    // 로그인 회원 정보
         isLogin: false,     // 로그인 여부
         userLoc: {lat: 1, lng:1 },      // 유저 현재 위치
+        dist: 1000,        // '근처' 의 기준이 될 meter 단위 반경
     },
     getters: {
         getServer: state => { return state.server },
@@ -27,6 +28,7 @@ export default new Vuex.Store({
         getLoginInfo: state => { return state.loginInfo },
         getIsLogin: state => { return state.isLogin },
         getUserLoc: state => { return state.userLoc },
+        getDist: state => { return state.dist }
     },
     mutations: {
         changeToken(state, payload) {
@@ -44,6 +46,9 @@ export default new Vuex.Store({
         },
         changeUserLoc(state, payload) {
             state.userLoc = payload;
+        },
+        changeDist(state, payload){
+            state.dist = payload;
         }
     },
     actions: {
@@ -94,7 +99,7 @@ export default new Vuex.Store({
                     var obj = eval("("+response.data.data+")");
                     if(response.data.state === 'ok'){
                         commit('changeLoginId', obj);
-                        dispatch('storePost/getUserPosts', state.loginInfo)
+                        dispatch('storePost/getMyPosts', state.loginInfo.user_no)
                     } else {
                         dispatch('logout');
                     }

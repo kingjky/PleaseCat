@@ -6,6 +6,8 @@ export default {
     namespaced: true,
     state: {
         catList: [],
+        selectedCat: null,
+        nearCatList: [],
     },
     // mutations : 동기 처리 logic
     mutations: { // (state, rootState?)
@@ -16,6 +18,12 @@ export default {
         changeCatList(state, payload, rootState) {
             state.catList = payload;
             // console.log('Finally End getCatList')
+        },
+        changeSelectedCat(state, payload, rootState) {
+            state.selectedCat = payload;
+        },
+        changeNearCatList(state, payload, rootState) {
+            state.nearCatList = payload;
         },
     },
     // actions : 비동기 처리 logic
@@ -38,10 +46,45 @@ export default {
                     // always executed
                 });
         },
+        getSelectedCat({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/cat/searchCat?Cat_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var catInfo = res.data.data;
+                    commit('changeSelectedCat', catInfo);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
+        getNearCatList({ dispatch, commit, getters, rootGetters },data){
+            axios
+                .get(`${rootGetters.getServer}/api/cat/searchCat?Cat_no=${data}`)
+                .then(res => {
+                    // handle success
+                    var catInfo = res.data.data;
+                    commit('changeSelectedCat', catInfo);
+                })
+                .catch(err => {
+                    // handle error
+                })
+                .then(() => {
+                    // always executed
+                    // console.log(vm.man);
+                });
+        },
     },
     getters: { // (state, getters, rootState, rootGetters)
         catList: state => {
             return state.catList
+        },
+        selectedCat: state => {
+            return state.selectedCat;
         },
     }
 };

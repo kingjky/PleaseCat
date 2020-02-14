@@ -3,15 +3,15 @@
     <div class="emptySpace"></div>
     <div><span>내 주변 반경</span></div>
     <div>
-        <input type="radio" id="d300" value="300" v-model="distance">
+        <input type="radio" id="d300" value="300" v-model="dist" @click="changeDist(value)">
         <label for="d300">300m</label>
-        <input type="radio" id="d500" value="500" v-model="distance">
+        <input type="radio" id="d500" value="500" v-model="dist" @click="changeDist(value)">
         <label for="d500">500m</label>
-        <input type="radio" id="d1000" value="1000" v-model="distance">
+        <input type="radio" id="d1000" value="1000" v-model="dist" @click="changeDist(value)">
         <label for="d1000">1000m</label>
     </div>
     <div id="mapView">
-        <mapComponent v-if="catList" txt="catProfile" :pos="positions" :curLoca="user" :range="distance"/>
+        <mapComponent v-if="catList" txt="catProfile" :pos="positions" :curLoca="getUserLoc" :range="getDist"/>
     </div>
     <div class="emptySpace"></div>
 </div>
@@ -19,26 +19,27 @@
 
 <script>
 import mapComponent from '@/components/map/map';
-import { mapActions, mapMutations, mapGetters } from "vuex";
+import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 export default {
     name: 'nearMap',
     data() {
         return {
-            user: {
-                pos_x: 37.54099,
-                pos_y: 127.09598,
-            },
-            distance: 500,
         }
     },
     components: {
         mapComponent,
     },
     computed:{
+        ...mapState([
+            'dist',
+        ]),
+        ...mapGetters([
+            'getDist', 'getUserLoc',
+        ]),
         ...mapGetters('storeCat',[
             'catList',
         ]),
-        positions: function(distance) {
+        positions: function() {
             let array = [];
 
             function deg2rad(deg) {
@@ -66,7 +67,7 @@ export default {
             };
             if(this.catList != null){
                 this.catList.forEach(cat => {
-                    if(distance(this.user.pos_x, this.user.pos_y, cat.cat_x, cat.cat_y) < this.distance){
+                    if(distance(this.getUserLoc.lat, this.getUserLoc.lng, cat.cat_x, cat.cat_y) < this.getDist){
                         array.push({
                             no: cat.cat_no,
                             pos_x: cat.cat_x,
@@ -79,6 +80,9 @@ export default {
         }
     },
     method:{
+        ...mapMutations([
+            'changeDist',
+        ])
     },
 }
 </script>

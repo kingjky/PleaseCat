@@ -23,7 +23,7 @@ export default {
         return {
             url: this.txt,
             user: this.curLoca,
-            // dist: this.range,     
+            // dist: this.range,
         }
     },
     computed: {
@@ -61,7 +61,7 @@ export default {
             const vm = this;
             var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
             var mapOption = { 
-                center: (this.user == undefined)?(new kakao.maps.LatLng(this.avgX, this.avgY)):(new kakao.maps.LatLng(this.user.pos_x, this.user.pos_y)), // 지도의 중심좌표
+                center: (this.user == undefined)?(new kakao.maps.LatLng(this.avgX, this.avgY)):(new kakao.maps.LatLng(this.user.lat, this.user.lng)), // 지도의 중심좌표
                 level: 5 // 지도의 확대 레벨
             };
 
@@ -82,7 +82,7 @@ export default {
             if(this.user != undefined){
                 var circle = new kakao.maps.Circle({
                     map: map,
-                    center : new kakao.maps.LatLng(this.user.pos_x, this.user.pos_y),  // 원의 중심좌표 입니다 
+                    center : new kakao.maps.LatLng(this.user.lat, this.user.lng),  // 원의 중심좌표 입니다 
                     radius: dist, // 미터 단위의 원의 반지름입니다 
                     strokeWeight: 5, // 선의 두께입니다 
                     strokeColor: '#75B8FA', // 선의 색깔입니다

@@ -97,7 +97,7 @@ public class PostRestController {
 	}
 	
 	@ApiOperation("게시글 정보 삭제")
-	@DeleteMapping("/delete/{Post_no}")
+	@DeleteMapping("/delete/")
 	public ResponseEntity<Map<String, Object>> deletePost(@RequestParam int Post_no) throws Exception{
 		postService.deletePost(Post_no);
 		return handleSuccess(Post_no+"번 게시글 삭제완료");

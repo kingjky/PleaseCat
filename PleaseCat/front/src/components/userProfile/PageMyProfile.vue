@@ -22,9 +22,9 @@
         <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
         <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
     </div>
-    <div id="photoView" v-if="(userPosts != null)">
+    <div id="photoView" v-if="(myPosts != null)">
         <div id="photoList">
-            <span v-for="(post, idx) in userPosts" :key="idx">
+            <span v-for="(post, idx) in myPosts" :key="idx">
                 <router-link :to="{name:''}">
                     <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
                     </span>
@@ -49,7 +49,7 @@ export default {
     },
     computed:{
         ...mapGetters('storePost',[
-            'userPosts',
+            'myPosts',
         ]),
         ...mapGetters([
             'getLoginInfo',

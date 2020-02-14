@@ -1,7 +1,7 @@
 <template>
 <div id="catProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView">
+    <div id="profileView" v-if="(selectedCat != null)">
         <div id="leftPart">
             <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
@@ -17,16 +17,16 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text">
+    <div id="summaryView" class="text" v-if="(selectedCat != null)">
         <span class="summary">게시물<br>{{ selectedCat.countPosts }}</span>
         <span class="summary">팔로우<br>{{ selectedCat.countFollowers }}</span>
         <span class="summary">좋아요<br>{{ selectedCat.countLikes }}</span>
     </div>
-    <div id="photoView">
+    <div id="photoView" v-if="(catPosts != null)">
         <div id="photoList">
-            <span v-for="n in selectedCat.count_posts" :key=n>
+            <span v-for="(post, idx) in catPosts" :key="idx">
                 <router-link :to="{name:''}">
-                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/cats/${ selectedCat.cat_no }/${n}.jpg`)})`}"  :alt='`pic${n}`'>
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
                     </span>
                 </router-link>
             </span>
@@ -44,6 +44,8 @@ export default {
     name: 'catProfile',
     created() {
         this.no = this.$route.params.cat_no;
+        this.getSelectedCat(this.no);
+        this.getCatPosts(this.no);
     },
     data(){
         return{
@@ -52,13 +54,19 @@ export default {
     },
     computed:{
         ...mapGetters('storeCat',[
-            'catList',
+            'selectedCat',
         ]),
-        selectedCat: function() {
-            return this.catList[this.no - 1];
-        },
+        ...mapGetters('storePost',[
+            'catPosts',
+        ]),
     },
     methods: {
+        ...mapActions('storeCat',[
+            'getSelectedCat',
+        ]),
+        ...mapActions('storePost',[
+            'getCatPosts',
+        ])
     },
 }
 </script>

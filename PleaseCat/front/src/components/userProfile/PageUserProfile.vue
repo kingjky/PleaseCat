@@ -1,12 +1,12 @@
 <template>
 <div id="myProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView" v-if="(getLoginInfo != null)">
+    <div id="profileView" v-if="(selectedUser != null)">
         <div id="leftPart">
-            <img id="userPhoto" :src='require(`@/assets/images/man/${ getLoginInfo.user_no }.jpg`)' alt="catProfile">
+            <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
         </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{ getLoginInfo.user_id }}</h1></div>
+            <div id="name"><h1 id="catName" class="text">{{ selectedUser.user_id }}</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -17,10 +17,10 @@
             </div>
         </section>
     </div>
-    <div id="summaryView" class="text" v-if="(getLoginInfo != null)">
-        <span class="summary">게시물<br>{{ getLoginInfo.count_posts }}</span>
-        <span class="summary">팔로우<br>{{ getLoginInfo.count_followers }}</span>
-        <span class="summary">좋아요<br>{{ getLoginInfo.count_likes }}</span>
+    <div id="summaryView" class="text" v-if="(selectedUser != null)">
+        <span class="summary">게시물<br>{{ selectedUser.count_posts }}</span>
+        <span class="summary">팔로우<br>{{ selectedUser.count_followers }}</span>
+        <span class="summary">좋아요<br>{{ selectedUser.count_likes }}</span>
     </div>
     <div id="photoView" v-if="(userPosts != null)">
         <div id="photoList">
@@ -44,6 +44,8 @@ export default {
     name: 'userProfile',
     created() {
         this.no = this.$route.params.user_no;
+        this.getSelectedUser(this.no);
+        this.getUserPosts(this.no);
     },
     data(){
         return{
@@ -51,13 +53,24 @@ export default {
         }
     },
     computed:{
-        ...mapGetters('storePost',[
-            'userPosts',
-        ]),
         ...mapGetters([
             'getLoginInfo',
         ]),
+        ...mapGetters('storeUser',[
+            'selectedUser',
+        ]),
+        ...mapGetters('storePost',[
+            'userPosts',
+        ]),
     },
+    methods: {
+        ...mapActions('storeUser',[
+            'getSelectedUser',
+        ]),
+        ...mapActions('storePost',[
+            'getUserPosts',
+        ])
+    }
 }
 </script>
 

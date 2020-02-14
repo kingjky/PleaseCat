@@ -2,7 +2,7 @@
   <div style="position: fixed;  bottom: 0;  left: 0;  right: 0; z-index:100;">
     <v-tabs
       v-model="tab"
-      background-color="pink"
+      background-color="black"
       class="elevation-2"
       dark
       :centered="centered"

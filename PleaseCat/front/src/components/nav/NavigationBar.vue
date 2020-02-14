@@ -40,7 +40,7 @@ export default {
   left:0;
   width: 100%;
   height: 50px;
-  background-color: pink;
+  background: orange;
   z-index:100;
   text-align: right;
   #greeting {
