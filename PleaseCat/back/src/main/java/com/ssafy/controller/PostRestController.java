@@ -110,4 +110,10 @@ public class PostRestController {
 		return handleSuccess("게시글 정보 수정완료");
 	}
 	
+	@ApiOperation("새로 저장하려는 게시글의 post_no를 찾는다.")
+	@GetMapping("/findPostNo")
+	public ResponseEntity<Map<String, Object>> findNextPostNo() throws Exception{
+		return handleSuccess(postService.findNextPostNo());
+	}
+	
 }

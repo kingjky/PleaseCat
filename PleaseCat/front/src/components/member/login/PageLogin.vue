@@ -5,7 +5,7 @@
     </div>
     <div class="input-wrap">
       <div class="input-row">
-        <label for="id">ID</label>
+        <label for="id">Email</label>
         <input type="text" v-model="user_email " id="id" placeholder="이메일을 입력하세요." />
       </div>
       <div class="input-row">

@@ -12,4 +12,5 @@ public interface CatService {
 	public void updateCat(cat Cat);
 	public void deleteCat(int no);
 	public List<cat> searchAllCat();
+	public int findNextCatNo();
 }

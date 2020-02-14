@@ -83,4 +83,10 @@ public class CatRestController {
 		return handleSuccess("고양이 정보 수정완료");
 	}
 	
+	@ApiOperation("새로 저장하려는 고양이의 cat_no를 찾는다.")
+	@GetMapping("/findCatNo")
+	public ResponseEntity<Map<String, Object>> findNextCatNo() throws Exception{
+		return handleSuccess(catService.findNextCatNo());
+	}
+	
 }
