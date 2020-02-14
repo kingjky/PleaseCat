@@ -104,9 +104,8 @@
 
 
 <script>
-import PostingApi from "@/apis/PostingApi";
 import axios from "axios";
-import Modal from "@/components/post/addPost/Modal.vue";
+import Modal from "@/components/post/modal/Modal.vue";
 import EXIF from "../../../../node_modules/exif-js/exif";
 import mapComponent from '@/components/map/selectlLocationMap'
 

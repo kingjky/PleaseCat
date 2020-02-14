@@ -1,13 +1,8 @@
 <template>
-  <div class="selectPhoto">
+  <div class="addCat">
     <div class="title-selectPhoto">NEW POST</div>
-    <!--
-    <div class="preview">
-      <div class="uploadPhoto">
-        <div class="post-btn"></div>
-      </div>
-    </div>
-    !-->
+    
+    
 
     <p>고양이 이미지 추가</p>
     <div class="canvas-wrap">
@@ -34,27 +29,31 @@
 
 <script>
 import axios from "axios";
-import PostingApi from "@/apis/PostingApi";
+import Modal from "@/components/post/modal/Modal.vue";
 export default {
+  components: {
+    Modal: Modal,
+  },
   data() {
     return {
-      cat_no: "", // cat 받아와서 바꿔야함
-      cat_name: "야옹쓰", // user 받아와서 바꿔야함
-      cat_image: "",
-      age: "",
-      sex: "",
-      reg_date: "",
-      meal_time: "",
-      skin_disease: "",
-      cat_location: "",
-      cat_manager: "",
-      neuter: "",
-      cat_desc: "",
-      hurt: "",
-      hair_color: "",
-      eye_color: "",
-      catImg: "",
-      uploadImage: ""
+      cat_manager:'',
+      reg_date: '',
+
+      catImg: '',
+      cat_name: '',
+      cat_location: '', 
+      age: '',
+      sex: '',
+      cat_desc: '',
+
+      skin_disease: '',
+      neuter:'',
+      hurt: '',
+
+      hair_color: '',
+      eye_color: '',
+
+      // uploadImage: '',
     };
   },
   created() {
