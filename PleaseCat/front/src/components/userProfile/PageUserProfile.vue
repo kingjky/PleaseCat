@@ -122,7 +122,9 @@ export default {
     height: 36vw;
     vertical-align: middle;
     text-align: center;
-    background-color: white;
+    background-color: #F2E6E1;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
     // border: 2px solid red;
     img {
         width: 100%;
@@ -164,8 +166,8 @@ export default {
     padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;
@@ -185,11 +187,12 @@ export default {
             background-color: black;
             display: inline-block;
             overflow: hidden;
-            width: calc((100% - 6px) / 3);
+            width: calc((100% - 12px) / 3);
             text-align: center;
             vertical-align: middle;
             box-sizing: border-box;
             margin: 1px;
+            box-shadow: 1px 1px 5px 1px black;
             // border: 1px solid red;
             background-position-x: 50%;
             background-position-y: 50%;

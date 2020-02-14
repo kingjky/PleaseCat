@@ -48,7 +48,6 @@
           <h3 slot="header">이 중에 고양이가 있나요?</h3>
           <div
             slot="footer"
-            @click="showModalSelectCat = false"
           >
             <button
               v-for="nc in nearCats"
@@ -77,7 +76,7 @@
             @click="showModalSelectCat = false"
           >
 
-            <!-- 지도 component 추가 -->
+            안녕하세요
           </div>
         </modal>
       </div>
