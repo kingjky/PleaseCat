@@ -14,7 +14,7 @@
               <button @click="$emit('close')">Close</button>
             </slot>
           </div>
-					
+					     
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
 }
 .modal-header h3 {
   margin-top: 0;
-  color: purple;
+  color: #FF339E;
 }
 .modal-body {
   margin: 20px 0;
