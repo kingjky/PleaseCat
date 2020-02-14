@@ -2,6 +2,9 @@ package com.ssafy.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,6 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2	//스웨거 환경설정
+//@EnableWebMvc
+//@EnableAsync
 public class SwaggerConfig {
 	@Bean
 	public Docket api() {
@@ -33,6 +38,17 @@ public class SwaggerConfig {
 				.version("1.0")
 				.build();
 	}
+	
+	/*
+	public void addResourceHandlers(ResourceHandlerRegistry registry) { 
+		registry.addResourceHandler("swagger-ui.html") 
+		.addResourceLocations("classpath:/META-INF/resources/"); 
+		registry.addResourceHandler("/webjars/**") 
+		.addResourceLocations("classpath:/META-INF/resources/webjars/"); 
+		}
+	*/
+
+	
 	
 	
 }

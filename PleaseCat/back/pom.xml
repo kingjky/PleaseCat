@@ -39,9 +39,9 @@
 			<optional>true</optional>
 		</dependency>
 	<!--  Spring Boot -->
-	
-		
+			
 		<!-- jackson (for json Handling) -->
+		
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>

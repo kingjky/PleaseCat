@@ -1,165 +1,216 @@
 <template>
 <div id="catProfile">
-    <div id="photoView">
-        <div id="cat">
-            <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
-            <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
-            <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
-            <img id="catPhoto" :src='cat.cat_no!=null?require(`../../assets/images/cat/${cat.cat_no}.jpg`):null' alt="" >
-            <h1 id="catName" class="text">{{cat.cat_name}}</h1>
+    <div class="emptySpace">-Navigation Bar-</div>
+    <div class="profileView">
+        <div class="leftPart" v-if="(selectedCat != null)">
+            <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
-        <div id="man">
-            <!-- <img id="manPhoto" src="../../assets/images/man/1.jpg" alt="" > -->
-            <img id="manPhoto" :src='man.user_no!=null?require(`../../assets/images/man/${man.user_no}.jpg`):null' alt="" >
-            <h1 id="manName" class="text">{{man.user_id}}</h1>
+        <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
+            <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+        </div>
+        <section id="rightPart">
+            <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedCat === null)"><h1 id="catName" class="text">고양이</h1></div>
+            <div id="buttons">
+                <span id="followButton" class="btn text">
+                    <button>팔로우</button>
+                </span>
+                <span id="detailButton" class="btn text">
+                    <router-link :to="`/catDetail/${no}`"><button>상세 정보</button></router-link>
+                </span>
+            </div>
+        </section>
+    </div>
+    <div id="summaryView" class="text" v-if="(selectedCat != null)">
+        <span class="summary">게시물<br>{{ selectedCat.count_followers }}</span>
+        <span class="summary">팔로우<br>{{ selectedCat.count_likes }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.count_posts }}</span>
+    </div>
+    <div id="photoView" v-if="(catPosts != null)">
+        <div id="photoList">
+            <span v-for="(post, idx) in catPosts" :key="idx">
+                <router-link :to="{name:''}">
+                    <span class="photo" :style="{'background-image' : `url(${require(`@/assets/images/posts/${ post.post_image }`)})`}"  :alt='`${ post.post_image }`'>
+                    </span>
+                </router-link>
+            </span>
         </div>
     </div>
     <div class="emptySpace"></div>
-    <div id="descView" class="text">
-        나이: {{cat.age}}
-        <br>털색: {{cat.hair_color}}
-        <br>눈색: {{cat.eye_color}}
-        <br>중성화: {{cat.neuter}}
-        <br>피부병:  {{cat.skin_disease}}
-        <br>다친곳: {{cat.hurt}}
-        <br>마지막 밥 먹은 시간: {{cat.meal_time}}
-    </div>
-    <div id="mapView">
-
-    </div>
-    <div id="rankView">
-
-    </div>
 </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapActions, mapMutations, mapGetters } from "vuex";
+
 export default {
     name: 'catProfile',
     created() {
-        this.no = this.$route.params.no;
-        this.pullCat();
+        this.no = this.$route.params.cat_no;
+        this.getSelectedCat(this.no);
+        this.getCatPosts(this.no);
+    },
+    destroyed() {
+        this.clearSelectedCat();
+        this.clearCatPosts();
     },
     data(){
         return{
-            cat: {},
-            man: {},
             no: '',
         }
     },
+    computed:{
+        ...mapGetters('storeCat',[
+            'selectedCat',
+        ]),
+        ...mapGetters('storePost',[
+            'catPosts',
+        ]),
+    },
     methods: {
-        pullCat(){
-            console.log(this.no);
-            const vm = this;
-            axios
-                .get(`http://70.12.247.116:8080/api/cat/searchCat/{cat_no}?cat_no=${vm.no}`)
-                .then(res => {
-                    // handle success
-                    vm.cat = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    console.log(vm.cat);
-                    this.pullMan();
-                });
-        },
-        pullMan(){
-            const vm = this;
-            axios
-                .get(`http://70.12.247.116:8080/api/user/searchUserNo/{user_no}?user_no=${vm.cat.cat_manager}`)
-                .then(res => {
-                    // handle success
-                    vm.man = res.data.data
-                })
-                .catch(err =>  {
-                    // handle error
-                })
-                .then(() => {
-                    // always executed
-                    console.log(vm.man);
-                });
-        }
-    }
+        ...mapMutations('storeCat',[
+            'clearSelectedCat',
+        ]),
+        ...mapMutations('storePost',[
+            'clearCatPosts',
+        ]),
+        ...mapActions('storeCat',[
+            'getSelectedCat',
+        ]),
+        ...mapActions('storePost',[
+            'getCatPosts',
+        ])
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 #catProfile{
     text-align: center;
+    .btn{
+        margin: 8px;
+    }
+    button {
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        color: #262626;
+        font-size: 2.7vw;
+        padding: 3px 12px 3px 12px;
+    }
+    h1{
+        font-size: 7vw;
+    }
+    .emptySpace {
+        height: 70px;
+    }
+    .text {
+        // transition:all 0.4s ease-out;
+        // text-shadow: 4px 2px 2px black;
+        font-weight: bold;
+        color: black;
+    }
 }
-#photoView{
-    padding: 10px;
+.profileView{
+    padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90%;
+    width: 90vw;
+    height: 40vw;
     vertical-align: middle;
     text-align: center;
-    background-color: grey;
+    background-color: #F2E6E1;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    // border: 2px solid red;
+    img {
+        width: 100%;
+        border-radius: 100%;
+    }
+    img::after{
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+    .leftPart{
+        width: 30%;
+        position: absolute;
+        left: 5%;
+        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
+    #rightPart{
+        position: absolute;
+        left: 40%;
+        #fakename{
+            visibility: hidden;
+        }        
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
 }
-#photoView::after{
-    content: "";
-    display: block;
-    padding-bottom: 50%;
-}
-#photoView img{
-    width: 100%;
-    border-radius: 100%;
-}
-#photoView img::after{
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-}
-#photoView h1{
-    font-size: 7vw;
-}
-#photoView > div{
-    display: inline;
-}
-#photoView #cat{
-    width: 30%;
-    position: absolute;
-    left: 30px;
-    // box-sizing: border-box;
-    // border: 1px solid red;
-}
-#photoView #man{
-    width: 30%;
-    position: absolute;
-    right: 30px;
+// #profileView::after{
+//     content: "";
+//     display: block;
+//     padding-bottom: 40%;
+// }
+#summaryView{
+    display: inline-block;
+    font-size: 3vw;
+    width: 90%;
+    text-align: center;
+    padding: 5px 0 5px 0;
     // box-sizing: border-box;
     // border: 1px solid blue;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
+    .summary{
+        display: inline-block;
+        width: 33.3%;
+        text-align: center;
+
+        // box-sizing: border-box;
+        // border: 1px solid red;
+    }
 }
-#photoView .line { 
-    display: inline-block;
-    width: 50%; 
-    text-align: center; 
-    vertical-align: middle;
-    border-bottom: 1px solid #000; 
-    line-height: 0.1em;
-    margin: 10px 0 20px; 
-    padding:0 10px; 
-}
-#catProfile .emptySpace {
-    height: 10px;
-}
-.text {
-    // transition:all 0.4s ease-out;
-    text-shadow: 4px 2px 2px black;
-    font-weight: bold;
-    color: #fff;
-}
-#descView{
+#photoView {
     display: inline-block;
     width: 90%;
-    text-align: left;
-    margin-bottom: 100px;
-    background-color: grey;
-    padding: 10px;
-    font-size: 4vw
+    padding: 0, 1%, 0, 1%;
+    #photoList {
+        text-align: left;
+        .photo{
+            background-color: black;
+            display: inline-block;
+            overflow: hidden;
+            width: calc((100% - 12px) / 3);
+            text-align: center;
+            vertical-align: middle;
+            box-sizing: border-box;
+            margin: 1px;
+            box-shadow: 1px 1px 5px 1px black;
+            // border: 1px solid red;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            background-size: cover;
+            // max-width: 100%; /* Scale up to fill container width */
+            // max-height: 100%; /* Scale up to fill container height */
+            // min-width: 100%; /* Scale up to fill container width */
+            // min-height: 100%; /* Scale up to fill container height */
+            div {
+                overflow: hidden;
+                display: inline-block; /* Otherwise it keeps some space around baseline */
+                // max-width: 100%; /* Scale up to fill container width */
+                // max-height: 100%; /* Scale up to fill container height */
+                -ms-interpolation-mode: bicubic; /* Scaled images look a bit better in IE now */
+            }
+        }
+        .photo::after{
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+        }
+    }
 }
 </style>

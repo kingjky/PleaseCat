@@ -9,6 +9,9 @@ public class user{
 	private String user_id; 
 	private String user_image; 
 	private String user_desc;
+	private int count_followers; 
+	private int count_posts; 
+	private int count_likes; 
 	
 	
 	public user() {}
@@ -19,8 +22,7 @@ public class user{
 		this.user_email = user_email;
 		this.user_pw = user_pw;
 		this.user_id = user_id;
-	}
-	
+	}	
 	public user(int user_no, String user_email, String user_pw, String user_id, String user_image, String user_desc) {
 		super();
 		this.user_no = user_no;
@@ -29,8 +31,20 @@ public class user{
 		this.user_id = user_id;
 		this.user_image = user_image;
 		this.user_desc = user_desc;
+	}	
+	public user(int user_no, String user_email, String user_pw, String user_id, String user_image, String user_desc,
+			int count_followers, int count_posts, int count_likes) {
+		super();
+		this.user_no = user_no;
+		this.user_email = user_email;
+		this.user_pw = user_pw;
+		this.user_id = user_id;
+		this.user_image = user_image;
+		this.user_desc = user_desc;
+		this.count_followers = count_followers;
+		this.count_posts = count_posts;
+		this.count_likes = count_likes;
 	}
-	
 	public int getUser_no() {
 		return user_no;
 	}
@@ -67,6 +81,29 @@ public class user{
 	public void setUser_desc(String user_desc) {
 		this.user_desc = user_desc;
 	}
-
-	
+	public int getCount_followers() {
+		return count_followers;
+	}
+	public void setCount_followers(int count_followers) {
+		this.count_followers = count_followers;
+	}
+	public int getCount_posts() {
+		return count_posts;
+	}
+	public void setCount_posts(int count_posts) {
+		this.count_posts = count_posts;
+	}
+	public int getCount_likes() {
+		return count_likes;
+	}
+	public void setCount_likes(int count_likes) {
+		this.count_likes = count_likes;
+	}
+	@Override
+	public String toString() {
+		return "{ user_no: \'" + user_no + "\', user_email: \'" + user_email + "\', user_pw: \'" + user_pw + "\', user_id: \'"
+				 + user_id + "\', user_image: \'" + user_image + "\', user_desc: \'" + user_desc
+				 + "\', count_followers: \'" + count_followers + "\', count_posts: \'" + count_posts
+				 + "\', count_likes: \'" + count_likes+ "\'}";
+	}	
 }

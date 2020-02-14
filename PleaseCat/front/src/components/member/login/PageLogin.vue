@@ -5,7 +5,7 @@
     </div>
     <div class="input-wrap">
       <div class="input-row">
-        <label for="id">ID</label>
+        <label for="id">Email</label>
         <input type="text" v-model="user_email " id="id" placeholder="이메일을 입력하세요." />
       </div>
       <div class="input-row">
@@ -19,7 +19,6 @@
         />
       </div>
     </div>
-
     <div class="btn-wrap">
       <a href="/signUp">가입하기</a>
       <button class="btn-login" v-on:click="login">로그인</button>
@@ -29,7 +28,8 @@
 
 
 <script>
-import UserApi from "../../../apis/UserApi";
+import UserApi from "@/apis/UserApi";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -44,35 +44,42 @@ export default {
       pwChecked: false
     };
   },
-
+  created() {
+    },
   methods: {
+    ...mapActions([
+        'postLogin',
+    ]),
     login() {
       // id, pw가 DB에 존재하는지 확인
       let { user_email, user_pw } = this;
       let data = {
         user_email,
-        user_pw
+        user_pw,
       };
-
-      UserApi.requestLogin(
-        data,
-        res => {
-          if (res.status == 200) {
-            if (res.data.state == "ok") {
-              //성공
-              this.$router.push("/");
-            } else {
-              //실패
-            }
-          }
-        },
-        error => {
-          //요청이 끝나면 버튼 활성화
-          // console.log("리턴")
-          console.log("서버 에러");
-          this.isSubmit = true;
-        }
-      );
+      this.postLogin(data);
+      
+      // UserApi.requestLogin(
+      //   data,
+      //   res => {
+      //     if (res.status == 200) {
+      //       if (res.data.state == "ok") {
+      //       console.log('로그인 성공');
+      //       console.log(res);
+      //         //성공
+      //         this.$router.push("/");
+      //       } else {
+      //         //실패
+      //       }
+      //     }
+      //   },
+      //   error => {
+      //     //요청이 끝나면 버튼 활성화
+      //     // console.log("리턴")
+      //     console.log("서버 에러 입니다");
+      //     this.isSubmit = true;
+      //   }
+      // );
     }
   }
 };
@@ -92,7 +99,7 @@ export default {
   margin-top: 60px;
   margin-bottom: 40px;
   font-weight: bold;
-  font-size: 42px;
+  font-size: 42px;                         
 }
 .login label {
   display: inline-block;

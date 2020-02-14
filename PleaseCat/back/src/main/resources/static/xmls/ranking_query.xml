@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+<mapper namespace="com.ssafy.model.dao.RankingDao" >
+	
+	<select id ="searchRanking" parameterType="hashmap" resultType="ranking" >
+    	SELECT * FROM RANKING 
+    	WHERE cat_no=#{cat_no} 
+    	AND user_no=#{user_no}
+	</select>
+	
+    <select id = "searchRankingCat"  parameterType="int" resultType="ranking">
+    	SELECT * FROM RANKING 
+    	WHERE cat_no=#{cat_no}
+    	ORDER BY rank_point DESC;
+    </select>
+
+	<insert id ="insertRanking" parameterType="hashmap" >
+		insert into RANKING (cat_no,user_no)
+					values(#{cat_no:INTEGER},
+						   #{user_no:INTEGER})	
+	</insert>
+    
+    <delete id="deleteRanking" parameterType="hashmap">
+    	DELETE FROM RANKING
+    	WHERE cat_no=#{cat_no:INTEGER}
+    	AND user_no=#{user_no:INTEGER}
+    </delete>
+    
+    <update id="updateRanking"  parameterType="hashmap">
+    	UPDATE RANKING SET rank_point=#{rank_point:INTEGER}
+    	WHERE cat_no=#{cat_no:INTEGER} AND user_no=#{user_no:INTEGER}
+    </update>
+    
+</mapper>

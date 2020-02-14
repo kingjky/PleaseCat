@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.model.dto.cat;
 import com.ssafy.model.service.CatService;
@@ -51,8 +52,8 @@ public class CatRestController {
 	
 	@ApiOperation("새로운 고양이 정보를 입력한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertCat(@RequestBody cat Cat) throws Exception{
-		catService.insertCat(Cat);
+	public ResponseEntity<Map<String, Object>> insertCat(@RequestBody MultipartFile catImg, cat Cat) throws Exception{
+		catService.insertCat(catImg,Cat);
 		return handleSuccess("고양이 등록 완료");
 	}
 	
@@ -80,6 +81,12 @@ public class CatRestController {
 	public ResponseEntity<Map<String, Object>> updateCat(@RequestBody cat Cat) throws Exception{
 		catService.updateCat(Cat);
 		return handleSuccess("고양이 정보 수정완료");
+	}
+	
+	@ApiOperation("새로 저장하려는 고양이의 cat_no를 찾는다.")
+	@GetMapping("/findCatNo")
+	public ResponseEntity<Map<String, Object>> findNextCatNo() throws Exception{
+		return handleSuccess(catService.findNextCatNo());
 	}
 	
 }

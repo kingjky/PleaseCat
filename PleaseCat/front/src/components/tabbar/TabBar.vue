@@ -2,7 +2,7 @@
   <div style="position: fixed;  bottom: 0;  left: 0;  right: 0; z-index:100;">
     <v-tabs
       v-model="tab"
-      background-color="pink"
+      background-color="black"
       class="elevation-2"
       dark
       :centered="centered"
@@ -30,8 +30,6 @@
 <script>
 export default {
   name: "TabBar",
-
-
   data() {
     return {
       tab: null,
@@ -49,8 +47,9 @@ export default {
         { id: 1, name: "NewsFeed", route: `/` },
         { id: 2, name: "Location", route: `/catList` },
         { id: 3, name: "AddPost", route: `/addpost` },
-        { id: 4, name: "Search", route: `/login` },
-        { id: 5, name: "Map", route: `/catMap` }
+        { id: 4, name: "DashBoard", route: `/catPostMap` },
+        { id: 5, name: "MyProfile", route: `/myProfile` },
+        { id: 6, name: "Test", route: `/test` }
         // { id: 5, name: "TimeLine", route: `/user/${this.id}` }
       ]
     };

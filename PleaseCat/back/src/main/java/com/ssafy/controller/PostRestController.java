@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.model.dto.cat;
 import com.ssafy.model.dto.post;
 import com.ssafy.model.service.PostService;
 
@@ -51,27 +53,41 @@ public class PostRestController {
 	
 	@ApiOperation("새로운 게시글 정보를 등록한다.")
 	@PostMapping("/insert")
-	public ResponseEntity<Map<String, Object>> insertPost(@RequestBody post Post) throws Exception{
-		postService.insertPost(Post);
+	public ResponseEntity<Map<String, Object>> insertPost(@RequestBody MultipartFile catImg,  post Post) throws Exception{
+		postService.insertPost(catImg, Post);
 		return handleSuccess("게시글 등록 완료");
 	}
 	
 	@ApiOperation("게시글 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPost/{Post_no}")
+	@GetMapping("/searchPost")
 	public ResponseEntity<Map<String, Object>> searchPost(@RequestParam int Post_no) throws Exception{
 		return handleSuccess(postService.searchPost(Post_no));
 	}
 	
 	@ApiOperation("회원 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostUser/{User_no}")
+	@GetMapping("/searchPostUser")
 	public ResponseEntity<Map<String, Object>> searchPostUser(@RequestParam int User_no) throws Exception{
 		return handleSuccess(postService.searchPostUser(User_no));
 	}
 	
 	@ApiOperation("고양이 관리번호로 게시글 정보를 찾는다.")
-	@GetMapping("/searchPostCat/{Cat_no}")
+	@GetMapping("/searchPostCat")
 	public ResponseEntity<Map<String, Object>> searchPostCat(@RequestParam int Cat_no) throws Exception{
 		return handleSuccess(postService.searchPostCat(Cat_no));
+	}
+	
+	@ApiOperation("좋아요 갯수를 수정")
+	@PutMapping("/updateLikes")
+	public ResponseEntity<Map<String, Object>> updateLikes(@RequestBody post Post) throws Exception{
+		postService.updateLikes(Post);
+		return handleSuccess("고양이 정보 수정완료");
+	}
+	
+	@ApiOperation("싫어요 갯수를 수정")
+	@PutMapping("/updateUnLikes")
+	public ResponseEntity<Map<String, Object>> updateUnLikes(@RequestBody post Post) throws Exception{
+		postService.updateUnLikes(Post);
+		return handleSuccess("고양이 정보 수정완료");
 	}
 
 	@ApiOperation("모든 게시글을 찾는다.")
@@ -81,7 +97,7 @@ public class PostRestController {
 	}
 	
 	@ApiOperation("게시글 정보 삭제")
-	@DeleteMapping("/delete/{Post_no}")
+	@DeleteMapping("/delete/")
 	public ResponseEntity<Map<String, Object>> deletePost(@RequestParam int Post_no) throws Exception{
 		postService.deletePost(Post_no);
 		return handleSuccess(Post_no+"번 게시글 삭제완료");
@@ -92,6 +108,12 @@ public class PostRestController {
 	public ResponseEntity<Map<String, Object>> updatePost(@RequestBody post Post) throws Exception{
 		postService.updatePost(Post);
 		return handleSuccess("게시글 정보 수정완료");
+	}
+	
+	@ApiOperation("새로 저장하려는 게시글의 post_no를 찾는다.")
+	@GetMapping("/findPostNo")
+	public ResponseEntity<Map<String, Object>> findNextPostNo() throws Exception{
+		return handleSuccess(postService.findNextPostNo());
 	}
 	
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+	
+<mapper namespace="com.ssafy.model.dao.LikesDao" >
+	
+	<insert id ="insertLikes" parameterType="hashmap" >
+		insert into LIKES (user_no,post_no)
+					values(#{user_no:INTEGER},
+						   #{post_no:INTEGER})	
+	</insert>
+   	
+   	<select id = "searchAllLikesOfUser" parameterType="int" resultType="likes">
+    	select * from LIKES 
+    	where user_no=#{user_no}
+    </select>
+    
+   	<select id = "searchAllLikesOfPost" parameterType="int" resultType="likes">
+    	select * from LIKES 
+    	where post_no=#{post_no}
+    </select>
+   	
+    <select id = "searchLikes"  parameterType="hashmap" resultType="likes">
+    	SELECT * FROM LIKES 
+    	WHERE user_no=#{user_no} 
+    	AND post_no=#{post_no}
+    </select>
+    
+    <delete id="deleteLikes" parameterType="hashmap">
+    	DELETE FROM LIKES
+    	WHERE user_no=#{user_no:INTEGER}
+    	AND post_no=#{post_no:INTEGER}
+    </delete>
+    
+</mapper>

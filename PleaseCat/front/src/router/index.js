@@ -7,11 +7,21 @@ import Home from '../components/newsfeed/Home.vue'
 import NewsFeed from '../components/newsfeed/NewsFeed.vue'
 import PageCatList from '../components/catList/PageCatList.vue'
 import PageCatProfile from '../components/catProfile/PageCatProfile.vue'
-import PageCatMap from '../components/catMap/PageMap.vue'
+import AddPost from '../components/post/addPost/PageAddPost'
+import PageCatDetail from '@/components/catProfile/PageCatDetail.vue'
+import PageAddCat from '../components/post/addCat/PageAddCat'
+import PageNearMap from '@/components/map/PageNearMap'
+import PageMyProfile from '@/components/userProfile/PageMyProfile'
+import PageUserProfile from '@/components/userProfile/PageUserProfile'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test
+  },
   {
     path: '/',
     name: 'NewsFeed',
@@ -28,9 +38,14 @@ const routes = [
     component: Login
   },
   {
-    path: '/test',
-    name: 'Test',
-    component: Test
+    path: '/signUp',
+    name: 'SignUp',
+    component: SignUp
+  },
+  {
+    path: '/nearMap',
+    name: 'PageNearMap',
+    component: PageNearMap
   },
   {
     path: '/catList',
@@ -38,25 +53,35 @@ const routes = [
     component: PageCatList
   },
   {
-    path: '/signUp',
-    name: 'SignUp',
-    component: SignUp
-  },
-  {
-    path: '/catProfile',
+    path: '/catProfile/:cat_no',
     name: 'PageCatProfile',
     component: PageCatProfile
   },
   {
-    path: '/catMap',
-    name: 'PageCatMap',
-    component: PageCatMap
+    path: '/addPost',
+    name: 'AddPost',
+    component: AddPost
   },
-  // {
-  //   path: '/login_id',
-  //   name: 'login_id',
-  //   component: Login_id
-  // },
+  {
+    path: '/catDetail/:cat_no',
+    name: 'PageCatDetail',
+    component: PageCatDetail
+  },
+  {
+    path: '/addCat',
+    name: 'PageAddCat',
+    component: PageAddCat
+  },
+  {
+    path: '/myProfile',
+    name: 'PageMyProfile',
+    component: PageMyProfile
+  },
+  {
+    path: '/userProfile/:user_no',
+    name: 'PageUserProfile',
+    component: PageUserProfile
+  },
   // {
   //   path: '/about',
   //   name: 'about',

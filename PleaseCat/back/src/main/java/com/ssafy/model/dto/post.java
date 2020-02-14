@@ -12,13 +12,12 @@ public class post {
 	private int post_unlike;
 	private int post_report;
 	private String post_location;
-	
+	private double post_x;
+	private double post_y;
 	
 	public post() {}
-	
-	
 	public post(int post_no, int user_no, int cat_no, String post_image, String post_time, String post_content,
-			int post_like, int post_unlike, int post_report, String post_location) {
+			int post_like, int post_unlike, int post_report, String post_location, double post_x, double post_y) {
 		super();
 		this.post_no = post_no;
 		this.user_no = user_no;
@@ -30,6 +29,8 @@ public class post {
 		this.post_unlike = post_unlike;
 		this.post_report = post_report;
 		this.post_location = post_location;
+		this.post_x = post_x;
+		this.post_y = post_y;
 	}
 	public int getPost_no() {
 		return post_no;
@@ -91,16 +92,24 @@ public class post {
 	public void setPost_location(String post_location) {
 		this.post_location = post_location;
 	}
-
-
+	public double getPost_x() {
+		return post_x;
+	}
+	public void setPost_x(double post_x) {
+		this.post_x = post_x;
+	}
+	public double getPost_y() {
+		return post_y;
+	}
+	public void setPost_y(double post_y) {
+		this.post_y = post_y;
+	}
 	@Override
 	public String toString() {
 		return "post [post_no=" + post_no + ", user_no=" + user_no + ", cat_no=" + cat_no + ", post_image=" + post_image
 				+ ", post_time=" + post_time + ", post_content=" + post_content + ", post_like=" + post_like
 				+ ", post_unlike=" + post_unlike + ", post_report=" + post_report + ", post_location=" + post_location
-				+ "]";
+				+ ", post_x=" + post_x + ", post_y=" + post_y + "]";
 	}
-
-	
 	
 }

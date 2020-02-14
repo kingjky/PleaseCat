@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+   	<typeAlias type ="com.ssafy.model.dto.cat" 		alias ="cat"/>
+   	<typeAlias type ="com.ssafy.model.dto.comment" 		alias ="comment"/>
+   	<typeAlias type ="com.ssafy.model.dto.following_cat" 		alias ="following_cat"/>
+   	<typeAlias type ="com.ssafy.model.dto.following_user" 		alias ="following_user"/>
+   	<typeAlias type ="com.ssafy.model.dto.likes" 		alias ="likes"/>
+   	<typeAlias type ="com.ssafy.model.dto.post" 		alias ="post"/>
+   	<typeAlias type ="com.ssafy.model.dto.ranking" 		alias ="ranking"/>
+   	<typeAlias type ="com.ssafy.model.dto.report" 		alias ="report"/>
+   	<typeAlias type ="com.ssafy.model.dto.unlikes" 		alias ="unlikes"/>
+   	<typeAlias type ="com.ssafy.model.dto.user" 		alias ="user"/>
+   	<typeAlias type ="com.ssafy.model.dto.newsFeed" 		alias ="newsFeed"/>
+   	<typeAlias type ="com.ssafy.model.dto.catMap" 		alias ="catMap"/>
+   	<!-- <typeAlias type ="com.ssafy.model.dto.FoodPageBean" alias ="pagebean"/> -->
+
+  </typeAliases>
+    
+  <mappers>
+     <!--  <mapper url = ""/> 리소스 or URL -->  
+     <mapper resource = "static/xmls/cat_query.xml"/>
+     <mapper resource = "static/xmls/comment_query.xml"/>
+     <mapper resource = "static/xmls/following_cat_query.xml"/>
+     <mapper resource = "static/xmls/following_user_query.xml"/>
+     <mapper resource = "static/xmls/likes_query.xml"/>
+     <mapper resource = "static/xmls/post_query.xml"/>
+     <mapper resource = "static/xmls/ranking_query.xml"/>
+     <mapper resource = "static/xmls/report_query.xml"/>
+     <mapper resource = "static/xmls/unlikes_query.xml"/>
+     <mapper resource = "static/xmls/user_query.xml"/>
+     <mapper resource = "static/xmls/newsFeed_query.xml"/>
+     <mapper resource = "static/xmls/catMap_query.xml"/>
+  </mappers>
+   <!-- query 설정 끝 -->
+</configuration>
+
+
+
+
+
+
