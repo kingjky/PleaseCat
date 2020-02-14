@@ -1,14 +1,16 @@
 <template>
   <div id="rank-box">
-      <span class="text">
-          <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" alt="medal"></div>
-        <!-- <img class="square" :src='require(`@/assets/images/icons/rankMedal.jpg`)' alt=""> -->
-      </span>
-      <span>
-        <img class="circle" :src='require(`@/assets/images/man/${user_no}.jpg`)' alt="">      
-      </span>
-      <span class="text name">{{name}}</span>
-      <span class="text score">{{score}}p</span>
+      <router-link :to="`/userProfile/${user_no}`" style="color: black;">
+        <span class="text">
+            <div v-if="user_no>0" class="square" :class="{rank1 : (ranking==1), rank2 : (ranking==2), rank3 : (ranking==3) }"   :style="{'background-image' : `url(${require('@/assets/images/icons/rankMedal.jpg')})`}" alt="medal"></div>
+            <!-- <img class="square" :src='require(`@/assets/images/icons/rankMedal.jpg`)' alt=""> -->
+        </span>
+        <span>
+            <img class="circle" :src='require(`@/assets/images/man/${user_no}.jpg`)' alt="">      
+        </span>
+        <span class="text name">{{name}}</span>
+        <span class="text score">{{score}}p</span>
+      </router-link>
   </div>
 </template>
 
@@ -55,13 +57,19 @@ export default {
         background-size: 55vw;
     }
     .rank1{
-        background-position-x: 0px;
+        border-radius: 6vw;
+        background-position-x: -0.5vw;
+        background-position-y: -1vw;
     }
     .rank2{
-        background-position-x: -10.7vw;
+        border-radius: 6vw;
+        background-position-x: -11vw;
+        background-position-y: -1vw;
     }
     .rank3{
-        background-position-x: -21.4vw;
+        border-radius: 6vw;
+        background-position-x: -21.7vw;
+        background-position-y: -1vw;
     }
     .name {
         font-size: 5vw;

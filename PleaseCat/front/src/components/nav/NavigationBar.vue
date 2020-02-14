@@ -21,8 +21,8 @@ export default {
     
     computed: {
       ...mapGetters([
-        'getIsLogin'
-      ])
+        'getIsLogin', 'getUserLoc'
+      ]),
     },
     methods: {
       logout() {

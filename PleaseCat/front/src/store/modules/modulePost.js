@@ -22,6 +22,12 @@ export default {
         changeCatPosts(state, payload, rootState) {
             state.catPosts = payload;
         },
+        clearUserPosts(state, payload, rootState) {
+            state.userPosts = null;
+        },
+        clearCatPosts(state, payload, rootState) {
+            state.catPosts = null;
+        },
     },
     actions: { // ({ dispatch, commit, getters, rootGetters }) : context. 생략
         getPostList({ dispatch, commit, getters, rootGetters }) {

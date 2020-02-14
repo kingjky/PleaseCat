@@ -112,15 +112,14 @@ export default new Vuex.Store({
         },
         findUserLoc({ state, dispatch, commit, getters, rootGetters }){
             // console.log('위치찾기');
-            if (navigator.geolocation) {
+            commit('changeUserLoc', { lat: 37.507072, lng: 127.0366208 });
+            if (navigator) {
                 // GeoLocation을 이용해서 접속 위치를 얻어옵니다
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var lat = position.coords.latitude, // 위도
                         lon = position.coords.longitude; // 경도
                         commit('changeUserLoc', { lat: lat, lng: lon });
                 });
-            } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-                commit('changeUserLoc', { lat: 37.507072, lng: 127.0366208 });
             }
         }
     },

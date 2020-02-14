@@ -1,12 +1,16 @@
 <template>
 <div id="catProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView" v-if="(selectedCat != null)">
-        <div id="leftPart">
+    <div class="profileView">
+        <div class="leftPart" v-if="(selectedCat != null)">
             <img id="catPhoto" :src='require(`@/assets/images/cats/_profile/${ selectedCat.cat_no }.jpg`)' alt="catProfile">
         </div>
+        <div id="fakeleftPart" class="leftPart" v-if="(selectedCat === null)">
+            <img id="catPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+        </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{ selectedCat.cat_name }}</h1></div>
+            <div class="name"><h1 id="catName" class="text" v-if="(selectedCat != null)">{{ selectedCat.cat_name }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedCat === null)"><h1 id="catName" class="text">고양이</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -18,9 +22,9 @@
         </section>
     </div>
     <div id="summaryView" class="text" v-if="(selectedCat != null)">
-        <span class="summary">게시물<br>{{ selectedCat.countPosts }}</span>
-        <span class="summary">팔로우<br>{{ selectedCat.countFollowers }}</span>
-        <span class="summary">좋아요<br>{{ selectedCat.countLikes }}</span>
+        <span class="summary">게시물<br>{{ selectedCat.count_followers }}</span>
+        <span class="summary">팔로우<br>{{ selectedCat.count_likes }}</span>
+        <span class="summary">좋아요<br>{{ selectedCat.count_posts }}</span>
     </div>
     <div id="photoView" v-if="(catPosts != null)">
         <div id="photoList">
@@ -47,6 +51,10 @@ export default {
         this.getSelectedCat(this.no);
         this.getCatPosts(this.no);
     },
+    destroyed() {
+        this.clearSelectedCat();
+        this.clearCatPosts();
+    },
     data(){
         return{
             no: '',
@@ -61,6 +69,12 @@ export default {
         ]),
     },
     methods: {
+        ...mapMutations('storeCat',[
+            'clearSelectedCat',
+        ]),
+        ...mapMutations('storePost',[
+            'clearCatPosts',
+        ]),
         ...mapActions('storeCat',[
             'getSelectedCat',
         ]),
@@ -97,11 +111,12 @@ export default {
         color: black;
     }
 }
-#profileView{
+.profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90%;
+    width: 90vw;
+    height: 40vw;
     vertical-align: middle;
     text-align: center;
     background-color: white;
@@ -115,7 +130,7 @@ export default {
         display: block;
         padding-bottom: 100%;
     }
-    #leftPart{
+    .leftPart{
         width: 30%;
         position: absolute;
         left: 5%;
@@ -126,16 +141,18 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        
+        #fakename{
+            visibility: hidden;
+        }        
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-#profileView::after{
-    content: "";
-    display: block;
-    padding-bottom: 40%;
-}
+// #profileView::after{
+//     content: "";
+//     display: block;
+//     padding-bottom: 40%;
+// }
 #summaryView{
     display: inline-block;
     font-size: 3vw;

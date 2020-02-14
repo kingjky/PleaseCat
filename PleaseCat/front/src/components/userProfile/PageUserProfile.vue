@@ -1,12 +1,16 @@
 <template>
 <div id="myProfile">
     <div class="emptySpace">-Navigation Bar-</div>
-    <div id="profileView" v-if="(selectedUser != null)">
-        <div id="leftPart">
+    <div class="profileView" >
+        <div class="leftPart" v-if="(selectedUser != null)">
             <img id="userPhoto" :src='require(`@/assets/images/man/${ selectedUser.user_no }.jpg`)' alt="catProfile">
         </div>
+        <div id="fakeleftPart" class="leftPart" v-if="(selectedUser === null)">
+            <img id="userPhoto" :src='require(`@/assets/images/icons/user.png`)' alt="catProfile">
+        </div>
         <section id="rightPart">
-            <div id="name"><h1 id="catName" class="text">{{ selectedUser.user_id }}</h1></div>
+            <div class="name" v-if="(selectedUser != null)"><h1 id="userName" class="text">{{ selectedUser.user_id }}</h1></div>
+            <div id="fakename" class="name" v-if="(selectedUser === null)"><h1 id="userName" class="text">사용자</h1></div>
             <div id="buttons">
                 <span id="followButton" class="btn text">
                     <button>팔로우</button>
@@ -47,6 +51,10 @@ export default {
         this.getSelectedUser(this.no);
         this.getUserPosts(this.no);
     },
+    destroyed() {
+        this.clearSelectedUser();
+        this.clearUserPosts();
+    },
     data(){
         return{
             no: '',
@@ -64,6 +72,12 @@ export default {
         ]),
     },
     methods: {
+        ...mapMutations('storeUser',[
+            'clearSelectedUser',
+        ]),
+        ...mapMutations('storePost',[
+            'clearUserPosts',
+        ]),
         ...mapActions('storeUser',[
             'getSelectedUser',
         ]),
@@ -100,11 +114,12 @@ export default {
         color: black;
     }
 }
-#profileView{
+.profileView{
     padding: 2% 2% 0 2%;
     position: relative;
     display: inline-block;
-    width: 90%;
+    width: 90vw;
+    height: 36vw;
     vertical-align: middle;
     text-align: center;
     background-color: white;
@@ -118,7 +133,7 @@ export default {
         display: block;
         padding-bottom: 100%;
     }
-    #leftPart{
+    .leftPart{
         width: 30%;
         position: absolute;
         left: 5%;
@@ -129,16 +144,18 @@ export default {
     #rightPart{
         position: absolute;
         left: 40%;
-        
+        #fakename{
+            visibility: hidden;
+        }
         // box-sizing: border-box;
         // border: 1px solid red;
     }
 }
-#profileView::after{
-    content: "";
-    display: block;
-    padding-bottom: 40%;
-}
+// #profileView::after{
+//     content: "";
+//     display: block;
+//     padding-bottom: 40%;
+// }
 #summaryView{
     display: inline-block;
     font-size: 3vw;

@@ -25,6 +25,9 @@ export default {
         changeNearCatList(state, payload, rootState) {
             state.nearCatList = payload;
         },
+        clearSelectedCat(state, payload) {
+            state.selectedCat = null;
+        }
     },
     // actions : 비동기 처리 logic
     actions: { // ({ dispatch, commit, getters, rootGetters }, data) : context. 생략

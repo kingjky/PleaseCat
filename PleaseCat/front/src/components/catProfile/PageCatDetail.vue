@@ -3,11 +3,13 @@
     <div class="emptySpace">-Navigation Bar-</div>
     <div id="photoView">
         <div id="cat" >
+            <router-link :to="`/catProfile/${selectedCat.cat_no}`">
             <!-- <div id="catPhoto" :style="{'background-image' : 'url('+require('../../assets/images/cat/1.jpg')+')'}"></div> -->
             <!-- <div id="catPhoto" :style="{'background-image': 'url('+require('../../assets/images/cat/1.jpg')+')'}">asdasdasdasdasd</div> -->
             <!-- <img id="catPhoto" src="../../assets/images/cat/0.jpg" alt="" > -->
             <img id="catPhoto" :src='require(`../../assets/images/cats/_profile/${selectedCat.cat_no}.jpg`)' alt="">
             <h1 id="catName" class="text">{{selectedCat.cat_name}}</h1>
+            </router-link>
         </div>
         <div id="man" v-if="catManager">
             <router-link :to="`/userProfile/${catManager.user_no}`">

@@ -53,5 +53,5 @@ export default {
 * {
     font-family: "Noto Sans KR", sans-serif;
     background: linear-gradient(to bottom, #2b5c7a, #377896, #4ea3a3);
-}
+};
 </style>

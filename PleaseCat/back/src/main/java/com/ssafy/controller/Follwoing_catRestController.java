@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,19 +47,19 @@ public class Follwoing_catRestController {
 	}
 	
 	@ApiOperation("follower, cat no로 팔로잉 여부 확인")
-	@PostMapping("/searchFollwoingCat")
+	@GetMapping("/searchFollwoingCat")
 	public ResponseEntity<Map<String, Object>> searchFollwoingCat(@RequestParam int follower_no, @RequestParam int cat_no) throws Exception{
 		return handleSuccess(followingCatService.searchFollowingCat(follower_no,cat_no));
 	}
 	
 	@ApiOperation("cat no로 팔로워 목록 출력")
-	@PostMapping("/searchFollwerCat")
+	@GetMapping("/searchFollwerCat")
 	public ResponseEntity<Map<String, Object>> searchFollwerCat(@RequestParam int cat_no) throws Exception{
 		return handleSuccess(followingCatService.searchFollowerCat(cat_no));
 	}
 	
 	@ApiOperation("follower no로 cat 목록 출력")
-	@PostMapping("/searchFollowedCat")
+	@GetMapping("/searchFollowedCat")
 	public ResponseEntity<Map<String, Object>> searchFollwedCat(@RequestParam int follower_no) throws Exception{
 		return handleSuccess(followingCatService.searchFollowedCat(follower_no));
 	}

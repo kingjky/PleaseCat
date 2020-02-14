@@ -91,7 +91,11 @@ export default {
     width: 90%;
     vertical-align: middle;
     text-align: center;
-    background-color: white;
+    background-color: #F2E6E1;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(54, 52, 76, 0.7);
+    
+    // background: linear-gradient(to right, #F2E6E1, #F7F3EF);
     // border: 2px solid red;
     img {
         width: 100%;
@@ -129,10 +133,12 @@ export default {
     width: 90%;
     text-align: center;
     padding: 5px 0 5px 0;
+    
+    border-radius: 10px;
     // box-sizing: border-box;
     // border: 1px solid blue;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
     .summary{
         display: inline-block;
         width: 33.3%;

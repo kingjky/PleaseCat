@@ -49,6 +49,9 @@ export default {
         changeSelectedUser(state, payload, rootState) {
             state.selectedUser = payload;
         },
+        clearSelectedUser(state, payload) {
+            state.selectedUser = null;
+        }
     },
     actions: { // ({ dispatch, commit, getters, rootGetters }, data, ...) 'context.'는 생략
         getUserList({ dispatch, commit, getters, rootGetters }) {
