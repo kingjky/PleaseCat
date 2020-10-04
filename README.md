@@ -1,5 +1,5 @@
 
-# PJT III - This is Frontend Branch
+# PJT III - This is Master Branch
 - Branch Name
     - master
     - dev/master : Develop Master Branch
